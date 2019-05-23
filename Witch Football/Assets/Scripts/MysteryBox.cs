@@ -7,14 +7,18 @@ public class MysteryBox : MonoBehaviour
     // Taking the enum from magic skill: type and affect to
     public MagicSkill.AffectTo affectTo;
     public MagicSkill.Type type;
+    // Need stat Modifier class template here
 
     public MysteryBox(){
         Init();
     }
+    // <Edit later>
+    //public MysteryBox(MagicSkill.Type type, MagicSkill.AffectTo affectTo, MagicSkill.StatModifier modifier){}
     public void Init(){
         affectTo    = MagicSkill.AffectTo.Self;
         type        = MagicSkill.Type.HealthPoint;
     }
+
 
     public void Start(){
         //Init();
@@ -35,4 +39,18 @@ public class MysteryBox : MonoBehaviour
             //else if type != HP
         }
     }
+}
+
+public static class MysteryBoxDefault{
+    private static MysteryBox _bomb;
+    private static MysteryBox _mannaPotion;
+    private static MysteryBox _hpPotion;
+    private static MysteryBox _speedPotion;
+
+    public static MysteryBox Bomb() {
+        _bomb = new MysteryBox();
+        _bomb.type = MagicSkill.Type.Damage;
+        return _bomb;
+    }
+
 }

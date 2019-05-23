@@ -264,6 +264,10 @@ public class WitchController : MonoBehaviour
         Debug.Log("Guard: "+character.guard.current +" .HP: "+character.healthPoint.current);
     }
 
+    public void ExplosionDamaged(float guardReduced, float healthReduced){
+        Tackled(guardReduced, healthReduced);
+    }
+
     void PlayerIndexControl(int index){
         
     }
@@ -325,5 +329,10 @@ public class WitchController : MonoBehaviour
             other.gameObject.GetComponent<MysteryBox>().UseEffect();
             Debug.Log("UseEffect");
         }
+
+        // <Edit later> Spiky & Explode and need to check the ball possession
+        //if(other.gameObject.tag == "Tile") {
+            // spiky and exploding damage and addforce
+        //}
     }
 } 

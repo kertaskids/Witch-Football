@@ -170,8 +170,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &75148500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -230,6 +232,97 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75148497}
   m_Mesh: {fileID: 4068373912626513877, guid: 0407c5761ece1e74ca6a010e750084e6, type: 3}
+--- !u!1 &81587495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 81587496}
+  - component: {fileID: 81587499}
+  - component: {fileID: 81587498}
+  - component: {fileID: 81587497}
+  m_Layer: 0
+  m_Name: Trap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &81587496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81587495}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1512468628}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &81587497
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81587495}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &81587498
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81587495}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &81587499
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81587495}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &122405373
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +373,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &122405376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -390,8 +485,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &141103624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -565,8 +662,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &212790642
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -780,8 +879,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &486680518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -967,8 +1068,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &634178765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1168,8 +1271,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &721510401
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1841,8 +1946,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1079873780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1937,8 +2044,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1110160351
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2061,8 +2170,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1164364880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2197,7 +2308,7 @@ BoxCollider:
   m_GameObject: {fileID: 1178612567}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.75, z: 0.25}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2210,7 +2321,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1178612567}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.25
   m_Height: 1
   m_Direction: 1
@@ -2281,8 +2392,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1198752665
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2377,8 +2490,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1225370012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2501,8 +2616,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1242585408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2611,8 +2728,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1272448360
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2721,8 +2840,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1395289212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2892,12 +3013,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c6a3aef8eb67142805354f3f83aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 1
+  tileType: 0
   tileEffect: 0
   triggerType: 0
-  triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  triggerDistance: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 1
 --- !u!65 &1440061060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3002,12 +3125,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c6a3aef8eb67142805354f3f83aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 1
+  tileType: 2
   tileEffect: 0
   triggerType: 0
-  triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  triggerDistance: 1.5
+  effectMaxDuration: 2
+  effectMaxDelay: 2
+  typeMaxDuration: 1
+  typeMaxDelay: 3
 --- !u!65 &1512468625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3076,7 +3201,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 81587496}
   m_Father: {fileID: 1043304460}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3116,8 +3242,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1591835413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3240,8 +3368,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1607276241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3415,8 +3545,10 @@ MonoBehaviour:
   tileEffect: 1
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1675405021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3525,8 +3657,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1678726672
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3649,8 +3783,10 @@ MonoBehaviour:
   tileEffect: 1
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1698319434
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3745,8 +3881,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1831261748
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3946,8 +4084,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1912260875
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4070,8 +4210,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1924245205
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4180,8 +4322,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1956706136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4381,12 +4525,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c6a3aef8eb67142805354f3f83aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 1
+  tileType: 3
   tileEffect: 0
-  triggerType: 0
+  triggerType: 1
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &1987851059
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4494,9 +4640,11 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
-  triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  triggerDistance: 1
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 1
 --- !u!65 &2007575582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4714,8 +4862,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &2046049565
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4929,8 +5079,10 @@ MonoBehaviour:
   tileEffect: 0
   triggerType: 0
   triggerDistance: 0
-  maxDuration: 2
-  maxDelay: 2
+  effectMaxDuration: 0
+  effectMaxDelay: 0
+  typeMaxDuration: 0
+  typeMaxDelay: 0
 --- !u!65 &2090850660
 BoxCollider:
   m_ObjectHideFlags: 0
