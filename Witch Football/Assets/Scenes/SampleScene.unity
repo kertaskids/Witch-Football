@@ -3127,12 +3127,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileType: 2
   tileEffect: 0
-  triggerType: 0
+  triggerType: 1
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
   typeMaxDuration: 1
-  typeMaxDelay: 3
+  typeMaxDelay: 2
 --- !u!65 &1512468625
 BoxCollider:
   m_ObjectHideFlags: 0

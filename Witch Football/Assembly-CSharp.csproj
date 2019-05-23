@@ -56,9 +56,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Ball.cs" />
+     <Compile Include="Assets\Scripts\BillboardSprite.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
+     <Compile Include="Assets\Scripts\Goal.cs" />
      <Compile Include="Assets\Scripts\MagicSkill.cs" />
+     <Compile Include="Assets\Scripts\Match.cs" />
      <Compile Include="Assets\Scripts\MysteryBox.cs" />
+     <Compile Include="Assets\Scripts\StatModifier.cs" />
+     <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\WitchController.cs" />
  <Reference Include="Unity.Timeline.Editor">

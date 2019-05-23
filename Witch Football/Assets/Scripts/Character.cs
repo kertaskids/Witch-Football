@@ -44,8 +44,6 @@ public class Character
         Defense 
     };
     public TeamState teamState;
-    // <Edit later>
-    public bool possessingBall;
 
     // Basic Stats
     public CharacterStat healthPoint;
@@ -74,8 +72,6 @@ public class Character
     public MagicSkill lightMagicSkill;
     public MagicSkill heavyMagicSkill;
 
-    //<Edit later> Make a new class for stats variable, i.e, Duration{elapsed, max}, Delay{remaining, max}  or just current
-    // Then assign the stats variables here
     public Character(){
         Initiate();
     }
@@ -83,7 +79,6 @@ public class Character
     public void Initiate(){
         teamParty       = TeamParty.Unassigned;
         teamState       = TeamState.Defense;
-        possessingBall  = false;
         healthPoint     = new CharacterStat(10f, 10f);
         jumpForce       = new CharacterStat(5f, 5f); 
         jumpDelay       = new CharacterStat(5f, 5f);
@@ -101,7 +96,6 @@ public class Character
         tackledDamageToHealth   = new CharacterStat(1f, 1f);
         
         // <Edit later> Delete Later
-        // Duration != Delay
         lightMagicSkill = new MagicSkill();
         lightMagicSkill = DefaultMagicSkill.DefaultSkill(MagicSkill.Category.Light, MagicSkill.Type.Speed,
                                                         "Super Fast", MagicSkill.TimeUse.Both, MagicSkill.AffectTo.Self);
@@ -114,26 +108,28 @@ public class Character
 
     public void CastMagic(MagicSkill magicSkill){
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current +", "+tackledDamageToGuard.current+", "+passPower.current+ ", " +moveSpeed.current);
-        this.tackledDamageToGuard.current   += magicSkill.modifierDamage;
-        this.tackledDamageToHealth.current  += magicSkill.modifierDamage;
-        this.healthPoint.current    += magicSkill.modifierHP;   
-        this.passPower.current      += magicSkill.modifierPower;
-        this.shootPower.current     += magicSkill.modifierPower;
-        this.moveSpeed.current      += magicSkill.modifierSpeed;
+        this.tackledDamageToGuard.current   += magicSkill.statModifier.damage;
+        this.tackledDamageToHealth.current  += magicSkill.statModifier.damage;
+        this.healthPoint.current    += magicSkill.statModifier.healthPoint;   
+        this.passPower.current      += magicSkill.statModifier.power;
+        this.shootPower.current     += magicSkill.statModifier.power;
+        this.moveSpeed.current      += magicSkill.statModifier.moveSpeed;
+        
         //<Edit later> Harusnya dipindah di magicskill class, karena tiap magic skill punya current duration
         lightMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Light ? 0 :  lightMagicSkill.duration.current; 
         heavyMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Heavy ? 0 :  heavyMagicSkill.duration.current; 
-        Debug.Log("Casting " + magicSkill.name + " Damage:" +magicSkill.modifierDamage + "HP:"+magicSkill.modifierHP + " Power:"+magicSkill.modifierPower +" Speed:"+magicSkill.modifierSpeed);
-        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current +", "+tackledDamageToGuard.current+", "+passPower.current + ", " +moveSpeed.current); 
+        Debug.Log("Casting " + magicSkill.name + " Damage:" +magicSkill.statModifier.damage + "HP:"+magicSkill.statModifier.healthPoint + 
+                    " Power:" + magicSkill.statModifier.power + " Speed:" + magicSkill.statModifier.moveSpeed);
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
     }
 
     public void RevertMagic(MagicSkill magicSkill){
         // HP doesnt need to revert
-        this.tackledDamageToGuard.current   -= magicSkill.modifierDamage;
-        this.tackledDamageToHealth.current  -= magicSkill.modifierDamage;
-        this.passPower.current      -= magicSkill.modifierPower;
-        this.shootPower.current     -= magicSkill.modifierPower;
-        this.moveSpeed.current      -= magicSkill.modifierSpeed;
+        this.tackledDamageToGuard.current   -= magicSkill.statModifier.damage;
+        this.tackledDamageToHealth.current  -= magicSkill.statModifier.damage;
+        this.passPower.current      -= magicSkill.statModifier.power;
+        this.shootPower.current     -= magicSkill.statModifier.power;
+        this.moveSpeed.current      -= magicSkill.statModifier.moveSpeed;
         lightMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Light ? lightMagicSkill.duration.max :  lightMagicSkill.duration.current; 
         heavyMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Heavy ? heavyMagicSkill.duration.max :  heavyMagicSkill.duration.current;
         Debug.Log("Revert.");

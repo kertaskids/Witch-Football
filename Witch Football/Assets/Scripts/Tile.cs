@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
         Exploding,
         Shooting, 
         MysteryBox,
-        // Falling Rock
+        FallingRock
     }
     public TileType tileType;
     
@@ -221,6 +221,24 @@ public class Tile : MonoBehaviour
                         }
                 }
             }  
+            // <Edit later> if not collided, animation off immediatelly. 
+        }
+        else if (tileType == TileType.FallingRock) {
+            // <Edit later> Change this with mysterybox prefabs
+            if(_typeDelay <= 0f) {
+                // Spawn mystery box prefabs based on random
+                int r = Random.Range(1, 5);
+                GameObject mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                if(r == 1) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                if(r == 2) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                if(r == 3) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                if(r == 4) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                mysteryBox.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
+                mysteryBox.AddComponent<Rigidbody>();
+                mysteryBox.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                _typeDelay = typeMaxDelay;
+            }
+            _typeDelay -= Time.deltaTime;
         }
     }
     //<Edit later> delete the second if. Just use else instead. Change the static Y value. Add effect speed. 
