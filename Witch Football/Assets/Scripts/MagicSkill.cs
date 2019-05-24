@@ -130,4 +130,7 @@ public static class DefaultMagicSkill {
         }        
         return magicSkill;
     }
+
+    //<Edit later>
+    // Make list of Skill set; static class
 }

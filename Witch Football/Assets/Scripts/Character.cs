@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStat {
@@ -32,19 +33,6 @@ public class CharacterStat {
 
 public class Character
 {
-    // Match Stats
-    public enum TeamParty {
-        Unassigned, 
-        TeamA, 
-        TeamB
-    };
-    public TeamParty teamParty;
-    public enum TeamState {
-        Offense,
-        Defense 
-    };
-    public TeamState teamState;
-
     // Basic Stats
     public CharacterStat healthPoint;
     public CharacterStat jumpForce;
@@ -59,26 +47,26 @@ public class Character
     public CharacterStat passDelay;
     public CharacterStat shootPower;
     public CharacterStat passPower;
+    public CharacterStat getTackledDelay;
     
     // Defense Stats
     public CharacterStat tackleDelay;
     public CharacterStat followDelay;
-    public CharacterStat getTackledDelay;
-    public CharacterStat tackledDamageToGuard;
-    public CharacterStat tackledDamageToHealth;
 
     // Magic Stats
     public CharacterStat manna;
     public MagicSkill lightMagicSkill;
     public MagicSkill heavyMagicSkill;
 
+    // Self Damage Stats
+    public CharacterStat tackledDamageToGuard; 
+    public CharacterStat tackledDamageToHealth; 
+
     public Character(){
         Initiate();
     }
 
     public void Initiate(){
-        teamParty       = TeamParty.Unassigned;
-        teamState       = TeamState.Defense;
         healthPoint     = new CharacterStat(10f, 10f);
         jumpForce       = new CharacterStat(5f, 5f); 
         jumpDelay       = new CharacterStat(5f, 5f);
@@ -107,7 +95,7 @@ public class Character
     }
 
     public void CastMagic(MagicSkill magicSkill){
-        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current +", "+tackledDamageToGuard.current+", "+passPower.current+ ", " +moveSpeed.current);
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);
         this.tackledDamageToGuard.current   += magicSkill.statModifier.damage;
         this.tackledDamageToHealth.current  += magicSkill.statModifier.damage;
         this.healthPoint.current    += magicSkill.statModifier.healthPoint;   
@@ -115,9 +103,8 @@ public class Character
         this.shootPower.current     += magicSkill.statModifier.power;
         this.moveSpeed.current      += magicSkill.statModifier.moveSpeed;
         
-        //<Edit later> Harusnya dipindah di magicskill class, karena tiap magic skill punya current duration
-        lightMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Light ? 0 :  lightMagicSkill.duration.current; 
-        heavyMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Heavy ? 0 :  heavyMagicSkill.duration.current; 
+        lightMagicSkill.duration.current = 0f; 
+        heavyMagicSkill.duration.current = 0f; 
         Debug.Log("Casting " + magicSkill.name + " Damage:" +magicSkill.statModifier.damage + "HP:"+magicSkill.statModifier.healthPoint + 
                     " Power:" + magicSkill.statModifier.power + " Speed:" + magicSkill.statModifier.moveSpeed);
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
@@ -130,10 +117,10 @@ public class Character
         this.passPower.current      -= magicSkill.statModifier.power;
         this.shootPower.current     -= magicSkill.statModifier.power;
         this.moveSpeed.current      -= magicSkill.statModifier.moveSpeed;
-        lightMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Light ? lightMagicSkill.duration.max :  lightMagicSkill.duration.current; 
-        heavyMagicSkill.duration.current = magicSkill.category == MagicSkill.Category.Heavy ? heavyMagicSkill.duration.max :  heavyMagicSkill.duration.current;
+        lightMagicSkill.duration.current = lightMagicSkill.duration.max; 
+        heavyMagicSkill.duration.current = heavyMagicSkill.duration.max;
         Debug.Log("Revert.");
-        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current +", "+tackledDamageToGuard.current +", "+passPower.current + ", " +moveSpeed.current);
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);
     }
 
     //<Edit later> Delay != duration

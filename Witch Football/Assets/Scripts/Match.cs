@@ -11,7 +11,7 @@ public class Match : MonoBehaviour
         PostGoal, 
         TimeOver,
         PostMatch
-    };
+    }
     public GameState gamestate;
     public float Timer;
     public Team TeamA;
@@ -19,11 +19,14 @@ public class Match : MonoBehaviour
     public WitchController[] Scorers;
     private bool _isPaused;
     private float _stateDelay;
-    // <Delete later>
-    private float _aSecondTimer=1;
+    private float _oneSecondTimer = 1;
+    private bool _initiated;
 
     void Start(){
+        _initiated = false;
+        _isPaused   = false;
         gamestate = GameState.PreMatch;
+        // Need to make sure the assignment of the team & witches
     }
     void Update() {
         if(!_isPaused){
@@ -35,27 +38,33 @@ public class Match : MonoBehaviour
             if(gamestate == GameState.TimeOver) TimeOver();
             if(gamestate == GameState.PostMatch) PostMatch();
         } else {
+            // Uncomment if we want when the celebration, the time is still running. 
             //_stateDelay -= Time.deltaTime;
             if(gamestate == GameState.PostGoal) PostGoal();
-            
         }
     }
 
     public void PreMatch(){
-        Timer = 180f; 
-        //TeamA.Initialize();
-        //TeamB.Initialize();
-        _isPaused = false;
-        //_stateDelay = 3f;
+        if(!_initiated){
+            Timer = 180f; 
+            TeamA = new Team(Team.TeamParty.TeamA);
+            TeamB = new Team(Team.TeamParty.TeamB);
+            _isPaused   = false;
+            _stateDelay = 3f;
+            _initiated  = true;
 
+            // <Edit later> Add these features
+            // Init Scorers; 
+            // Show players and stats
+            ShowPlayersStats();
+            // Set up for the match: ball position, player position, goal, player's skill
+        }
         if(_stateDelay <= 0) {
-            gamestate = GameState.MatchPlaying;
+            gamestate   = GameState.MatchPlaying;
             _stateDelay = 3f;
         }
-        //Init Scorers; 
-        // Assign score and time 
-        // Show players and stats
-        // Set up for the match
+        // Comment this to test the gamestate
+        _stateDelay -= Time.deltaTime;
     }
     public void MatchPlaying(){
         Timer -= Time.deltaTime;
@@ -66,10 +75,10 @@ public class Match : MonoBehaviour
         // Time is limited. Time is paused when playing a cutscene for casting heavy magic. 
         // Spawn mystery box. 
         // Tiles can be manipulated and mutated
-        _aSecondTimer -= Time.deltaTime;
-        if(_aSecondTimer<=0){
+        _oneSecondTimer -= Time.deltaTime;
+        if(_oneSecondTimer<=0){
             //Debug.Log("Timer: " + (int)(Timer/60) + "Minutes " + (int)(Timer%60) + "Seconds.");
-            _aSecondTimer = 1f;
+            _oneSecondTimer = 1f;
         }
 
     }
@@ -121,6 +130,32 @@ public class Match : MonoBehaviour
             }
         }
         _stateDelay -= Time.deltaTime;
+    }
+    // <Edit later> Change in the UI
+    void ShowPlayersStats(){
+        Debug.Log(TeamA.teamParty.ToString() + " Statistic:");
+        foreach (WitchController w in TeamA.witches)
+        {
+            //Character Stat
+            Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
+                        ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
+                        ", PassPower" + w.character.passPower.current + 
+                        ", Speed: " + w.character.moveSpeed.current);
+            //MagicSkill
+            Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                        ", HeavySkill: " + w.character.heavyMagicSkill.name);
+        }
+
+        Debug.Log(TeamB.teamParty.ToString() + " Statistic:");
+        foreach (WitchController w in TeamB.witches)
+        {
+            Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
+                        ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
+                        ", PassPower" + w.character.passPower.current + 
+                        ", Speed: " + w.character.moveSpeed.current);
+            Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                        ", HeavySkill: " + w.character.heavyMagicSkill.name);
+        }
     }
 
 }

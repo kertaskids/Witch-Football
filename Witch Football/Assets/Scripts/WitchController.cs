@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class WitchController : MonoBehaviour
 {
-    //<Edit later> Use only capsule collider on the player and set ball's collider and physics when possessed. 
     public Character character;
+    public Team.TeamParty teamParty;
     public bool _possessingBall;
     public GameObject ball; 
     public GameObject ballPosition; 
+    // <Edit later> delete this and change with GetTeamMates(); like in Team.cs
     public GameObject[] teamMates;
+    public WitchController[] witchTeamMates;
     private Rigidbody _rigidbody;
 
     void Start(){
+        // <Edit later> Assign Team here
+        if(witchTeamMates == null || witchTeamMates.Length < 1) {
+            WitchController[] allWitches = GameObject.FindObjectsOfType<WitchController>();
+            //Debug.Log("allwitches length " + allWitches.Length);
+            List<WitchController> witchesTemp = new List<WitchController>();
+            foreach (WitchController w in allWitches) {
+                //Debug.Log(w.name + ", " + w.teamParty.ToString());
+                if(w.teamParty == this.teamParty && w != this) {
+                    witchesTemp.Add(w);
+                    Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate"); 
+                }
+            }
+            witchTeamMates = witchesTemp.ToArray();
+        }
+
         character       = new Character();
         _rigidbody      = GetComponent<Rigidbody>();
         _possessingBall = false;
@@ -200,6 +217,7 @@ public class WitchController : MonoBehaviour
             }
         }
 
+        // <Update> Back to original coding, duration --; 
         // UpdateTimer duration dan delay dari magicskill!
         // When the delay is over, back to original stats
         character.lightMagicSkill.delay.current = UpdateTimer(character.lightMagicSkill.delay.current, character.lightMagicSkill.delay.max);

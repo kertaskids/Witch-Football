@@ -5,7 +5,6 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public enum BallState {
-        // <Edit later> For now, only use free and possessed
         Free, 
         Possessed, 
         Passed, 
@@ -19,8 +18,10 @@ public class Ball : MonoBehaviour
         possesingWitch  = null;
     }
 
-    //<Edit later> use this to replace in witchcontroller
-    //<Edit later> change the method below with general method i.e., ChangeState(Witch, State);
+    public void ChangeState(WitchController witch, BallState state){
+        possesingWitch  = witch;
+        ballState       = state;
+    }
     public void Possessed(WitchController witch){
         possesingWitch  = witch;
         ballState       = BallState.Possessed;
