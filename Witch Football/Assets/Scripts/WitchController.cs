@@ -33,6 +33,7 @@ public class WitchController : MonoBehaviour
         character       = new Character();
         _rigidbody      = GetComponent<Rigidbody>();
         _possessingBall = false;
+        ball            = GameObject.Find("Ball");
 
         // Exception
         character.guard.current     = 0; // <delete later>
@@ -106,8 +107,9 @@ public class WitchController : MonoBehaviour
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    ball.transform.rotation = Quaternion.identity;
                     ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
-                    _possessingBall = false;
+                    //_possessingBall = false;
                     character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " +character.shootPower.current + ", at Euler: " + transform.eulerAngles);
                 }
@@ -130,9 +132,10 @@ public class WitchController : MonoBehaviour
                         // If the ball is a passing ball, move the ball smoothly towards teammate except it is interrupted. 
                         // Check the rotation and the velocity before adding a force of pass.
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        ball.transform.rotation = Quaternion.identity;
                         ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.passPower.current, ForceMode.Impulse);
                         
-                        _possessingBall        = false;
+                        //_possessingBall        = false;
                         character.passDelay.current    = 0f;
                         Debug.Log("Pass! Power: " + character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
                     } else {
@@ -297,16 +300,19 @@ public class WitchController : MonoBehaviour
             Debug.Log("Guard:"+character.guard.current);
         }
         ball.transform.position = ballPosition.transform.position;
-        ball.GetComponent<Ball>().possesingWitch    = this;
-        ball.GetComponent<Ball>().ballState         = Ball.BallState.Possessed;  
+        ball.GetComponent<Ball>().Possessed(this);
+        // <Edit later> Refresh ball velocity and rotation
+        //ball.GetComponent<Ball>().possesingWitch    = this;
+        //ball.GetComponent<Ball>().ballState         = Ball.BallState.Possessed;  
     }
 
     void BallReleasing(){
         // Need to check why the ball is releasing
-        //witchCharacter.guard = 0;
+        // character.guard.current = 0f; Already defined in GuardControl();
         _possessingBall = false;
-        ball.GetComponent<Ball>().possesingWitch    = null;
-        ball.GetComponent<Ball>().ballState         = Ball.BallState.Free;
+        ball.GetComponent<Ball>().Released(Ball.BallState.Free);
+        //ball.GetComponent<Ball>().possesingWitch    = null;
+        //ball.GetComponent<Ball>().ballState         = Ball.BallState.Free;
     }
 
     GameObject GetClosestTeamMate(){
@@ -352,5 +358,17 @@ public class WitchController : MonoBehaviour
         //if(other.gameObject.tag == "Tile") {
             // spiky and exploding damage and addforce
         //}
+        
+        // <Edit later>
+        // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
+        if(other.gameObject == ball) {
+            if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
+                // <Edit later> Must be
+                _possessingBall = true;
+                ball.GetComponent<Ball>().Possessed(this);
+                Debug.Log("Possessed by "+gameObject.name);
+                // <Edit later> Refresh ball velocity and rotation
+            }
+        }
     }
 } 

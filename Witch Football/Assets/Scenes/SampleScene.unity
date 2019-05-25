@@ -1717,10 +1717,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 983755793}
+  - component: {fileID: 983755794}
   - component: {fileID: 983755792}
   - component: {fileID: 983755791}
   - component: {fileID: 983755790}
-  - component: {fileID: 983755794}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -1813,7 +1813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983755789}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 1, z: 1}
+  m_LocalPosition: {x: 3.99, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1833,6 +1833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballState: 0
   possesingWitch: {fileID: 0}
+  lastToucher: {fileID: 0}
 --- !u!1 &1043304459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,7 +2390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamParty: 1
   _possessingBall: 0
-  ball: {fileID: 983755789}
+  ball: {fileID: 0}
   ballPosition: {fileID: 2063064034}
   teamMates:
   - {fileID: 1059708772}
@@ -4949,7 +4950,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015435764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 0}
+  m_LocalPosition: {x: 7.12, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1439145512}

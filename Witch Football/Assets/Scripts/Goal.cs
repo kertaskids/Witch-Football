@@ -7,10 +7,16 @@ public class Goal : MonoBehaviour
     public bool move;
     public float moveSpeed;
     public Transform targetTransform;
+    //<Edit later> need TeamParty to check own goal 
 
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.GetComponent<Ball>() != null){
             Debug.Log("Goal! OLE!");
+            Ball ball = other.gameObject.GetComponent<Ball>();
+            if(ball.lastToucher != null) {
+                Match matchController = GameObject.FindObjectOfType<Match>();
+                matchController.GoalScored(ball.lastToucher);
+            }
             // <Edit later>
             // Check the latest toucher/ shooter
             // Give score to the team 
