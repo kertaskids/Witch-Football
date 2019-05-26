@@ -1,42 +1,126 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MysteryBox : MonoBehaviour
 {
-    // Taking the enum from magic skill: type and affect to
     public MagicSkill.AffectTo affectTo;
     public MagicSkill.Type type;
-    // Need stat Modifier class template here
+    public StatModifier statModifier;
+    public float duration;
+    public bool casted;
 
-    public MysteryBox(){
-        Init();
+    public void Init(MagicSkill.Type type, MagicSkill.AffectTo affectTo, StatModifier modifier){
+        this.affectTo    = affectTo;
+        this.type        = type;
+        this.statModifier = modifier;
+        // Assign duration
+        casted = false;
     }
-    // <Edit later>
-    //public MysteryBox(MagicSkill.Type type, MagicSkill.AffectTo affectTo, MagicSkill.StatModifier modifier){}
-    public void Init(){
-        affectTo    = MagicSkill.AffectTo.Self;
-        type        = MagicSkill.Type.HealthPoint;
-    }
-
 
     public void Start(){
-        //Init();
+        // <Edit later> assign the static variables here from the default class
     }
 
-    public void UseEffect(){
-        // <edit later based on the affectTo>
-        WitchController witch = GameObject.Find("WitchPlayer").GetComponent<WitchController>();
-        WitchController[] witches = new WitchController[] {witch};
-        
-        if(witches != null && witches.Length > 0){
-            if(type == MagicSkill.Type.HealthPoint) {
-                foreach (WitchController w in witches)
-                {
-                    w.character.healthPoint.current = 10f;
+    void CastEffect(WitchController targetWitch){
+        targetWitch.character.tackledDamageToGuard.current += statModifier.damage;
+        targetWitch.character.tackledDamageToHealth.current += statModifier.damage;
+        targetWitch.character.healthPoint.current += statModifier.healthPoint;
+        targetWitch.character.passPower.current += statModifier.power;
+        targetWitch.character.shootPower.current += statModifier.power;
+        targetWitch.character.moveSpeed.current += statModifier.moveSpeed;
+    }
+    // <Edit later> move UseMysteryBoxEffect(); & RevertMysteryBoxEffect(), need duration, and caster, and current item used (this is preffered)
+    public void UseEffect(WitchController casterWitch){
+        // Every affecto need to check the null first
+        // <Edit later>Assign all witches and team here is better
+
+        // Need to check if the player's box is null or not, and if its casting still or not
+        if(affectTo == MagicSkill.AffectTo.Self){
+            if(casterWitch.character.usedMysteryBox == null) {
+                if(!casterWitch.character.usedMysteryBox.casted){ // No need to check if its casted
+                    casterWitch.character.CastMysteryBox(this);
+                    Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + casterWitch.gameObject.name);
+                }
+            } else {
+                Debug.Log("Casting MysteryBox Failed.");
+            }
+        } else if (affectTo == MagicSkill.AffectTo.OneTeamMate){
+            // Randomly cast on one team mate, if not casting, the apply
+            if(casterWitch.teamMates.Length >= 1){
+                int r = Random.Range(0, casterWitch.teamMates.Length - 1);
+                GameObject teamMate = casterWitch.teamMates[r];
+                if(teamMate.GetComponent<WitchController>().character.usedMysteryBox == null){ // casted?
+                    teamMate.GetComponent<WitchController>().character.CastMysteryBox(this);
+                    Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + teamMate.name);
+                } else {
+                    Debug.Log("Casting MysteryBox Failed.");
+                }
+            } else {
+                Debug.Log("Casting MysteryBox Failed. Has no team mates.");
+            }
+        } else if (affectTo == MagicSkill.AffectTo.AllTeamMates){
+            
+        } else if (affectTo == MagicSkill.AffectTo.Team){
+            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+            foreach (GameObject w in allWitches)
+            {
+                if(w.GetComponent<WitchController>().teamParty == casterWitch.teamParty){
+                    if(w.GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
+                        w.GetComponent<WitchController>().character.CastMysteryBox(this);
+                        Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + w.name);
+                    } else {
+                        Debug.Log("Casting MysteryBox Failed.");
+                    }
                 }
             }
-            //else if type != HP
+        } else if (affectTo == MagicSkill.AffectTo.OneOpponent){
+            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+            List<GameObject> allOpponents = new List<GameObject>();
+            foreach (GameObject w in allWitches)
+            {
+                if(w.GetComponent<WitchController>().teamParty != casterWitch.teamParty){
+                    allOpponents.Add(w);
+                }    
+            }
+            if(allOpponents.Count >= 1){
+                int r = Random.Range(0, allOpponents.Count - 1);
+                if(allOpponents[r].GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
+                    allOpponents[r].GetComponent<WitchController>().character.CastMysteryBox(this);
+                    Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + allOpponents[r].name);
+                } else {
+                    Debug.Log("Casting MysteryBox Failed.");
+                }
+            } else {
+                Debug.Log("Casting MysteryBox Failed. Has no team mates.");
+            }
+        } else if (affectTo == MagicSkill.AffectTo.AllOpponents){
+            
+        } else if (affectTo == MagicSkill.AffectTo.AllOtherCharacters){
+            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+            List<GameObject> allOpponents = new List<GameObject>();
+            foreach (GameObject w in allWitches)
+            {
+                if(w.GetComponent<WitchController>().teamParty != casterWitch.teamParty){
+                    allOpponents.Add(w);
+                }    
+            }
+            if(allOpponents.Count >= 1){
+                foreach (GameObject w in allOpponents)
+                {
+                    if(w.GetComponent<WitchController>().teamParty != casterWitch.teamParty){
+                        if(w.GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
+                            w.GetComponent<WitchController>().character.CastMysteryBox(this);
+                            Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + w.name);
+                        } else {
+                            Debug.Log("Casting MysteryBox Failed.");
+                        }
+                    }
+                }
+            } else {
+                Debug.Log("Casting MysteryBox Failed. Has no team mates.");
+            }
         }
     }
 }

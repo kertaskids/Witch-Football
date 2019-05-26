@@ -184,27 +184,37 @@ public class Match : MonoBehaviour
     // <Edit later> Change in the UI
     void ShowPlayersStats(){
         Debug.Log(TeamA.teamParty.ToString() + " Statistic:");
+        Debug.Log(TeamA.witches.Length);
         foreach (WitchController w in TeamA.witches)
-        {
-            //Character Stat
-            Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
-                        ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
-                        ", PassPower" + w.character.passPower.current + 
-                        ", Speed: " + w.character.moveSpeed.current);
-            //MagicSkill
-            Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                        ", HeavySkill: " + w.character.heavyMagicSkill.name);
+        {   
+            // <Edit later> If the script is disabled, it is null reference somehow
+            // <EDIT LATER> Null reference at the character, because the character is not a monobehaviour script
+            Debug.Log(w.character == null);
+            
+            if(w.enabled){
+                //Character Stat
+                Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
+                            ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
+                            ", PassPower" + w.character.passPower.current + 
+                            ", Speed: " + w.character.moveSpeed.current);
+                //MagicSkill
+                Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                            ", HeavySkill: " + w.character.heavyMagicSkill.name);
+            }
         }
-
         Debug.Log(TeamB.teamParty.ToString() + " Statistic:");
         foreach (WitchController w in TeamB.witches)
         {
-            Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
-                        ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
-                        ", PassPower" + w.character.passPower.current + 
-                        ", Speed: " + w.character.moveSpeed.current);
-            Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                        ", HeavySkill: " + w.character.heavyMagicSkill.name);
+            if(w.enabled){
+                //Character Stat
+                Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
+                            ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
+                            ", PassPower" + w.character.passPower.current + 
+                            ", Speed: " + w.character.moveSpeed.current);
+                //MagicSkill
+                Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                            ", HeavySkill: " + w.character.heavyMagicSkill.name);
+            }
         }
     }
     void SetupMatch(){
@@ -232,6 +242,7 @@ public class Match : MonoBehaviour
         {
             w.enabled = enable;
         }
+        // <Edit later> Better using boolean in the update function to allow player control. 
     }
     void SpawnMysteryBox(){
         // Prepare the mysterybox objects

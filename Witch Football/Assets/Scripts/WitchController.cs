@@ -47,6 +47,7 @@ public class WitchController : MonoBehaviour
         ActionControl();
         MagicControl();
         GuardControl();
+        MysteryBoxControl();
     }
 
     void MoveControl(){
@@ -234,12 +235,12 @@ public class WitchController : MonoBehaviour
         if(character.lightMagicSkill.duration.current >=  character.lightMagicSkill.duration.max && character.lightMagicSkill.magicCasted){
             character.RevertMagic(character.lightMagicSkill);
             // <Edit> Pindahkan magic casted pada character
-            character.lightMagicSkill.magicCasted = false;
+            //character.lightMagicSkill.magicCasted = false;
         }
         if(character.heavyMagicSkill.duration.current >=  character.heavyMagicSkill.duration.max && character.heavyMagicSkill.magicCasted){
             character.RevertMagic(character.heavyMagicSkill);
             // <Edit> Pindahkan magic casted pada character
-            character.heavyMagicSkill.magicCasted = false;
+            //character.heavyMagicSkill.magicCasted = false;
         }
     }
 
@@ -339,6 +340,7 @@ public class WitchController : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
+        // Tackled
         if(other.gameObject.name == "damageCollider") {
             //Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
@@ -348,10 +350,13 @@ public class WitchController : MonoBehaviour
                 character.getTackledDelay.current = 0f;
             }
         }
-
+        // MysteryBox
         if(other.gameObject.name == "MysteryBox") { 
-            other.gameObject.GetComponent<MysteryBox>().UseEffect();
-            Debug.Log("UseEffect");
+            if(character.usedMysteryBox != null) {
+                other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
+                Debug.Log("Taking MysteryBox: " + other.gameObject.name);
+                Destroy(other.gameObject);
+            }
         }
 
         // <Edit later> Spiky & Explode and need to check the ball possession
@@ -361,6 +366,7 @@ public class WitchController : MonoBehaviour
         
         // <Edit later>
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
+        // Ball 
         if(other.gameObject == ball) {
             if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
                 // <Edit later> Must be
@@ -368,6 +374,19 @@ public class WitchController : MonoBehaviour
                 ball.GetComponent<Ball>().Possessed(this);
                 Debug.Log("Possessed by "+gameObject.name);
                 // <Edit later> Refresh ball velocity and rotation
+            }
+        }
+    }
+
+    void MysteryBoxControl(){
+        if(character.usedMysteryBox != null){
+            // If already casted
+            if(character.usedMysteryBox.duration > 0 && character.usedMysteryBox.casted) {
+                character.usedMysteryBox.duration -= Time.deltaTime;
+            } else if (character.usedMysteryBox.duration <= 0 && character.usedMysteryBox.casted) {
+                // <Edit later> Not needed to make it false before the nullifying
+                character.usedMysteryBox.casted = false;
+                character.usedMysteryBox = null;
             }
         }
     }

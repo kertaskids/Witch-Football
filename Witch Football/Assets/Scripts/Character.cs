@@ -61,6 +61,7 @@ public class Character
     // Self Damage Stats
     public CharacterStat tackledDamageToGuard; 
     public CharacterStat tackledDamageToHealth; 
+    public MysteryBox usedMysteryBox;
 
     public Character(){
         Initiate();
@@ -92,6 +93,7 @@ public class Character
         heavyMagicSkill = DefaultMagicSkill.DefaultSkill(MagicSkill.Category.Heavy, MagicSkill.Type.Speed, 
                                                         "Godly Fast", MagicSkill.TimeUse.Both, MagicSkill.AffectTo.Self); 
         //heavyMagicSkill.curDuration = 5f; 
+        usedMysteryBox = null;
     }
 
     public void CastMagic(MagicSkill magicSkill){
@@ -117,14 +119,40 @@ public class Character
         this.passPower.current      -= magicSkill.statModifier.power;
         this.shootPower.current     -= magicSkill.statModifier.power;
         this.moveSpeed.current      -= magicSkill.statModifier.moveSpeed;
-        lightMagicSkill.duration.current = lightMagicSkill.duration.max; 
-        heavyMagicSkill.duration.current = heavyMagicSkill.duration.max;
+        magicSkill.duration.current = magicSkill.duration.max;
+        magicSkill.magicCasted = false;
+        //lightMagicSkill.duration.current = lightMagicSkill.duration.max; 
+        //heavyMagicSkill.duration.current = heavyMagicSkill.duration.max;
         Debug.Log("Revert.");
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);
     }
 
-    //<Edit later> Delay != duration
     public float UpdateDurationMagic(MagicSkill magicSkill){
         return magicSkill.duration.current >= magicSkill.duration.max ? magicSkill.duration.max : (magicSkill.duration.current += 1f * Time.deltaTime);
     }    
+
+    public void CastMysteryBox(MysteryBox mysteryBox){
+        usedMysteryBox.casted   = true;
+        usedMysteryBox          = mysteryBox;
+        tackledDamageToGuard.current    += mysteryBox.statModifier.damage;
+        tackledDamageToHealth.current   += mysteryBox.statModifier.damage;
+        healthPoint.current     += mysteryBox.statModifier.healthPoint;
+        passPower.current       += mysteryBox.statModifier.power;
+        shootPower.current      += mysteryBox.statModifier.power;
+        moveSpeed.current       += mysteryBox.statModifier.moveSpeed;
+        Debug.Log("Using Mystery Box");
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
+    }
+    public void RevertMysteryBox(MysteryBox mysteryBox){
+        usedMysteryBox.casted   = false;
+        usedMysteryBox          = null;
+        tackledDamageToGuard.current    -= mysteryBox.statModifier.damage;
+        tackledDamageToHealth.current   -= mysteryBox.statModifier.damage;
+        healthPoint.current     -= mysteryBox.statModifier.healthPoint;
+        passPower.current       -= mysteryBox.statModifier.power;
+        shootPower.current      -= mysteryBox.statModifier.power;
+        moveSpeed.current       -= mysteryBox.statModifier.moveSpeed;
+        Debug.Log("Reverting Mystery Box");
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
+    }
 }

@@ -34,6 +34,6 @@ public class Ball : MonoBehaviour
     public void Released(BallState ballState){
         this.possesingWitch  = null;
         this.ballState       = ballState;
-        Debug.Log("Ball released from:"+lastToucher.gameObject.name);
+        Debug.Log("Ball released from: "+lastToucher.gameObject.name);
     }
 }

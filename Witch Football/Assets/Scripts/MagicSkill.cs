@@ -10,8 +10,8 @@ public class MagicSkill
         OneOpponent,
         AllOpponents, 
         AllOtherCharacters,
-        TilesSelected,
-        TIlesSurround 
+        //TilesSelected,
+        //TIlesSurround 
     }
     public AffectTo affectTo;
     public enum TimeUse{
