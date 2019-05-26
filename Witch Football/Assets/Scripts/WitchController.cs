@@ -299,12 +299,22 @@ public class WitchController : MonoBehaviour
         if(ball.GetComponent<Ball>().ballState != Ball.BallState.Possessed){
             character.guard.current    = character.guard.max;
             Debug.Log("Guard:"+character.guard.current);
+            ball.GetComponent<Ball>().Possessed(this);
         }
+        // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children
         ball.transform.position = ballPosition.transform.position;
-        ball.GetComponent<Ball>().Possessed(this);
-        // <Edit later> Refresh ball velocity and rotation
-        //ball.GetComponent<Ball>().possesingWitch    = this;
-        //ball.GetComponent<Ball>().ballState         = Ball.BallState.Possessed;  
+
+        // Change Team State
+        Match match = GameObject.FindObjectOfType<Match>();
+        if(match != null){
+            if(this.teamParty == match.TeamA.teamParty){
+                match.TeamA.teamState = Team.TeamState.Offense;
+                match.TeamB.teamState = Team.TeamState.Defense;
+            } else if (this.teamParty == match.TeamB.teamParty){
+                match.TeamA.teamState = Team.TeamState.Defense;
+                match.TeamB.teamState = Team.TeamState.Offense;
+            }
+        }
     }
 
     void BallReleasing(){
@@ -312,8 +322,16 @@ public class WitchController : MonoBehaviour
         // character.guard.current = 0f; Already defined in GuardControl();
         _possessingBall = false;
         ball.GetComponent<Ball>().Released(Ball.BallState.Free);
-        //ball.GetComponent<Ball>().possesingWitch    = null;
-        //ball.GetComponent<Ball>().ballState         = Ball.BallState.Free;
+
+        // <Edit later> Change the team state based on the type of the release, free/ pass/ shot
+         Match match = GameObject.FindObjectOfType<Match>();
+         if(match != null){
+            if(this.teamParty == match.TeamA.teamParty){
+                match.TeamA.teamState = Team.TeamState.Defense;
+            } else if (this.teamParty == match.TeamB.teamParty){
+                match.TeamB.teamState = Team.TeamState.Defense;
+            }
+        }
     }
 
     GameObject GetClosestTeamMate(){
@@ -373,7 +391,7 @@ public class WitchController : MonoBehaviour
                 _possessingBall = true;
                 ball.GetComponent<Ball>().Possessed(this);
                 Debug.Log("Possessed by "+gameObject.name);
-                // <Edit later> Refresh ball velocity and rotation
+                // <Edit later> Refresh ball velocity and rotation                 
             }
         }
     }

@@ -30,8 +30,8 @@ public class Match : MonoBehaviour
 
     void Start(){
         _initiated = false;
-        _isPaused   = false;
-        gamestate = GameState.PreMatch;
+        _isPaused  = false;
+        gamestate  = GameState.PreMatch;
     }
     void Update() {
         if(!_isPaused){
@@ -87,7 +87,7 @@ public class Match : MonoBehaviour
         _mysteryBoxDelay -= Time.deltaTime;
 
         _oneSecondTimer -= Time.deltaTime;
-        if(_oneSecondTimer<=0){
+        if(_oneSecondTimer <= 0){
             //Debug.Log("Timer: " + (int)(Timer/60) + "Minutes " + (int)(Timer%60) + "Seconds.");
             _oneSecondTimer = 1f;
         }

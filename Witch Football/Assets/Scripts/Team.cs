@@ -23,10 +23,8 @@ public class Team
         this.teamParty  = teamParty;
         Score = 0;
         WitchController[] allWitches = GameObject.FindObjectsOfType<WitchController>();
-        //Debug.Log("allwitches length " + allWitches.Length);
         List<WitchController> witchesTemp = new List<WitchController>();
         foreach (WitchController w in allWitches) {
-            //Debug.Log(w.name + ", " + w.teamParty.ToString());
             if(w.teamParty == this.teamParty) {
                 witchesTemp.Add(w);
                 Debug.Log("Add " + w.name + " on " + teamParty.ToString()); 

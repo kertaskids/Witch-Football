@@ -11,27 +11,18 @@ public class MysteryBox : MonoBehaviour
     public float duration;
     public bool casted;
 
-    public void Init(MagicSkill.Type type, MagicSkill.AffectTo affectTo, StatModifier modifier){
+    public void Init(MagicSkill.Type type, MagicSkill.AffectTo affectTo, StatModifier modifier, float duration){
         this.affectTo    = affectTo;
         this.type        = type;
         this.statModifier = modifier;
-        // Assign duration
-        casted = false;
+        this.duration   = duration;
+        this.casted     = false;
     }
 
     public void Start(){
         // <Edit later> assign the static variables here from the default class
     }
 
-    void CastEffect(WitchController targetWitch){
-        targetWitch.character.tackledDamageToGuard.current += statModifier.damage;
-        targetWitch.character.tackledDamageToHealth.current += statModifier.damage;
-        targetWitch.character.healthPoint.current += statModifier.healthPoint;
-        targetWitch.character.passPower.current += statModifier.power;
-        targetWitch.character.shootPower.current += statModifier.power;
-        targetWitch.character.moveSpeed.current += statModifier.moveSpeed;
-    }
-    // <Edit later> move UseMysteryBoxEffect(); & RevertMysteryBoxEffect(), need duration, and caster, and current item used (this is preffered)
     public void UseEffect(WitchController casterWitch){
         // Every affecto need to check the null first
         // <Edit later>Assign all witches and team here is better
@@ -125,16 +116,39 @@ public class MysteryBox : MonoBehaviour
     }
 }
 
-public static class MysteryBoxDefault{
-    private static MysteryBox _bomb;
-    private static MysteryBox _mannaPotion;
-    private static MysteryBox _hpPotion;
-    private static MysteryBox _speedPotion;
-
-    public static MysteryBox Bomb() {
-        _bomb = new MysteryBox();
-        _bomb.type = MagicSkill.Type.Damage;
-        return _bomb;
+// <Edit later> Delete this or Change Mysterybox class into non monobehaviour class
+/* public static class MysteryBoxDefault{
+    
+    private static MagicSkill.Type type; 
+    private static MagicSkill.AffectTo affectTo;
+    private static float duration;
+    static StatModifier statModifier;
+    
+    public static MysteryBoxDefault HealthPotion{
+        get {
+            type = MagicSkill.Type.HealthPoint;
+            affectTo = MagicSkill.AffectTo.Self;
+            duration = 5f;
+            statModifier = new StatModifier(0f, 5f, 0f, 0f);
+            return;
+        }
     }
 
-}
+    public static MysteryBox HealthPotion {
+        get {
+            MysteryBox mysteryBox = new MysteryBox();
+            StatModifier statModifier = new StatModifier(0f, 5f, 0f, 0f);
+            mysteryBox.Init(MagicSkill.Type.HealthPoint, MagicSkill.AffectTo.Self, statModifier, 5f);
+            return mysteryBox;
+        }
+    }
+    public static MysteryBox DamagePotion {
+        get {
+            MysteryBox mysteryBox = new MysteryBox();
+            StatModifier statModifier = new StatModifier(3f, 0f, 0f, 0f);
+            mysteryBox.Init(MagicSkill.Type.HealthPoint, MagicSkill.AffectTo.Self, statModifier, 5f);
+            return mysteryBox;
+        }
+    }
+
+}*/

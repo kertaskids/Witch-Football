@@ -30,6 +30,8 @@ public class Tile : MonoBehaviour
     public TriggerType triggerType;
     
     public GridPosition gridPos;
+    // <Edit later> make a CharacterStat variable rather than these. Need a custom inspector or 
+    // just simply pass this variable's value to the characterstat variable.
     public float triggerDistance;
     public float effectMaxDuration;
     public float effectMaxDelay;
@@ -44,13 +46,15 @@ public class Tile : MonoBehaviour
     private bool _collided;
     // <Edit later> GameObject[] _collidedWitches; make GetCollidedWitches(); GetNearbyWitches()
     private GameObject _collideWith;
-    private GameObject _collidedWitches;
-    private GameObject _nearbyWitches;
+    private List<GameObject> _collidedWitches;
+    private List<GameObject> _nearbyWitches;
 
 
     void Start() {
         //MaxDuration = 2f;
         //MaxDelay = 5f;
+        _collidedWitches = new List<GameObject>();
+        _nearbyWitches = new List<GameObject>();
     }
     public Tile(){
         tileType    = TileType.Normal;
@@ -344,11 +348,17 @@ public class Tile : MonoBehaviour
             _collided = true;
             _collideWith = other.gameObject;
         }
+
+        // <Edit later> Remove code above once this finish
+        if(other.gameObject.tag == "Witch"){
+            _collided = true;
+            _collidedWitches.Add(other.gameObject);
+        }
     }
     void OnCollisionExit(Collision other) {
         if(other.gameObject.tag == "Witch"){
             _collided = false;
-            _collideWith = null;
+            _collidedWitches.Remove(other.gameObject);
         }
     }
 }
