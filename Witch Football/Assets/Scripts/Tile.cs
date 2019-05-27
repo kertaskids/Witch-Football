@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Tile : MonoBehaviour
 {
     public enum TileType{
@@ -43,18 +43,15 @@ public class Tile : MonoBehaviour
     private float _typeDelay;
     private bool _effectPerformed; 
     private bool _typePerformed;
-    private bool _collided;
-    // <Edit later> GameObject[] _collidedWitches; make GetCollidedWitches(); GetNearbyWitches()
-    private GameObject _collideWith;
     private List<GameObject> _collidedWitches;
-    private List<GameObject> _nearbyWitches;
+    private List<GameObject> _onRangeWitches;
 
 
     void Start() {
         //MaxDuration = 2f;
         //MaxDelay = 5f;
         _collidedWitches = new List<GameObject>();
-        _nearbyWitches = new List<GameObject>();
+        _onRangeWitches = new List<GameObject>();
     }
     public Tile(){
         tileType    = TileType.Normal;
@@ -66,7 +63,6 @@ public class Tile : MonoBehaviour
         _effectDelay              = 0f;
         _effectPerformed    = false;
         _typePerformed      = false;
-        _collided           = false;
         effectMaxDelay            = 0f;
         effectMaxDuration         = 0f;
 
@@ -86,7 +82,6 @@ public class Tile : MonoBehaviour
         this._effectDelay             = 0f;
         this._effectPerformed   = false;
         this._typePerformed     = false;
-        this._collided          = false;
         this.effectMaxDelay           = _effectDelay;
         this.effectMaxDuration        = _effectDuration;
         this._typeDuration = typeDuration;
@@ -106,35 +101,46 @@ public class Tile : MonoBehaviour
         if(tileType == TileType.None){}
         else if(tileType == TileType.Normal){}
         else if(tileType == TileType.Exploding){
-            // <Edit later> Damage the witch with trigger distance or just with what collide with
-            // addforce to witch and ball
-            // release ball
-            
-            /* 
-            GameObject[] witches = GameObject.FindGameObjectsWithTag("Witch");
-            if(witches !=null && witches.Length > 0){
-                foreach (GameObject w in witches){
-                    // Check the distance
-                    w.GetComponent<WitchController>().ExplosionDamaged(3f, 5f);
-                }
-            }
-            */
-            if(_collided){
-                // <Edit later> move explosion damage to witch
-                _collideWith.GetComponent<WitchController>().ExplosionDamaged(3f, 5f); // Release the ball
-                _collideWith.transform.rotation = Quaternion.LookRotation(transform.position - _collideWith.transform.position);
-                _collideWith.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                Debug.Log("Collide with:"+_collideWith.name+" Direction:"+_collideWith.transform.rotation);
-                // Need to check the ball possession
-                //if(_collideWith.GetComponent<WitchController>()._possessingBall){}
-                // <Edit later> move to witch
-                GameObject ball = GameObject.Find("Ball");
-                if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free){
-                    ball.transform.rotation = Quaternion.LookRotation(transform.position - ball.transform.position);
-                    ball.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                }
-            }
+            if(_onRangeWitches.Count > 0 && triggerType == TriggerType.Distance) {
+               foreach (GameObject cw in _onRangeWitches){
+                    cw.GetComponent<WitchController>().ExplosionDamaged(3f, 3f); // Make a variable to hold this
+                    cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
+                    cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                    Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
+                    
+                    // Need to check the ball possession 
+                    // Uncomment this if we want to make the ball unpossessed by the player after explosion
+                    //if(_collideWith.GetComponent<WitchController>()._possessingBall){}
 
+                    // <Edit later> move to witch
+                    GameObject ball = GameObject.Find("Ball");
+                    if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free){
+                        ball.transform.rotation = Quaternion.LookRotation(transform.position - ball.transform.position);
+                        ball.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                    }
+               } 
+            }
+            if(_collidedWitches.Count > 0 && triggerType == TriggerType.Collide){
+                // <Edit later> move explosion damage to witch
+                // <Doing> Change the single object with the all collided objects
+                foreach (GameObject cw in _collidedWitches){
+                    cw.GetComponent<WitchController>().ExplosionDamaged(3f, 3f); // Make a variable to hold this
+                    cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
+                    cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                    Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
+                
+                    // Need to check the ball possession 
+                    // Uncomment this if we want to make the ball unpossessed by the player after explosion
+                    //if(_collideWith.GetComponent<WitchController>()._possessingBall){}
+
+                    // <Edit later> move to witch
+                    GameObject ball = GameObject.Find("Ball");
+                    if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free){
+                        ball.transform.rotation = Quaternion.LookRotation(transform.position - ball.transform.position);
+                        ball.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                    }
+                }
+            }
             Destroy(this.gameObject);
         }
         else if(tileType == TileType.MysteryBox){
@@ -155,51 +161,53 @@ public class Tile : MonoBehaviour
             _typeDelay -= Time.deltaTime;
         }
         else if(tileType == TileType.Shooting){
-            //<Edit later> Shoot all the witches in the range, randomly
-            // <Edit later> moveup the shooter if the duration is availablestart shooting to random witch but the closest witch get 50% higher chance of getting shot
+            // Shoot random nearby witch; ignoring the trigger type (distance and collide can work)
+            // <Edit later> Shooting to random witch but the closest witch get 50% higher chance of getting shot
             if(_typeDelay <= 0){
-                GameObject canon = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                canon.AddComponent<Rigidbody>();
-                canon.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-                //Vector3 targetDir = GameObject.Find("Red Witch").transform.position - transform.position;
-                // <edit later> can be changed to y = 0; below.
-                //canon.transform.rotation = Quaternion.LookRotation(new Vector3(targetDir.x, -targetDir.y / 2, targetDir.z));
-                // Check the direction and targets first
-                canon.transform.LookAt(GameObject.Find("Red Witch").transform);
-                canon.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-                //canon.GetComponent<BoxCollider>().enabled = false;
-                canon.GetComponent<Rigidbody>().AddForce(canon.transform.forward * 10f, ForceMode.Impulse);
-                _typeDelay = typeMaxDelay;
-                
+                if(_onRangeWitches.Count > 0) {
+                    // Prepare shooter
+                    GameObject canon = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    canon.AddComponent<Rigidbody>();
+                    canon.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+                    // <Edit later> moveup the shooter if the duration is available
+
+                    // Random nearby target
+                    int r = Random.Range(0, _onRangeWitches.Count - 1);
+                    canon.transform.LookAt(_onRangeWitches[r].transform);
+                    canon.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    // <Delete later> just to check the shooting
+                    //canon.GetComponent<BoxCollider>().enabled = false;
+                    canon.GetComponent<Rigidbody>().AddForce(canon.transform.forward * 10f, ForceMode.Impulse);
+                    _typeDelay = typeMaxDelay;
+                }
             }
             _typeDelay -= Time.deltaTime;
-            
-
         }
         else if(tileType == TileType.Spiky){
-            // <Edit later> put trap as global var?
+            // For now, only impact the CollidedWitches, Onrangedwitches is not yet implemented
             Transform trap = gameObject.transform.Find("Trap");
             if(_typePerformed){
                 // <Edit later> if trap != null
                 if(trap.GetComponent<MeshRenderer>().enabled){
                     trap.GetComponent<MeshRenderer>().enabled = false;  
-                    trap.GetComponent<BoxCollider>().enabled  = false;   
+                    //trap.GetComponent<BoxCollider>().enabled  = false;   
                 } else {
                     _typeDelay = _typeDelay + 1 * Time.deltaTime;
                     if(_typeDelay > typeMaxDelay){
                         _typePerformed = false;
                         _typeDelay = 0;
                         trap.GetComponent<MeshRenderer>().enabled = true;
-                        trap.GetComponent<BoxCollider>().enabled  = true;
+                        //trap.GetComponent<BoxCollider>().enabled  = true; // <Delete> this, only need the Renderer
 
-                        // <Edit later> move these to witch, collidewitch should be an array
-                        if(_collided) {
-                            // Need to check the ball possesion too 
-                            _collideWith.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
-                            _collideWith.transform.rotation = Quaternion.LookRotation(transform.position - _collideWith.transform.position);
-                            _collideWith.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                            Debug.Log("Collide with:"+_collideWith.name+" Direction:"+_collideWith.transform.rotation);
-                        }
+                        if(_collidedWitches.Count > 0){
+                            foreach (GameObject w in _collidedWitches){
+                                // Need to check the ball possesion too 
+                                w.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
+                                w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
+                                w.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                                Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                            }
+                        } 
                     }
                 }
             }
@@ -208,21 +216,25 @@ public class Tile : MonoBehaviour
                     _typeDuration = _typeDuration - 1 * Time.deltaTime;
                     if(_typeDuration < 0){
                         _typePerformed = true;
-                        _typeDuration    = typeMaxDuration;
+                        _typeDuration  = typeMaxDuration;
                         trap.GetComponent<MeshRenderer>().enabled = false;
-                        trap.GetComponent<BoxCollider>().enabled  = false;
+                        //trap.GetComponent<BoxCollider>().enabled  = false;
                     }
                 } else {
                     trap.GetComponent<MeshRenderer>().enabled = true;
-                    trap.GetComponent<BoxCollider>().enabled  = true;
-                    // <Edit later> move these to witch, collidewitch should be an array
-                        if(_collided) {
-                            // Need to check the ball possesion too 
-                            _collideWith.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
-                            _collideWith.transform.rotation = Quaternion.LookRotation(transform.position - _collideWith.transform.position);
-                            _collideWith.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                            Debug.Log("Collide with:"+_collideWith.name+" Direction:"+_collideWith.transform.rotation);
+                    //trap.GetComponent<BoxCollider>().enabled  = true; // <Delete> this, only need the Renderer
+                    
+                    // <Edit later> move these to witch?, collidewitch should be an array
+                    if(_collidedWitches.Count > 0) {
+                        // <Edit later> Need to check the ball possesion too 
+                        foreach (GameObject w in _collidedWitches)
+                        {
+                            w.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
+                            w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
+                            w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
+                            Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
                         }
+                    }
                 }
             }  
             // <Edit later> if not collided, animation off immediatelly. 
@@ -313,7 +325,9 @@ public class Tile : MonoBehaviour
         if(triggerType == TriggerType.None) {
             return true;
         } else if (triggerType == TriggerType.Distance) {
-            GameObject[] Witches = GameObject.FindGameObjectsWithTag("Witch"); 
+            return (_onRangeWitches.Count >= 1);
+            // <Edit later> Simply check if any _onrangewitches is not null
+            /* GameObject[] Witches = GameObject.FindGameObjectsWithTag("Witch"); 
             if((Witches != null) && (Witches.Length > 0)){
                 GameObject closestWitch = Witches[0];
                 float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z),
@@ -331,8 +345,10 @@ public class Tile : MonoBehaviour
                 return (distance <= triggerDistance);
             }
             return false;
-        } else if (_collided && triggerType == TriggerType.Collide) {
-            return true;
+            */
+        } else if (triggerType == TriggerType.Collide) {
+            // <Edt later> _oncollidedwitches != null 
+            return (_collidedWitches.Count >= 1);
         }
         return false;
     }
@@ -341,24 +357,52 @@ public class Tile : MonoBehaviour
             PerformEffect();
             PerformType();
         }
+        OnRangeTrigger();
     }
 
     void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Witch"){
+        /* if(other.gameObject.tag == "Witch"){
             _collided = true;
             _collideWith = other.gameObject;
-        }
-
+        }*/
         // <Edit later> Remove code above once this finish
+        
         if(other.gameObject.tag == "Witch"){
-            _collided = true;
-            _collidedWitches.Add(other.gameObject);
+            if(_collidedWitches == null || _collidedWitches.Count < 1) {
+                _collidedWitches.Clear();
+            }
+            if(!_collidedWitches.Contains(other.gameObject)){ // Need to refine this, because the collision object might be different. 
+                _collidedWitches.Add(other.gameObject);
+            }
         }
     }
     void OnCollisionExit(Collision other) {
         if(other.gameObject.tag == "Witch"){
-            _collided = false;
-            _collidedWitches.Remove(other.gameObject);
+            if(_collidedWitches.Contains(other.gameObject)){
+                _collidedWitches.Remove(other.gameObject);
+            }
+        }
+        if(_collidedWitches == null || _collidedWitches.Count < 1){
+            _collidedWitches.Clear();
+        }
+    }
+
+    void OnRangeTrigger() {
+        List<GameObject> allWitches = GameObject.FindGameObjectsWithTag("Witch").ToList();
+        foreach (GameObject w in allWitches)
+        {
+            float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), 
+                                                new Vector2(w.transform.position.x, w.transform.position.z));
+            
+            // Enter 
+            if(distance <= triggerDistance && !_onRangeWitches.Contains(w)){
+                _onRangeWitches.Add(w);
+            }
+
+            // Exit 
+            if(distance > triggerDistance && _onRangeWitches.Contains(w)){
+                _onRangeWitches.Remove(w);
+            }
         }
     }
 }
