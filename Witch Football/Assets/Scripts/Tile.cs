@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+
 public class Tile : MonoBehaviour
 {
     public enum TileType{
@@ -14,21 +15,18 @@ public class Tile : MonoBehaviour
         FallingRock
     }
     public TileType tileType;
-    
     public enum TileEffect{
         None, 
         RisingUP,
         Invisible 
     } 
     public TileEffect tileEffect;
-    
     public enum TriggerType{
         None,
         Collide,
         Distance
     }
     public TriggerType triggerType;
-    
     public GridPosition gridPos;
     // <Edit later> make a CharacterStat variable rather than these. Need a custom inspector or 
     // just simply pass this variable's value to the characterstat variable.
@@ -46,12 +44,11 @@ public class Tile : MonoBehaviour
     private List<GameObject> _collidedWitches;
     private List<GameObject> _onRangeWitches;
 
-
     void Start() {
         //MaxDuration = 2f;
         //MaxDelay = 5f;
-        _collidedWitches = new List<GameObject>();
-        _onRangeWitches = new List<GameObject>();
+        _collidedWitches    = new List<GameObject>();
+        _onRangeWitches     = new List<GameObject>();
     }
     public Tile(){
         tileType    = TileType.Normal;
@@ -59,17 +56,16 @@ public class Tile : MonoBehaviour
         triggerType = TriggerType.None;
         gridPos     = new GridPosition(0,0,0);
         triggerDistance     = 0f;
-        _effectDuration           = 0f;
-        _effectDelay              = 0f;
+        _effectDuration     = 0f;
+        _effectDelay        = 0f;
         _effectPerformed    = false;
         _typePerformed      = false;
-        effectMaxDelay            = 0f;
-        effectMaxDuration         = 0f;
-
-        _typeDuration = 0f;
-        _typeDelay = 0f;
-        typeMaxDelay = 0f;
-        typeMaxDuration = 0f;
+        effectMaxDelay      = 0f;
+        effectMaxDuration   = 0f;
+        _typeDuration       = 0f;
+        _typeDelay          = 0f;
+        typeMaxDelay        = 0f;
+        typeMaxDuration     = 0f;
     }
     public Tile(TileType tileType, TileEffect tileEffect, TriggerType triggerType, GridPosition gridPos, 
                 float triggerDistance, float maxDuration, float maxDelay, float typeDuration, float typeMaxDuration, float typeDelay, float typeMaxDelay){
@@ -78,16 +74,16 @@ public class Tile : MonoBehaviour
         this.triggerType = triggerType;
         this.gridPos     = new GridPosition(gridPos);
         this.triggerDistance    = triggerDistance;
-        this._effectDuration          = 0f;
-        this._effectDelay             = 0f;
+        this._effectDuration    = 0f;
+        this._effectDelay       = 0f;
         this._effectPerformed   = false;
         this._typePerformed     = false;
-        this.effectMaxDelay           = _effectDelay;
-        this.effectMaxDuration        = _effectDuration;
-        this._typeDuration = typeDuration;
-        this._typeDelay = typeDelay;
-        this.typeMaxDelay = typeMaxDelay;
-        this.typeMaxDuration = typeMaxDuration;
+        this.effectMaxDelay     = _effectDelay;
+        this.effectMaxDuration  = _effectDuration;
+        this._typeDuration      = typeDuration;
+        this._typeDelay         = typeDelay;
+        this.typeMaxDelay       = typeMaxDelay;
+        this.typeMaxDuration    = typeMaxDuration;
     }
     //<Edit later>
     public void Randomized(){
@@ -184,7 +180,7 @@ public class Tile : MonoBehaviour
             _typeDelay -= Time.deltaTime;
         }
         else if(tileType == TileType.Spiky){
-            // For now, only impact the CollidedWitches, Onrangedwitches is not yet implemented
+            // Only impact the CollidedWitches
             Transform trap = gameObject.transform.Find("Trap");
             if(_typePerformed){
                 // <Edit later> if trap != null
@@ -240,27 +236,25 @@ public class Tile : MonoBehaviour
             // <Edit later> if not collided, animation off immediatelly. 
         }
         else if (tileType == TileType.FallingRock) {
-            // <Edit later> Change this with mysterybox prefabs
             if(_typeDelay <= 0f) {
-                // Spawn mystery box prefabs based on random
-                int r = Random.Range(1, 5);
-                GameObject mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                if(r == 1) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                if(r == 2) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                if(r == 3) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                if(r == 4) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                mysteryBox.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-                mysteryBox.AddComponent<Rigidbody>();
-                mysteryBox.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                // Spawn rock randomly, <1> Small rock, <2> Big rock
+                int r = Random.Range(1, 3);
+                GameObject rock = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                if(r == 1) rock = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                if(r == 2) rock = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                rock.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
+                rock.AddComponent<Rigidbody>();
+                rock.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 _typeDelay = typeMaxDelay;
             }
             _typeDelay -= Time.deltaTime;
         }
     }
-    //<Edit later> delete the second if. Just use else instead. Change the static Y value. Add effect speed. 
+    
     public void PerformEffect(){
         if(tileEffect == TileEffect.None){}
         else if(tileEffect == TileEffect.RisingUP){
+            //<Edit later>  Change the static Y value. Add effect speed. 
             if(_effectPerformed){
                 if(transform.position.y >= 1){
                     transform.position = new Vector3 (transform.position.x, 1, transform.position.z);
@@ -326,28 +320,7 @@ public class Tile : MonoBehaviour
             return true;
         } else if (triggerType == TriggerType.Distance) {
             return (_onRangeWitches.Count >= 1);
-            // <Edit later> Simply check if any _onrangewitches is not null
-            /* GameObject[] Witches = GameObject.FindGameObjectsWithTag("Witch"); 
-            if((Witches != null) && (Witches.Length > 0)){
-                GameObject closestWitch = Witches[0];
-                float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z),
-                                                    new Vector2(closestWitch.transform.position.x, closestWitch.transform.position.z));
-                //Mathf.Abs(Vector3.Distance(transform.position, closestWitch.transform.position));
-
-                foreach (GameObject w in Witches) {
-                    //<edit later> use vector2.distance instead
-                    float distanceNext = (new Vector2(transform.position.x, transform.position.z) - 
-                                                    new Vector2(w.transform.position.x, w.transform.position.z)).magnitude;
-                    if(distance > distanceNext){
-                        distance = distanceNext;
-                    }
-                }
-                return (distance <= triggerDistance);
-            }
-            return false;
-            */
         } else if (triggerType == TriggerType.Collide) {
-            // <Edt later> _oncollidedwitches != null 
             return (_collidedWitches.Count >= 1);
         }
         return false;
@@ -360,13 +333,7 @@ public class Tile : MonoBehaviour
         OnRangeTrigger();
     }
 
-    void OnCollisionEnter(Collision other) {
-        /* if(other.gameObject.tag == "Witch"){
-            _collided = true;
-            _collideWith = other.gameObject;
-        }*/
-        // <Edit later> Remove code above once this finish
-        
+    void OnCollisionEnter(Collision other) {        
         if(other.gameObject.tag == "Witch"){
             if(_collidedWitches == null || _collidedWitches.Count < 1) {
                 _collidedWitches.Clear();
