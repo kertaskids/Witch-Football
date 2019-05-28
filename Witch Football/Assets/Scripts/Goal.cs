@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    public Team.TeamParty TeamParty;
     public bool move;
     public float moveSpeed;
     public Transform targetTransform;
-    //<Edit later> need TeamParty to check own goal 
 
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.GetComponent<Ball>() != null){

@@ -31,7 +31,7 @@ public class WitchController : MonoBehaviour
                 WitchController witchController = w.GetComponent<WitchController>();
                 if(witchController.teamParty == this.teamParty && witchController != this) {
                     witchesTemp.Add(witchController);
-                    Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate of " + gameObject.name); 
+                    //Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate of " + gameObject.name); 
                 }
             }
             teamMatesWitches = witchesTemp.ToArray();

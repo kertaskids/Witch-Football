@@ -27,7 +27,7 @@ public class Team
         foreach (WitchController w in allWitches) {
             if(w.teamParty == this.teamParty) {
                 witchesTemp.Add(w);
-                Debug.Log("Add " + w.name + " on " + teamParty.ToString()); 
+                //Debug.Log("Add " + w.name + " on " + teamParty.ToString()); 
             }
         }
         witches = witchesTemp.ToArray();

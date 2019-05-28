@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -17,6 +18,7 @@ public class Match : MonoBehaviour
     }
     public GameState gamestate;
     public float Timer;
+    public Text TimerText;
     public Team TeamA;
     public Team TeamB;
     public WitchController[] Scorers;
@@ -56,6 +58,7 @@ public class Match : MonoBehaviour
             Timer = 180f; 
             TeamA = new Team(Team.TeamParty.TeamA);
             TeamB = new Team(Team.TeamParty.TeamB);
+            SetCharacterControl(true); // Need to check with OnEnabled
             SetupMatch();
             ShowPlayersStats();
             _isPaused   = false;
@@ -75,7 +78,7 @@ public class Match : MonoBehaviour
         if(Timer <= 0){
             gamestate = GameState.TimeOver;
         }
-        SetCharacterControl(true);
+
         // <Edit later> 
         // Time is limited. Timer is slower when playing a cutscene for casting heavy magic. 
         // Tiles can be manipulated and mutated
@@ -89,6 +92,7 @@ public class Match : MonoBehaviour
         _oneSecondTimer -= Time.deltaTime;
         if(_oneSecondTimer <= 0){
             //Debug.Log("Timer: " + (int)(Timer/60) + "Minutes " + (int)(Timer%60) + "Seconds.");
+            TimerText.text = ((int)(Timer/60)).ToString() + ":" + ((int)(Timer % 60)).ToString();
             _oneSecondTimer = 1f;
         }
     }
@@ -183,14 +187,12 @@ public class Match : MonoBehaviour
 
     // <Edit later> Change in the UI
     void ShowPlayersStats(){
-        Debug.Log(TeamA.teamParty.ToString() + " Statistic:");
-        Debug.Log(TeamA.witches.Length);
+        Debug.Log(TeamA.teamParty.ToString() + "'s statistic:");
         foreach (WitchController w in TeamA.witches)
         {   
-            // <Edit later> If the script is disabled, it is null reference somehow
-            // <EDIT LATER> Null reference at the character, because the character is not a monobehaviour script
-            Debug.Log(w.character == null);
-            
+            Debug.Log("Character null on " + w.name + "? " + (w.character == null));
+            //Debug.Log("Name " + w.name);
+            //Debug.Log(w.gameObject.name + " on " + TeamA.teamParty.ToString());
             if(w.enabled){
                 //Character Stat
                 Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 

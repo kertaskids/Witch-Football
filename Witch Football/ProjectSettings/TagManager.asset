@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Tile
   - Goal
+  - Match
   layers:
   - Default
   - TransparentFX
