@@ -8,40 +8,38 @@ public class WitchController : MonoBehaviour
     public Team.TeamParty teamParty;
     public bool _possessingBall;
     public GameObject ball; 
-    public GameObject ballPosition; 
-    // <Edit later> delete this and change with GetTeamMates(); like in Team.cs
-    public GameObject[] teamMates;
-    public WitchController[] witchTeamMates;
+    public GameObject ballPosition; // <Edit later> get ball and its position by tag and transform at startup 
+    public WitchController[] teamMatesWitches;
     private Rigidbody _rigidbody;
 
     void Start(){
-        // <Edit later> Assign Team here
-        if(witchTeamMates == null || witchTeamMates.Length < 1) {
-            WitchController[] allWitches = GameObject.FindObjectsOfType<WitchController>();
-            //Debug.Log("allwitches length " + allWitches.Length);
-            List<WitchController> witchesTemp = new List<WitchController>();
-            foreach (WitchController w in allWitches) {
-                //Debug.Log(w.name + ", " + w.teamParty.ToString());
-                if(w.teamParty == this.teamParty && w != this) {
-                    witchesTemp.Add(w);
-                    Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate"); 
-                }
-            }
-            witchTeamMates = witchesTemp.ToArray();
-        }
+        Init();
+    }
 
+    void Init(){
         character       = new Character();
         _rigidbody      = GetComponent<Rigidbody>();
+        //teamParty
         _possessingBall = false;
-        ball            = GameObject.Find("Ball");
+        ball            = GameObject.FindGameObjectWithTag("Ball");
+        //ballposition
 
-        // Exception
-        character.guard.current     = 0; // <delete later>
-        character.lightMagicSkill.magicCasted = false;
-        character.heavyMagicSkill.magicCasted = false;
+        if(teamMatesWitches == null || teamMatesWitches.Length < 1) {
+            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+            List<WitchController> witchesTemp = new List<WitchController>();
+            foreach (GameObject w in allWitches) {
+                WitchController witchController = w.GetComponent<WitchController>();
+                if(witchController.teamParty == this.teamParty && witchController != this) {
+                    witchesTemp.Add(witchController);
+                    Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate of " + gameObject.name); 
+                }
+            }
+            teamMatesWitches = witchesTemp.ToArray();
+        }
         
-        //<Edit later> assign the ball and ball position here
+        //<Edit later> assign the ball and ball position here locally
     }
+
     void Update(){
         MoveControl();
         ActionControl();
@@ -86,10 +84,6 @@ public class WitchController : MonoBehaviour
         if(ball != null){
             if(_possessingBall){
                 BallPossessing();
-                // Need condition of When get the ball for the first time to avoid redundancy on guard = 3.  
-                // Check if the ball is free
-                // ball.transform.rotation = Quaternion.identity; 
-                // ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
         }
     }
@@ -295,6 +289,11 @@ public class WitchController : MonoBehaviour
     }
 
     void BallPossessing(){
+        // Need condition of When get the ball for the first time to avoid redundancy on guard = 3.  
+        // Check if the ball is free
+        // ball.transform.rotation = Quaternion.identity; 
+        // ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        
         // If in previous state ball is free, refresh the guard
         if(ball.GetComponent<Ball>().ballState != Ball.BallState.Possessed){
             character.guard.current    = character.guard.max;
@@ -336,21 +335,19 @@ public class WitchController : MonoBehaviour
 
     GameObject GetClosestTeamMate(){
         GameObject closestTeamMate = null;
-            
-        if(teamMates != null && teamMates.Length > 0){
-            //Debug.Log("Not Null");
-            closestTeamMate = teamMates[0];
-            float distance = Mathf.Abs(Vector3.Distance(transform.position, closestTeamMate.transform.position)); 
 
-            foreach (GameObject tm in teamMates){
-                float distanceNext = Mathf.Abs(Vector3.Distance(transform.position, tm.transform.position));
-                if(distance > distanceNext){
-                    distance = distanceNext;
-                    closestTeamMate = tm;
-                }
+        if(teamMatesWitches != null){
+            closestTeamMate = teamMatesWitches[0].gameObject;
+            float distance  = Vector3.Distance(transform.position, closestTeamMate.transform.position); 
+            // <Edit later> Check first if TeamMates > 1
+            foreach (WitchController tmw in teamMatesWitches){
+               float distanceNext = Vector3.Distance(transform.position, tmw.transform.position);
+               if(distance > distanceNext) {
+                   distance = distanceNext;
+                   closestTeamMate = tmw.gameObject;
+               } 
             }
         }
-
         if(closestTeamMate != null) {
             Debug.Log("Closest Team Mate: "+closestTeamMate.name);
         }
