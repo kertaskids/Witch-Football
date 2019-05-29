@@ -11,6 +11,8 @@ public class WitchController : MonoBehaviour
     public GameObject ballPosition; // <Edit later> get ball and its position by tag and transform at startup 
     public WitchController[] teamMatesWitches;
     private Rigidbody _rigidbody;
+    // <Edit later> The WitchState
+    public bool _isTackling = false;
 
     void Start(){
         Init();
@@ -102,6 +104,7 @@ public class WitchController : MonoBehaviour
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                     ball.transform.rotation = Quaternion.identity;
                     ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
                     //_possessingBall = false;
@@ -116,7 +119,7 @@ public class WitchController : MonoBehaviour
                     // Check closest teammate, and assign it.   
                     if(GetClosestTeamMate()!=null){
                         BallReleasing();
-                    
+                        // Needto check, if the closest team mates if not active, just pass forward. 
                         Transform teamMate = GetClosestTeamMate().transform;
                         // Need to check if it has teamMates. If not, can perform pass, or simply pass forward. 
                         //Transform teamMate = GameObject.FindGameObjectWithTag("TeamMate").transform;
@@ -127,6 +130,7 @@ public class WitchController : MonoBehaviour
                         // If the ball is a passing ball, move the ball smoothly towards teammate except it is interrupted. 
                         // Check the rotation and the velocity before adding a force of pass.
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         ball.transform.rotation = Quaternion.identity;
                         ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.passPower.current, ForceMode.Impulse);
                         
@@ -135,10 +139,11 @@ public class WitchController : MonoBehaviour
                         Debug.Log("Pass! Power: " + character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
                     } else {
                         Debug.Log("You have no friend :'(");
+                        BallReleasing();
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                         ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.passPower.current, ForceMode.Impulse);
                         
-                        _possessingBall        = false;
+                        //_possessingBall        = false;
                         character.passDelay.current    = 0f;
                     }
                 }
@@ -147,8 +152,9 @@ public class WitchController : MonoBehaviour
             // Tackle
             if(Input.GetKeyDown(KeyCode.Z) && (character.tackleDelay.current >= character.tackleDelay.max)){
                 character.tackleDelay.current = 0f;
+                _isTackling = true;
                 Debug.Log("Tackle");
-
+                // 0. set damageCollider active for 0.5 sec 
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
                 // 2. If it posses
                 //      if its guard 0 short stun
@@ -280,7 +286,7 @@ public class WitchController : MonoBehaviour
         Debug.Log("Guard: "+character.guard.current +" .HP: "+character.healthPoint.current);
     }
 
-    public void ExplosionDamaged(float guardReduced, float healthReduced){
+    public void Damaged(float guardReduced, float healthReduced){
         Tackled(guardReduced, healthReduced);
     }
 
@@ -356,13 +362,15 @@ public class WitchController : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         // Tackled
-        if(other.gameObject.name == "damageCollider") {
+        if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
+        //if(other.gameObject.name == "damageCollider") {
             //Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
             if(character.getTackledDelay.current >= character.getTackledDelay.max){
                 Debug.Log("Tackled");
                 Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
                 character.getTackledDelay.current = 0f;
+                // <Edit later> Attacker get a manna. 
             }
         }
         // MysteryBox
@@ -374,7 +382,7 @@ public class WitchController : MonoBehaviour
             }
         }
 
-        // <Edit later> Spiky & Explode and need to check the ball possession
+        // <Edit later> Spiky & Explode & Rock and need to check the ball possession
         //if(other.gameObject.tag == "Tile") {
             // spiky and exploding damage and addforce
         //}

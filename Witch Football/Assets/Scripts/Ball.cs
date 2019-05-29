@@ -30,6 +30,10 @@ public class Ball : MonoBehaviour
         possesingWitch  = witch;
         ballState       = BallState.Possessed;
         lastToucher     = witch;
+        // Delete this if we want the ball movse wildly
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        gameObject.transform.rotation = Quaternion.identity;
     }
     public void Released(BallState ballState){
         this.possesingWitch  = null;

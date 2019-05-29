@@ -1390,8 +1390,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524511174}
-  - component: {fileID: 524511171}
   - component: {fileID: 524511170}
+  - component: {fileID: 524511171}
   m_Layer: 0
   m_Name: Goal A
   m_TagString: Goal
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9213ae09f33c9bb44998048dfe2476ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TeamParty: 1
+  teamParty: 1
   move: 0
   moveSpeed: 1
   targetTransform: {fileID: 0}
@@ -1426,7 +1426,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 1, z: 1.75}
+  m_Size: {x: 0.5, y: 1, z: -1.75}
   m_Center: {x: 0.125, y: 0, z: 0}
 --- !u!4 &524511174
 Transform:
@@ -3744,6 +3744,7 @@ MonoBehaviour:
   ball: {fileID: 0}
   ballPosition: {fileID: 313629137}
   teamMatesWitches: []
+  _isTackling: 0
 --- !u!54 &1059708775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4141,6 +4142,7 @@ MonoBehaviour:
   ball: {fileID: 0}
   ballPosition: {fileID: 2063064034}
   teamMatesWitches: []
+  _isTackling: 0
 --- !u!54 &1178612570
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4344,7 +4346,7 @@ BoxCollider:
   m_GameObject: {fileID: 1258382284}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -6089,7 +6091,11 @@ MonoBehaviour:
   gamestate: 0
   Timer: 180
   TimerText: {fileID: 522994216}
+  TeamAScore: {fileID: 1587759867}
+  TeamBScore: {fileID: 526536604}
   Scorers: []
+  GoalA: {fileID: 524511169}
+  GoalB: {fileID: 1704938196}
 --- !u!4 &1669794577
 Transform:
   m_ObjectHideFlags: 0
@@ -6113,8 +6119,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1704938199}
-  - component: {fileID: 1704938198}
   - component: {fileID: 1704938197}
+  - component: {fileID: 1704938198}
   m_Layer: 0
   m_Name: Goal B
   m_TagString: Goal
@@ -6134,7 +6140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9213ae09f33c9bb44998048dfe2476ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TeamParty: 2
+  teamParty: 2
   move: 0
   moveSpeed: 1
   targetTransform: {fileID: 0}
@@ -6149,7 +6155,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 1, z: 1.75}
+  m_Size: {x: 0.5, y: 1, z: 1.75}
   m_Center: {x: 0.125, y: 0, z: 0}
 --- !u!4 &1704938199
 Transform:
@@ -6159,7 +6165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704938196}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: 10.02, y: 1, z: 2}
+  m_LocalPosition: {x: 10, y: 1, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1824464218}
@@ -6659,7 +6665,7 @@ BoxCollider:
   m_GameObject: {fileID: 1824464217}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7374,6 +7380,7 @@ MonoBehaviour:
   ball: {fileID: 0}
   ballPosition: {fileID: 502594175}
   teamMatesWitches: []
+  _isTackling: 0
 --- !u!54 &1964189549
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8041,6 +8048,7 @@ MonoBehaviour:
   ball: {fileID: 0}
   ballPosition: {fileID: 1838235051}
   teamMatesWitches: []
+  _isTackling: 0
 --- !u!1 &2037122457
 GameObject:
   m_ObjectHideFlags: 0
@@ -8293,7 +8301,7 @@ BoxCollider:
   m_GameObject: {fileID: 2063064034}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

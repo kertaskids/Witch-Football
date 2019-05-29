@@ -19,25 +19,32 @@ public class Match : MonoBehaviour
     public GameState gamestate;
     public float Timer;
     public Text TimerText;
+    public Text TeamAScore;
+    public Text TeamBScore;
+    public WitchController[] Scorers;
+    public GameObject GoalA;
+    public GameObject GoalB;
     public Team TeamA;
     public Team TeamB;
-    public WitchController[] Scorers;
-    private bool _isPaused;
     private float _stateDelay;
-    private float _oneSecondTimer = 1;
     private float _mysteryBoxDelay;
+    private float _mysteryBoxMaxDelay = 10f;
+    private float _oneSecondTimer = 1;
     private float _stateMaxDelay = 3f;
-    private float _mysteryBoxDelayMaxDelay = 5f;
+
+    private bool _isPaused;
     private bool _initiated;
+
+    private Vector3 _initialBallPos;
 
     void Start(){
         _initiated = false;
         _isPaused  = false;
         gamestate  = GameState.PreMatch;
+        _initialBallPos = new Vector3(4.5f, 2, 2);
     }
-    void Update() {
+    void Update(){
         if(!_isPaused){
-            // Do all the stuff here
             if(gamestate == GameState.PreMatch) PreMatch();
             if(gamestate == GameState.MatchPlaying) MatchPlaying();
             if(gamestate == GameState.Goal) Goal();
@@ -45,7 +52,7 @@ public class Match : MonoBehaviour
             if(gamestate == GameState.TimeOver) TimeOver();
             if(gamestate == GameState.PostMatch) PostMatch();
         } else {
-            // Uncomment if we want when the celebration the time is still running. 
+            // Uncomment if we want when the celebration, time still running. 
             //_stateDelay -= Time.deltaTime;
             if(gamestate == GameState.PostGoal) PostGoal();
         }
@@ -53,24 +60,24 @@ public class Match : MonoBehaviour
 
     public void PreMatch(){
         if(!_initiated){
-            // <Edit later> Add these features
-            // Set up for the match: ball position, player position, goal position, player's skill
+            // <Edit later> Initialize Timer, Team, Ball position, Player's skill
             Timer = 180f; 
             TeamA = new Team(Team.TeamParty.TeamA);
             TeamB = new Team(Team.TeamParty.TeamB);
-            SetCharacterControl(true); // Need to check with OnEnabled
+            // <Edit later> Need to check with OnEnabled
+            SetCharacterControl(true); 
             SetupMatch();
             ShowPlayersStats();
             _isPaused   = false;
             _stateDelay = _stateMaxDelay;
             _initiated  = true;
-            _mysteryBoxDelay = _mysteryBoxDelayMaxDelay;
+            _mysteryBoxDelay = _mysteryBoxMaxDelay;
         }
+
         if(_stateDelay <= 0) {
             gamestate   = GameState.MatchPlaying;
             _stateDelay = _stateMaxDelay;
         }
-        // Comment this to test the gamestate
         _stateDelay -= Time.deltaTime;
     }
     public void MatchPlaying(){
@@ -85,7 +92,7 @@ public class Match : MonoBehaviour
         if(_mysteryBoxDelay <= 0){
             SpawnMysteryBox();
             Debug.Log("Spawn Mystery Box");
-            _mysteryBoxDelay = _mysteryBoxDelayMaxDelay;
+            _mysteryBoxDelay = _mysteryBoxMaxDelay;
         }
         _mysteryBoxDelay -= Time.deltaTime;
 
@@ -108,13 +115,24 @@ public class Match : MonoBehaviour
 
         // Add Celebration 
     }
-    public void GoalScored(WitchController scorer){
-        // <Edit later> call this function in goal script. 
+    public void GoalScored(WitchController scorer, Goal goal){ 
         if(scorer.teamParty == Team.TeamParty.TeamA) {
-            TeamA.Score += 1;
-        } else {
-            TeamB.Score +=1 ;
+            if(goal.teamParty == Team.TeamParty.TeamB){
+                // Normal Goal
+                TeamA.Score += 1;
+            } else if (goal.teamParty == Team.TeamParty.TeamA){
+                // Own Goal
+                TeamB.Score += 1;
+            }
+        } else if (scorer.teamParty == Team.TeamParty.TeamB){
+            if(goal.teamParty == Team.TeamParty.TeamA){
+                TeamB.Score += 1;
+            } else if (goal.teamParty == Team.TeamParty.TeamB){
+                TeamA.Score += 1;
+            }
         }
+        TeamAScore.text= TeamA.Score.ToString();
+        TeamBScore.text= TeamB.Score.ToString();
         
         List<WitchController> witchesTemp = new List<WitchController>();
         foreach (WitchController w in Scorers){
@@ -222,8 +240,7 @@ public class Match : MonoBehaviour
     void SetupMatch(){
         // Ball Position
         GameObject ball = GameObject.Find("Ball");
-        // <Edit later> Starting ball position
-        ball.transform.position = new Vector3(4f, 2f, 1f);
+        ball.transform.position = _initialBallPos;
         ball.transform.rotation = Quaternion.identity; 
         // Witches Position
         for(int i = 0; i < TeamA.witches.Length; i++){

@@ -99,7 +99,7 @@ public class Tile : MonoBehaviour
         else if(tileType == TileType.Exploding){
             if(_onRangeWitches.Count > 0 && triggerType == TriggerType.Distance) {
                foreach (GameObject cw in _onRangeWitches){
-                    cw.GetComponent<WitchController>().ExplosionDamaged(3f, 3f); // Make a variable to hold this
+                    cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                     cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
                     cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
                     Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
@@ -120,7 +120,7 @@ public class Tile : MonoBehaviour
                 // <Edit later> move explosion damage to witch
                 // <Doing> Change the single object with the all collided objects
                 foreach (GameObject cw in _collidedWitches){
-                    cw.GetComponent<WitchController>().ExplosionDamaged(3f, 3f); // Make a variable to hold this
+                    cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                     cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
                     cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
                     Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
@@ -198,7 +198,7 @@ public class Tile : MonoBehaviour
                         if(_collidedWitches.Count > 0){
                             foreach (GameObject w in _collidedWitches){
                                 // Need to check the ball possesion too 
-                                w.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
+                                w.GetComponent<WitchController>().Damaged(1f, 1f); 
                                 w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
                                 w.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
                                 Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
@@ -225,7 +225,7 @@ public class Tile : MonoBehaviour
                         // <Edit later> Need to check the ball possesion too 
                         foreach (GameObject w in _collidedWitches)
                         {
-                            w.GetComponent<WitchController>().ExplosionDamaged(1f, 1f); 
+                            w.GetComponent<WitchController>().Damaged(1f, 1f); 
                             w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
                             w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
                             Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);

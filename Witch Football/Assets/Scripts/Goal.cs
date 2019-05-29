@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    public Team.TeamParty TeamParty;
+    public Team.TeamParty teamParty;
     public bool move;
     public float moveSpeed;
     public Transform targetTransform;
@@ -15,23 +15,11 @@ public class Goal : MonoBehaviour
             Ball ball = other.gameObject.GetComponent<Ball>();
             if(ball.lastToucher != null) {
                 Match matchController = GameObject.FindObjectOfType<Match>();
-                matchController.GoalScored(ball.lastToucher);
+                matchController.GoalScored(ball.lastToucher, this);
             }
-            // <Edit later>
-            // Check the latest toucher/ shooter
-            // Give score to the team 
-            // Change MatchState
         }
     }
-    void OnTriggerEnter(Collider other) {
-        if(other.GetComponent<Ball>() !=null){
-            Debug.Log("Goal! OLALA!");
-            // <Edit later>
-            // Check the latest toucher/ shooter
-            // Give score to the team 
-            // Change MatchState
-        }    
-    }
+
     void Move(Transform targetTransform, float speed){
         transform.position = Vector3.Lerp(transform.position, targetTransform.position, speed * Time.deltaTime);
     }
