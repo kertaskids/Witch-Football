@@ -208,7 +208,7 @@ public class Match : MonoBehaviour
         Debug.Log(TeamA.teamParty.ToString() + "'s statistic:");
         foreach (WitchController w in TeamA.witches)
         {   
-            Debug.Log("Character null on " + w.name + "? " + (w.character == null));
+            //Debug.Log("Character null on " + w.name + "? " + (w.character == null));
             //Debug.Log("Name " + w.name);
             //Debug.Log(w.gameObject.name + " on " + TeamA.teamParty.ToString());
             if(w.enabled){
@@ -218,8 +218,8 @@ public class Match : MonoBehaviour
                             ", PassPower" + w.character.passPower.current + 
                             ", Speed: " + w.character.moveSpeed.current);
                 //MagicSkill
-                Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                            ", HeavySkill: " + w.character.heavyMagicSkill.name);
+                //Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                            //", HeavySkill: " + w.character.heavyMagicSkill.name);
             }
         }
         Debug.Log(TeamB.teamParty.ToString() + " Statistic:");
@@ -232,8 +232,8 @@ public class Match : MonoBehaviour
                             ", PassPower" + w.character.passPower.current + 
                             ", Speed: " + w.character.moveSpeed.current);
                 //MagicSkill
-                Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                            ", HeavySkill: " + w.character.heavyMagicSkill.name);
+                //Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
+                            //", HeavySkill: " + w.character.heavyMagicSkill.name);
             }
         }
     }
@@ -246,10 +246,12 @@ public class Match : MonoBehaviour
         for(int i = 0; i < TeamA.witches.Length; i++){
             TeamA.witches[i].transform.position = new Vector3(ball.transform.position.x - (i+1), 
                                                                 ball.transform.position.y, 
-                                                                ball.transform.position.z);
+                                                                ball.transform.position.z);                                                        
+        }
+        for(int i = 0; i < TeamB.witches.Length; i++){
             TeamB.witches[i].transform.position = new Vector3(ball.transform.position.x + (i+1), 
                                                                 ball.transform.position.y, 
-                                                                ball.transform.position.z);                                                        
+                                                                ball.transform.position.z);
         }
     }
     void SetCharacterControl(bool enable){

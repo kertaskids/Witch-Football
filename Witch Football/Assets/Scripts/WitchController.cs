@@ -82,6 +82,25 @@ public class WitchController : MonoBehaviour
         float horizontal    = 0;
         float vertical      = 0;
         
+        /*----------------FOR TESTING ONLY--------------------*/
+        if(Input.GetKey(KeyCode.A)){
+            transform.localEulerAngles = new Vector3 (0, -90, 0);
+            horizontal = -1f;    
+        } 
+        if(Input.GetKey(KeyCode.D)){
+            transform.localEulerAngles = new Vector3 (0, 90, 0);
+            horizontal = 1f;    
+        } 
+        if(Input.GetKey(KeyCode.W)){
+            transform.localEulerAngles = new Vector3 (0, 0, 0);
+            vertical = 1f;    
+        }
+        if(Input.GetKey(KeyCode.S)){
+            transform.localEulerAngles = new Vector3 (0, 180, 0);
+            vertical = -1f;    
+        }
+        /*---------------TESTING ONLY --------------- */
+
         // Direction  
         if(Input.GetAxis(playerInput.HorizontalMove) < 0){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
@@ -113,7 +132,10 @@ public class WitchController : MonoBehaviour
         //Dribble
         if(ball != null){
             if(_possessingBall){
-                BallPossessing();
+                // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
+                // <Edit this> in BallFollowing() 
+                ball.transform.position = ballPosition.transform.position;
+
             }
         }
     }
@@ -281,12 +303,18 @@ public class WitchController : MonoBehaviour
         // Handle all the tackle and income damage here
         // if possessing && if(guard && health > 0)
     }
-
+    // <Edit Later> tackled(guard, hp, explosiontype, etc)
     void Tackled(float guardReduced, float healthReduced) {
+        //Debug.Log("GetTackledDelayRemain: "+character.getTackledDelay.current);
+        // Need to check first if its Still in tackled duration (invulnerable).
+        // Code below is currently also implemented on tile.cs
+        //if(character.getTackledDelay.current < character.getTackledDelay.max){ // or make this as condition too, in checking guard.available and healthpoint available.
+        //    return;
+        //}
         // Need to check first if its possessing
         if(_possessingBall){
             // Guard
-            if(character.guard.available){
+            if(character.guard.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
                 character.guard.current -= guardReduced;
             }
             if(character.guard.empty) {
@@ -299,7 +327,7 @@ public class WitchController : MonoBehaviour
         } 
         // Move these codes into above block to not let player loss the HP when in guard. 
         // Health Point
-        if(character.healthPoint.available){
+        if(character.healthPoint.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
             character.healthPoint.current -= healthReduced;
         }
         if(character.healthPoint.empty) {
@@ -313,6 +341,9 @@ public class WitchController : MonoBehaviour
             }
         }
         Debug.Log("Guard: "+character.guard.current +" .HP: "+character.healthPoint.current);
+        
+        character.getTackledDelay.current = 0f;
+        Debug.Log("GetTackledDelay: "+character.getTackledDelay.current);
     }
 
     public void Damaged(float guardReduced, float healthReduced){
@@ -330,12 +361,14 @@ public class WitchController : MonoBehaviour
         // ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         
         // If in previous state ball is free, refresh the guard
-        if(ball.GetComponent<Ball>().ballState != Ball.BallState.Possessed){
+        if(ball.GetComponent<Ball>().ballState != Ball.BallState.Possessed){// <Edit later> Check in oncollisionenter
+            _possessingBall = true;
             character.guard.current    = character.guard.max;
             Debug.Log("Guard:"+character.guard.current);
             ball.GetComponent<Ball>().Possessed(this);
         }
-        // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children
+        // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
+        // <Edit this> in BallFollowing() 
         ball.transform.position = ballPosition.transform.position;
 
         // Change Team State
@@ -422,8 +455,8 @@ public class WitchController : MonoBehaviour
         // Ball 
         if(other.gameObject == ball) {
             if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
-                // <Edit later> Must be
-                _possessingBall = true;
+                // <Edit later> Must be Ballpossessing()
+                BallPossessing();
                 ball.GetComponent<Ball>().Possessed(this);
                 Debug.Log("Possessed by "+gameObject.name);
                 // <Edit later> Refresh ball velocity and rotation                 

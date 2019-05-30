@@ -49,6 +49,9 @@ public class Tile : MonoBehaviour
         //MaxDelay = 5f;
         _collidedWitches    = new List<GameObject>();
         _onRangeWitches     = new List<GameObject>();
+        OnRangeTrigger();
+        //Transform trap = transform.Find("Trap");
+        //Debug.Log(gameObject.name+" has children: "+transform.childCount);
     }
     public Tile(){
         tileType    = TileType.Normal;
@@ -181,7 +184,8 @@ public class Tile : MonoBehaviour
         }
         else if(tileType == TileType.Spiky){
             // Only impact the CollidedWitches
-            Transform trap = gameObject.transform.Find("Trap");
+            Transform trap = transform.Find("Trap");
+            //Debug.Log(transform.Find("Trap") == null);
             if(_typePerformed){
                 // <Edit later> if trap != null
                 if(trap.GetComponent<MeshRenderer>().enabled){
@@ -197,17 +201,23 @@ public class Tile : MonoBehaviour
 
                         if(_collidedWitches.Count > 0){
                             foreach (GameObject w in _collidedWitches){
-                                // Need to check the ball possesion too 
-                                w.GetComponent<WitchController>().Damaged(1f, 1f); 
-                                w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
-                                w.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
-                                Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                                // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
+                            // Need to check the ball possesion too 
+                                WitchController wc = w.GetComponent<WitchController>();
+                                Debug.Log("GetTackledDelayRemain: "+wc.character.getTackledDelay.current);
+                                if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                                    w.GetComponent<WitchController>().Damaged(1f, 1f); 
+                                    w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
+                                    w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
+                                    Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                                }
                             }
                         } 
                     }
                 }
             }
             if(!_typePerformed){
+                //Debug.Log(gameObject.name+" has children: "+transform.childCount);
                 if(trap.GetComponent<MeshRenderer>().enabled){
                     _typeDuration = _typeDuration - 1 * Time.deltaTime;
                     if(_typeDuration < 0){
@@ -225,10 +235,17 @@ public class Tile : MonoBehaviour
                         // <Edit later> Need to check the ball possesion too 
                         foreach (GameObject w in _collidedWitches)
                         {
-                            w.GetComponent<WitchController>().Damaged(1f, 1f); 
-                            w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
-                            w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                            Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                            // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
+                            // Need to check the ball possesion too 
+                            WitchController wc = w.GetComponent<WitchController>();
+                            Debug.Log("GetTackledDelayRemain: "+wc.character.getTackledDelay.current);
+                            if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                                w.GetComponent<WitchController>().Damaged(1f, 1f); 
+                                w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
+                                w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
+                                Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                            }
+                            
                         }
                     }
                 }

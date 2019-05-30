@@ -80,7 +80,7 @@ public class Character
         tackleDelay     = new CharacterStat(1f, 1f); 
         manna           = new CharacterStat(100f, 100f);
         followDelay     = new CharacterStat(1f, 1f);
-        getTackledDelay         = new CharacterStat(1f, 1f);
+        getTackledDelay         = new CharacterStat(5f, 5f);
         tackledDamageToGuard    = new CharacterStat(1f, 1f);
         tackledDamageToHealth   = new CharacterStat(1f, 1f);
         
