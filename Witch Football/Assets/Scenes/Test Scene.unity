@@ -3745,6 +3745,7 @@ MonoBehaviour:
   ballPosition: {fileID: 313629137}
   teamMatesWitches: []
   _isTackling: 0
+  playerID: 2
 --- !u!54 &1059708775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4143,6 +4144,7 @@ MonoBehaviour:
   ballPosition: {fileID: 2063064034}
   teamMatesWitches: []
   _isTackling: 0
+  playerID: 1
 --- !u!54 &1178612570
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7381,6 +7383,7 @@ MonoBehaviour:
   ballPosition: {fileID: 502594175}
   teamMatesWitches: []
   _isTackling: 0
+  playerID: 3
 --- !u!54 &1964189549
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8049,6 +8052,7 @@ MonoBehaviour:
   ballPosition: {fileID: 1838235051}
   teamMatesWitches: []
   _isTackling: 0
+  playerID: 4
 --- !u!1 &2037122457
 GameObject:
   m_ObjectHideFlags: 0

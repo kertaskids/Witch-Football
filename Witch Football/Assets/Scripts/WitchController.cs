@@ -13,9 +13,13 @@ public class WitchController : MonoBehaviour
     private Rigidbody _rigidbody;
     // <Edit later> The WitchState
     public bool _isTackling = false;
+    // Edit later
+    public PlayerInput.ID playerID;
+    private PlayerInput playerInput;
 
     void Start(){
         Init();
+        playerInput = PlayerInput.GetPlayer((int)playerID);
     }
 
     void Init(){
@@ -48,6 +52,30 @@ public class WitchController : MonoBehaviour
         MagicControl();
         GuardControl();
         MysteryBoxControl();
+        if(Input.GetButtonDown(playerInput.StartOrPause)){
+            Debug.Log("Start1 is pressed");
+        }
+        if(Input.GetButton(playerInput.HorizontalMove)){
+            Debug.Log("HMOVE");
+        }
+        if(Input.GetButton(playerInput.VerticalMove)){
+            Debug.Log("VMOve");
+        }
+        if(Input.GetButtonDown(playerInput.PassOrFollow)){
+            Debug.Log("pass");
+        }
+        if(Input.GetButtonDown(playerInput.ShootOrTackle)){
+            Debug.Log("tackle");
+        }
+        if(Input.GetButtonDown(playerInput.LightMagic)){
+            Debug.Log("Light");
+        }
+        if(Input.GetButtonDown(playerInput.HeavyMagic)){
+            Debug.Log("Heavy");
+        }
+        if(Input.GetButtonDown(playerInput.Jump)){
+            Debug.Log("Jump");
+        }
     }
 
     void MoveControl(){
@@ -55,19 +83,19 @@ public class WitchController : MonoBehaviour
         float vertical      = 0;
         
         // Direction  
-        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)){
+        if(Input.GetAxis(playerInput.HorizontalMove) < 0){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
-        if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)){
+        if(Input.GetAxis(playerInput.HorizontalMove) > 0){
             transform.localEulerAngles = new Vector3 (0, 90, 0);
             horizontal = 1f;    
         } 
-        if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)){
+        if(Input.GetAxis(playerInput.VerticalMove) > 0){
             transform.localEulerAngles = new Vector3 (0, 0, 0);
             vertical = 1f;    
         }
-        if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
+        if(Input.GetAxis(playerInput.VerticalMove) < 0){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
         } 
@@ -154,12 +182,13 @@ public class WitchController : MonoBehaviour
                 character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackle");
-                // 0. set damageCollider active for 0.5 sec 
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
                 // 2. If it posses
                 //      if its guard 0 short stun
                 //      if its health 0 long stun 
                 // 3. Release the ball & add force OR if player collide with the ball, then possessing    
+            } else {
+                _isTackling = false;
             }
             // Follow 
             if(Input.GetKey(KeyCode.X) && (character.followDelay.current >= character.followDelay.max)){
@@ -371,6 +400,7 @@ public class WitchController : MonoBehaviour
                 Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
                 character.getTackledDelay.current = 0f;
                 // <Edit later> Attacker get a manna. 
+                // <Edit later> AddForce to the damaged witch
             }
         }
         // MysteryBox
