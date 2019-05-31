@@ -158,7 +158,16 @@ public class Match : MonoBehaviour
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
 
+            // Make the possessing player nullifies the ball
+            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+            foreach (GameObject w in allWitches)
+            {
+                if(w.GetComponent<WitchController>()._possessingBall) {
+                    w.GetComponent<WitchController>().BallReleasing();
+                }
+            }
             SetupMatch();
+            
         }
         _stateDelay -= Time.deltaTime;
         Debug.Log("StateDelay:"+_stateDelay);

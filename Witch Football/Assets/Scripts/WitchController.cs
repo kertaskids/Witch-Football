@@ -47,11 +47,18 @@ public class WitchController : MonoBehaviour
     }
 
     void Update(){
-        MoveControl();
-        ActionControl();
-        MagicControl();
-        GuardControl();
-        MysteryBoxControl();
+        // If not ispaused && not stunned
+        if(character.stunnedDuration.current <= 0) {
+            MoveControl();
+            ActionControl();
+            MagicControl();
+            GuardControl();
+            MysteryBoxControl();
+        } else {
+            character.stunnedDuration.current = UpdateDuration(character.stunnedDuration.current);
+        }
+
+        /* -------FOR TESTING ONLY ---------*/
         if(Input.GetButtonDown(playerInput.StartOrPause)){
             Debug.Log("Start1 is pressed");
         }
@@ -76,6 +83,7 @@ public class WitchController : MonoBehaviour
         if(Input.GetButtonDown(playerInput.Jump)){
             Debug.Log("Jump");
         }
+        /* -------FOR TESTING ONLY ---------*/
     }
 
     void MoveControl(){
@@ -143,6 +151,9 @@ public class WitchController : MonoBehaviour
     // <Edit later> Change to static
     float UpdateTimer(float curVal, float maxVal){
         return curVal >= maxVal ? maxVal : (curVal += 1f * Time.deltaTime); 
+    }
+    float UpdateDuration(float curVal){
+        return curVal <= 0 ? 0 : (curVal -= 1f * Time.deltaTime);
     }
 
     void ActionControl(){
@@ -320,6 +331,7 @@ public class WitchController : MonoBehaviour
             if(character.guard.empty) {
                 character.guard.current = 0;
                 // Do short stun
+                character.stunnedDuration.current = 5f;
                 Debug.Log("Short stunned! Guard:" + character.guard.current + ", HP:" +character.healthPoint.current);
                 BallReleasing();
             }
@@ -334,6 +346,7 @@ public class WitchController : MonoBehaviour
             character.healthPoint.current = 0;
             character.guard.current       = 0;
             // Do long stun
+            character.stunnedDuration.current = 10f;
             Debug.Log("Long stunned! Guard:" + character.guard.current + ", HP:" +character.healthPoint.current);
             if(_possessingBall){
                 BallReleasing();
@@ -384,11 +397,17 @@ public class WitchController : MonoBehaviour
         }
     }
 
-    void BallReleasing(){
+    public void BallReleasing(){
         // Need to check why the ball is releasing
         // character.guard.current = 0f; Already defined in GuardControl();
         _possessingBall = false;
-        ball.GetComponent<Ball>().Released(Ball.BallState.Free);
+        Ball b =  ball.GetComponent<Ball>();
+        b.Released(Ball.BallState.Free);
+        // Release the ball forward and little bit up
+        Vector3 targetDir = -ball.transform.forward;
+        targetDir.x += 0.25f;
+        ball.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
+        Debug.Log("ball direction:"+targetDir);
 
         // <Edit later> Change the team state based on the type of the release, free/ pass/ shot
          Match match = GameObject.FindObjectOfType<Match>();
@@ -404,7 +423,7 @@ public class WitchController : MonoBehaviour
     GameObject GetClosestTeamMate(){
         GameObject closestTeamMate = null;
 
-        if(teamMatesWitches != null){
+        if(teamMatesWitches != null && teamMatesWitches.Length > 0){
             closestTeamMate = teamMatesWitches[0].gameObject;
             float distance  = Vector3.Distance(transform.position, closestTeamMate.transform.position); 
             // <Edit later> Check first if TeamMates > 1
@@ -446,7 +465,8 @@ public class WitchController : MonoBehaviour
         }
 
         // <Edit later> Spiky & Explode & Rock and need to check the ball possession
-        //if(other.gameObject.tag == "Tile") {
+        //if(other.gameObject.tag == "Tile") { && if typeperformed
+            
             // spiky and exploding damage and addforce
         //}
         

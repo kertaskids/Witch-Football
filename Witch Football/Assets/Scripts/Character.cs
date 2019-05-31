@@ -62,6 +62,7 @@ public class Character
     public CharacterStat tackledDamageToGuard; 
     public CharacterStat tackledDamageToHealth; 
     public MysteryBox usedMysteryBox;
+    public CharacterStat stunnedDuration;
 
     public Character(){
         Initiate();
@@ -83,6 +84,7 @@ public class Character
         getTackledDelay         = new CharacterStat(5f, 5f);
         tackledDamageToGuard    = new CharacterStat(1f, 1f);
         tackledDamageToHealth   = new CharacterStat(1f, 1f);
+        stunnedDuration         = new CharacterStat(0f, 10f);
         
         // <Edit later> Delete Later
         lightMagicSkill = new MagicSkill();

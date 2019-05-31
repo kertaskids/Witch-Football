@@ -102,10 +102,16 @@ public class Tile : MonoBehaviour
         else if(tileType == TileType.Exploding){
             if(_onRangeWitches.Count > 0 && triggerType == TriggerType.Distance) {
                foreach (GameObject cw in _onRangeWitches){
-                    cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
-                    cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
-                    cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
-                    Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
+                    WitchController wc = cw.GetComponent<WitchController>();
+                    // <Edit later>
+                    if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                        // Do damage here. Move code below to here  
+                        cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
+                        cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
+                        cw.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, triggerDistance * 2f, 3f, ForceMode.Impulse);
+                        Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);  
+                    }
+                    
                     
                     // Need to check the ball possession 
                     // Uncomment this if we want to make the ball unpossessed by the player after explosion
@@ -115,7 +121,7 @@ public class Tile : MonoBehaviour
                     GameObject ball = GameObject.Find("Ball");
                     if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free){
                         ball.transform.rotation = Quaternion.LookRotation(transform.position - ball.transform.position);
-                        ball.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                        ball.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, triggerDistance * 2f, 3f, ForceMode.Impulse);
                     }
                } 
             }
@@ -123,10 +129,16 @@ public class Tile : MonoBehaviour
                 // <Edit later> move explosion damage to witch
                 // <Doing> Change the single object with the all collided objects
                 foreach (GameObject cw in _collidedWitches){
-                    cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
-                    cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
-                    cw.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
-                    Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);
+                    //<Edit later>
+                    WitchController wc = cw.GetComponent<WitchController>();
+                    if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                        // Do damage here. Move code below to here  
+                        cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
+                        cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
+                        cw.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, 2f, 3f, ForceMode.Impulse);
+                        Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);  
+                    }
+                    
                 
                     // Need to check the ball possession 
                     // Uncomment this if we want to make the ball unpossessed by the player after explosion
@@ -136,11 +148,13 @@ public class Tile : MonoBehaviour
                     GameObject ball = GameObject.Find("Ball");
                     if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free){
                         ball.transform.rotation = Quaternion.LookRotation(transform.position - ball.transform.position);
-                        ball.GetComponent<Rigidbody>().AddExplosionForce(5f, transform.position, 2f, 2f, ForceMode.Impulse);
+                        ball.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, 2f, 3f, ForceMode.Impulse);
                     }
                 }
             }
-            Destroy(this.gameObject);
+            //if(triggerType != TriggerType.None) {
+                Destroy(this.gameObject);
+            //}
         }
         else if(tileType == TileType.MysteryBox){
             // <Edit later> Change this with mysterybox prefabs
@@ -185,19 +199,16 @@ public class Tile : MonoBehaviour
         else if(tileType == TileType.Spiky){
             // Only impact the CollidedWitches
             Transform trap = transform.Find("Trap");
-            //Debug.Log(transform.Find("Trap") == null);
             if(_typePerformed){
                 // <Edit later> if trap != null
-                if(trap.GetComponent<MeshRenderer>().enabled){
-                    trap.GetComponent<MeshRenderer>().enabled = false;  
-                    //trap.GetComponent<BoxCollider>().enabled  = false;   
+                if(trap.gameObject.activeSelf){
+                    trap.gameObject.SetActive(false);   
                 } else {
                     _typeDelay = _typeDelay + 1 * Time.deltaTime;
                     if(_typeDelay > typeMaxDelay){
                         _typePerformed = false;
                         _typeDelay = 0;
-                        trap.GetComponent<MeshRenderer>().enabled = true;
-                        //trap.GetComponent<BoxCollider>().enabled  = true; // <Delete> this, only need the Renderer
+                        trap.gameObject.SetActive(false);
 
                         if(_collidedWitches.Count > 0){
                             foreach (GameObject w in _collidedWitches){
@@ -218,16 +229,15 @@ public class Tile : MonoBehaviour
             }
             if(!_typePerformed){
                 //Debug.Log(gameObject.name+" has children: "+transform.childCount);
-                if(trap.GetComponent<MeshRenderer>().enabled){
+                if(trap.gameObject.activeSelf){
                     _typeDuration = _typeDuration - 1 * Time.deltaTime;
                     if(_typeDuration < 0){
                         _typePerformed = true;
                         _typeDuration  = typeMaxDuration;
-                        trap.GetComponent<MeshRenderer>().enabled = false;
-                        //trap.GetComponent<BoxCollider>().enabled  = false;
+                        trap.gameObject.SetActive(false);
                     }
                 } else {
-                    trap.GetComponent<MeshRenderer>().enabled = true;
+                    trap.gameObject.SetActive(true);
                     //trap.GetComponent<BoxCollider>().enabled  = true; // <Delete> this, only need the Renderer
                     
                     // <Edit later> move these to witch?, collidewitch should be an array
