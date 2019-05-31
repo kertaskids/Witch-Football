@@ -76,7 +76,7 @@ public class Character
         shootDelay      = new CharacterStat(5f, 5f);
         passDelay       = new CharacterStat(3f, 3f);
         shootPower      = new CharacterStat(5f, 5f);
-        passPower       = new CharacterStat(5f, 5f);
+        passPower       = new CharacterStat(3f, 3f);
         guard           = new CharacterStat(0f, 3f); 
         tackleDelay     = new CharacterStat(1f, 1f); 
         manna           = new CharacterStat(100f, 100f);
@@ -134,8 +134,8 @@ public class Character
     }    
 
     public void CastMysteryBox(MysteryBox mysteryBox){
-        usedMysteryBox.casted   = true;
         usedMysteryBox          = mysteryBox;
+        usedMysteryBox.casted   = true;
         tackledDamageToGuard.current    += mysteryBox.statModifier.damage;
         tackledDamageToHealth.current   += mysteryBox.statModifier.damage;
         healthPoint.current     += mysteryBox.statModifier.healthPoint;
@@ -146,14 +146,14 @@ public class Character
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
     }
     public void RevertMysteryBox(MysteryBox mysteryBox){
-        usedMysteryBox.casted   = false;
-        usedMysteryBox          = null;
         tackledDamageToGuard.current    -= mysteryBox.statModifier.damage;
         tackledDamageToHealth.current   -= mysteryBox.statModifier.damage;
         healthPoint.current     -= mysteryBox.statModifier.healthPoint;
         passPower.current       -= mysteryBox.statModifier.power;
         shootPower.current      -= mysteryBox.statModifier.power;
         moveSpeed.current       -= mysteryBox.statModifier.moveSpeed;
+        usedMysteryBox.casted   = false;
+        usedMysteryBox          = null;
         Debug.Log("Reverting Mystery Box");
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
     }

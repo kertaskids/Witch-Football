@@ -91,7 +91,7 @@ public class WitchController : MonoBehaviour
         float vertical      = 0;
         
         /*----------------FOR TESTING ONLY--------------------*/
-        if(Input.GetKey(KeyCode.A)){
+        /* if(Input.GetKey(KeyCode.A)){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
@@ -106,32 +106,34 @@ public class WitchController : MonoBehaviour
         if(Input.GetKey(KeyCode.S)){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
-        }
+        }*/
         /*---------------TESTING ONLY --------------- */
 
         // Direction  
-        if(Input.GetAxis(playerInput.HorizontalMove) < 0){
+        if(Input.GetAxis(playerInput.HorizontalMove) < -0.2){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
-        if(Input.GetAxis(playerInput.HorizontalMove) > 0){
+        if(Input.GetAxis(playerInput.HorizontalMove) > 0.2){
             transform.localEulerAngles = new Vector3 (0, 90, 0);
             horizontal = 1f;    
         } 
-        if(Input.GetAxis(playerInput.VerticalMove) > 0){
+        if(Input.GetAxis(playerInput.VerticalMove) > 0.2){
             transform.localEulerAngles = new Vector3 (0, 0, 0);
             vertical = 1f;    
         }
-        if(Input.GetAxis(playerInput.VerticalMove) < 0){
+        if(Input.GetAxis(playerInput.VerticalMove) < -0.2){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
         } 
+        //Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
+        //Debug.Log("H, V: " + horizontal + ", " + vertical);
         _rigidbody.MovePosition(new Vector3(transform.position.x + character.moveSpeed.current * horizontal * Time.deltaTime,
                                             transform.position.y, 
                                             transform.position.z + character.moveSpeed.current * vertical * Time.deltaTime));
 
         // Jump
-        if(Input.GetKeyDown(KeyCode.Space) && (_rigidbody.velocity.y <= 0.1f) && (character.jumpDelay.full)){
+        if(Input.GetButtonDown(playerInput.Jump) && (_rigidbody.velocity.y <= 0.1f) && (character.jumpDelay.full)){
             _rigidbody.AddForce(character.jumpForce.current * Vector3.up, ForceMode.Impulse);
             character.jumpDelay.current = 0f;
         }
@@ -160,7 +162,7 @@ public class WitchController : MonoBehaviour
         // Offense & Defense
         if(_possessingBall){
             // Shoot
-            if(Input.GetKeyDown(KeyCode.Z) && (character.shootDelay.current >= character.shootDelay.max)){
+            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (character.shootDelay.current >= character.shootDelay.max)){
                 if(_possessingBall && ball != null){
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
@@ -174,7 +176,7 @@ public class WitchController : MonoBehaviour
                 }
             }
             // Pass
-            if(Input.GetKeyDown(KeyCode.X) && (character.passDelay.current >= character.passDelay.max)){
+            if(Input.GetButtonDown(playerInput.PassOrFollow) && (character.passDelay.current >= character.passDelay.max)){
                 if(_possessingBall && ball != null){
                     // Find the closest teammate then pass the ball toward it.
                     // Check closest teammate, and assign it.   
@@ -211,7 +213,7 @@ public class WitchController : MonoBehaviour
             }
         }else{
             // Tackle
-            if(Input.GetKeyDown(KeyCode.Z) && (character.tackleDelay.current >= character.tackleDelay.max)){
+            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (character.tackleDelay.current >= character.tackleDelay.max)){
                 character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackle");
@@ -224,7 +226,7 @@ public class WitchController : MonoBehaviour
                 _isTackling = false;
             }
             // Follow 
-            if(Input.GetKey(KeyCode.X) && (character.followDelay.current >= character.followDelay.max)){
+            if(Input.GetButtonDown(playerInput.PassOrFollow) && (character.followDelay.current >= character.followDelay.max)){
                 Debug.Log("Follow");
                 // Check if there is no team possesing the ball  
                 Vector3 ballDir     = ball.transform.position - transform.position;
@@ -235,7 +237,7 @@ public class WitchController : MonoBehaviour
                 _rigidbody.MovePosition(transform.position + tempMovePos);
             }
             // Un-Follow
-            if(Input.GetKeyUp(KeyCode.X)){
+            if(Input.GetButtonUp(playerInput.PassOrFollow)){
                 character.followDelay.current = 0f;
             }
         }
@@ -247,7 +249,7 @@ public class WitchController : MonoBehaviour
 
     void MagicControl(){
          // Light Magic 
-        if(Input.GetKeyDown(KeyCode.C)){    
+        if(Input.GetButtonDown(playerInput.LightMagic)){    
             // <Edit later> Check the TimeUse first
             if(character.lightMagicSkill.delay.current >= character.lightMagicSkill.delay.max && !character.lightMagicSkill.magicCasted){
                 if(character.manna.current >= character.lightMagicSkill.mannaNeed){
@@ -262,7 +264,7 @@ public class WitchController : MonoBehaviour
             }
         }
         // Heavy Magic
-        if(Input.GetKeyDown(KeyCode.V)){
+        if(Input.GetButtonDown(playerInput.LightMagic)){
             /*if(witchCharacter.manna >= witchCharacter.heavyMagicMannaNeed){
                 witchCharacter.manna -= witchCharacter.heavyMagicMannaNeed;
                 Debug.Log("Heavy Magic. Damage: " + witchCharacter.heavyMagicDamage + ". Manna: " + witchCharacter.manna);
@@ -456,8 +458,8 @@ public class WitchController : MonoBehaviour
             }
         }
         // MysteryBox
-        if(other.gameObject.name == "MysteryBox") { 
-            if(character.usedMysteryBox != null) {
+        if(other.gameObject.tag == "MysteryBox") { 
+            if(character.usedMysteryBox == null) {
                 other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
                 Destroy(other.gameObject);
