@@ -37,6 +37,8 @@ public class Tile : MonoBehaviour
     private float _effectDelay;
     public float typeMaxDuration;
     public float typeMaxDelay;
+    public GameObject[] mysteryBoxes;
+    public GameObject[] rocks;
     private float _typeDuration;
     private float _typeDelay;
     private bool _effectPerformed; 
@@ -157,19 +159,17 @@ public class Tile : MonoBehaviour
             //}
         }
         else if(tileType == TileType.MysteryBox){
-            // <Edit later> Change this with mysterybox prefabs
             if(_typeDelay <= 0f) {
                 // Spawn mystery box prefabs based on random
-                int r = Random.Range(1, 5);
-                GameObject mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                if(r == 1) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                if(r == 2) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                if(r == 3) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                if(r == 4) mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                mysteryBox.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-                mysteryBox.AddComponent<Rigidbody>();
-                mysteryBox.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-                _typeDelay = typeMaxDelay;
+                if(mysteryBoxes != null || mysteryBoxes.Length >= 0){
+                    int r = Random.Range(0, mysteryBoxes.Length-1);
+                    GameObject mysteryBox = GameObject.Instantiate(mysteryBoxes[r]);
+                    Transform rootTiles = GameObject.Find("Tiles").transform;
+                    mysteryBox.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
+                    
+                    _typeDelay = typeMaxDelay;
+                    Debug.Log("Spawn " + mysteryBox.name);
+                }  
             }
             _typeDelay -= Time.deltaTime;
         }
@@ -213,7 +213,7 @@ public class Tile : MonoBehaviour
                         if(_collidedWitches.Count > 0){
                             foreach (GameObject w in _collidedWitches){
                                 // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
-                            // Need to check the ball possesion too 
+                                // Need to check the ball possesion too 
                                 WitchController wc = w.GetComponent<WitchController>();
                                 Debug.Log("GetTackledDelayRemain: "+wc.character.getTackledDelay.current);
                                 if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
@@ -265,13 +265,9 @@ public class Tile : MonoBehaviour
         else if (tileType == TileType.FallingRock) {
             if(_typeDelay <= 0f) {
                 // Spawn rock randomly, <1> Small rock, <2> Big rock
-                int r = Random.Range(1, 3);
-                GameObject rock = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                if(r == 1) rock = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                if(r == 2) rock = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                int r = Random.Range(0, 1);
+                GameObject rock = GameObject.Instantiate(rocks[r]);
                 rock.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-                rock.AddComponent<Rigidbody>();
-                rock.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 _typeDelay = typeMaxDelay;
             }
             _typeDelay -= Time.deltaTime;

@@ -40,8 +40,9 @@ public class MysteryBox : MonoBehaviour
 
     public void UseEffect(WitchController casterWitch){
         gameObject.GetComponent<BoxCollider>().enabled = false;
+        Destroy(gameObject.GetComponent<Rigidbody>());
         transform.SetParent(casterWitch.transform, false);
-        //transform.rotation = Quaternion.identity;
+        transform.localRotation = Quaternion.identity;
         transform.localPosition = new Vector3(0f, 0.5f, 0f);
 
         // Every affecto need to check the null first

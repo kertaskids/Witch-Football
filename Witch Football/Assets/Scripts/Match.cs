@@ -24,13 +24,14 @@ public class Match : MonoBehaviour
     public WitchController[] Scorers;
     public GameObject GoalA;
     public GameObject GoalB;
+    public GameObject[] mysteryBoxes;
     public Team TeamA;
     public Team TeamB;
     private float _stateDelay;
+    public float stateMaxDelay = 3f;
     private float _mysteryBoxDelay;
-    private float _mysteryBoxMaxDelay = 10f;
+    public float mysteryBoxMaxDelay = 30f;
     private float _oneSecondTimer = 1;
-    private float _stateMaxDelay = 3f;
 
     private bool _isPaused;
     private bool _initiated;
@@ -42,6 +43,8 @@ public class Match : MonoBehaviour
         _isPaused  = false;
         gamestate  = GameState.PreMatch;
         _initialBallPos = new Vector3(4.5f, 2, 2);
+        _mysteryBoxDelay = mysteryBoxMaxDelay;
+
     }
     void Update(){
         if(!_isPaused){
@@ -69,14 +72,14 @@ public class Match : MonoBehaviour
             SetupMatch();
             ShowPlayersStats();
             _isPaused   = false;
-            _stateDelay = _stateMaxDelay;
+            _stateDelay = stateMaxDelay;
             _initiated  = true;
-            _mysteryBoxDelay = _mysteryBoxMaxDelay;
+            _mysteryBoxDelay = mysteryBoxMaxDelay;
         }
 
         if(_stateDelay <= 0) {
             gamestate   = GameState.MatchPlaying;
-            _stateDelay = _stateMaxDelay;
+            _stateDelay = stateMaxDelay;
         }
         _stateDelay -= Time.deltaTime;
     }
@@ -89,10 +92,10 @@ public class Match : MonoBehaviour
         // <Edit later> 
         // Time is limited. Timer is slower when playing a cutscene for casting heavy magic. 
         // Tiles can be manipulated and mutated
+
         if(_mysteryBoxDelay <= 0){
             SpawnMysteryBox();
-            Debug.Log("Spawn Mystery Box");
-            _mysteryBoxDelay = _mysteryBoxMaxDelay;
+            _mysteryBoxDelay = mysteryBoxMaxDelay;
         }
         _mysteryBoxDelay -= Time.deltaTime;
 
@@ -109,7 +112,7 @@ public class Match : MonoBehaviour
         if(_stateDelay <= 0) {
             gamestate = GameState.PostGoal;
             _isPaused = true;
-            _stateDelay = _stateMaxDelay;
+            _stateDelay = stateMaxDelay;
         }
         _stateDelay -= Time.deltaTime;
 
@@ -153,7 +156,7 @@ public class Match : MonoBehaviour
         if(_stateDelay <= 0) {
             gamestate = GameState.MatchPlaying;
             _isPaused = false;
-            _stateDelay = _stateMaxDelay;
+            _stateDelay = stateMaxDelay;
             if(TeamA != null && TeamB!=null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
@@ -176,7 +179,7 @@ public class Match : MonoBehaviour
         // The time of match is over
         if(_stateDelay <= 0) {
             gamestate = GameState.PostMatch;
-            _stateDelay = _stateMaxDelay;
+            _stateDelay = stateMaxDelay;
             if(TeamA != null && TeamB!=null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
@@ -251,6 +254,8 @@ public class Match : MonoBehaviour
         GameObject ball = GameObject.Find("Ball");
         ball.transform.position = _initialBallPos;
         ball.transform.rotation = Quaternion.identity; 
+        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         // Witches Position
         for(int i = 0; i < TeamA.witches.Length; i++){
             TeamA.witches[i].transform.position = new Vector3(ball.transform.position.x - (i+1), 
@@ -275,20 +280,16 @@ public class Match : MonoBehaviour
         // <Edit later> Better using boolean in the update function to allow player control. 
     }
     void SpawnMysteryBox(){
-        // Prepare the mysterybox objects
-        // select mysterybox randomly
-        // prepare the tiles then select one randomly
-        // instantiate based on tile's position
+        if(mysteryBoxes != null || mysteryBoxes.Length >= 0){
+            int r = Random.Range(0, mysteryBoxes.Length-1);
+            GameObject mysteryBox = GameObject.Instantiate(mysteryBoxes[r]);
+            Transform rootTiles = GameObject.Find("Tiles").transform;
+            
+            int rt = Random.Range(0, rootTiles.transform.childCount-1);
+            Transform selectedTile = rootTiles.transform.GetChild(rt);
+            mysteryBox.transform.position = new Vector3(selectedTile.position.x, selectedTile.position.y+4, selectedTile.position.z);
 
-        GameObject mysteryBox = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        mysteryBox.AddComponent<Rigidbody>();
-        //<Edit later> Add the physic material
-        mysteryBox.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-        
-        Transform rootTiles = GameObject.Find("Tiles").transform;
-        int r = Random.Range(0, rootTiles.transform.childCount-1);
-        Transform selectedTile = rootTiles.transform.GetChild(r);
-        mysteryBox.transform.position = new Vector3(selectedTile.position.x, selectedTile.position.y+4, selectedTile.position.z);
+            Debug.Log("Spawn " + mysteryBox.name);
+        }   
     }
-
 }

@@ -59,7 +59,7 @@ public class Character
     public MagicSkill heavyMagicSkill;
 
     // Self Damage Stats
-    public CharacterStat tackledDamageToGuard; 
+    public CharacterStat tackledDamageToGuard; //<Delete later> Should not be passive. or just move it from the tackler.
     public CharacterStat tackledDamageToHealth; 
     public MysteryBox usedMysteryBox;
     public CharacterStat stunnedDuration;

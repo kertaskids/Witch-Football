@@ -341,9 +341,11 @@ public class WitchController : MonoBehaviour
         } 
         // Move these codes into above block to not let player loss the HP when in guard. 
         // Health Point
+        Debug.Log(character.healthPoint.available + " " + (character.getTackledDelay.current >= character.getTackledDelay.max));
         if(character.healthPoint.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
             character.healthPoint.current -= healthReduced;
         }
+        //Debug.Log("GetTackledDelay: "+character.getTackledDelay.current);
         if(character.healthPoint.empty) {
             character.healthPoint.current = 0;
             character.guard.current       = 0;
@@ -481,9 +483,25 @@ public class WitchController : MonoBehaviour
             if(character.usedMysteryBox == null) {
                 other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
-                
-                // <Bug> When destoryed, the usedMysteryBox is also null, and we cant revert. 
-                //Destroy(other.gameObject);
+            }
+        }
+
+        if(other.gameObject.tag == "Rock"){
+            if(character.getTackledDelay.current >= character.getTackledDelay.max){
+                // <Edit later> Need to change the force when the ball is released
+                /* if(_possessingBall){
+                    BallReleasing();
+                    Debug.Break();
+                }*/
+
+                Rock rock = other.gameObject.GetComponent<Rock>();
+                Debug.Log(gameObject.name + " damaged by" + rock.gameObject.name);
+                Damaged(rock.damageGuard, rock.damageHealth);
+                transform.rotation = Quaternion.LookRotation(transform.position - rock.transform.position);
+                gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
+                Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
+
+                character.getTackledDelay.current = 0f;
             }
         }
 
@@ -492,6 +510,7 @@ public class WitchController : MonoBehaviour
             
             // spiky and exploding damage and addforce
         //}
+        
         
         // <Edit later>
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 

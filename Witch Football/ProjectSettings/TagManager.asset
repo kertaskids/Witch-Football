@@ -11,6 +11,7 @@ TagManager:
   - Goal
   - Match
   - MysteryBox
+  - Rock
   layers:
   - Default
   - TransparentFX

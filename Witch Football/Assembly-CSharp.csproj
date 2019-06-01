@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\MysteryBox.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\PotionPreset.cs" />
+     <Compile Include="Assets\Scripts\Rock.cs" />
      <Compile Include="Assets\Scripts\StatModifier.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
