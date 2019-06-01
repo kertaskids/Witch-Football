@@ -152,9 +152,13 @@ public class Character
         passPower.current       -= mysteryBox.statModifier.power;
         shootPower.current      -= mysteryBox.statModifier.power;
         moveSpeed.current       -= mysteryBox.statModifier.moveSpeed;
-        usedMysteryBox.casted   = false;
-        usedMysteryBox          = null;
+        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);
         Debug.Log("Reverting Mystery Box");
-        Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current); 
+
+        usedMysteryBox.casted   = false;
+        GameObject mysteryBoxToDelete = usedMysteryBox.gameObject;
+        usedMysteryBox          = null;
+        Debug.Log((usedMysteryBox == null) + " " + (mysteryBoxToDelete == null));
+        GameObject.Destroy(mysteryBoxToDelete);
     }
 }

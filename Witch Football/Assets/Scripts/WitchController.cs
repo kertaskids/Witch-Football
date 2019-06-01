@@ -72,7 +72,7 @@ public class WitchController : MonoBehaviour
             Debug.Log("pass");
         }
         if(Input.GetButtonDown(playerInput.ShootOrTackle)){
-            Debug.Log("tackle");
+            //Debug.Log("tackle");
         }
         if(Input.GetButtonDown(playerInput.LightMagic)){
             Debug.Log("Light");
@@ -81,7 +81,8 @@ public class WitchController : MonoBehaviour
             Debug.Log("Heavy");
         }
         if(Input.GetButtonDown(playerInput.Jump)){
-            Debug.Log("Jump");
+            //Debug.Log("Jump");
+            Debug.Log(playerInput.Jump);
         }
         /* -------FOR TESTING ONLY ---------*/
     }
@@ -167,6 +168,7 @@ public class WitchController : MonoBehaviour
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
                     ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                     ball.transform.rotation = Quaternion.identity;
                     ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
@@ -184,8 +186,6 @@ public class WitchController : MonoBehaviour
                         BallReleasing();
                         // Needto check, if the closest team mates if not active, just pass forward. 
                         Transform teamMate = GetClosestTeamMate().transform;
-                        // Need to check if it has teamMates. If not, can perform pass, or simply pass forward. 
-                        //Transform teamMate = GameObject.FindGameObjectWithTag("TeamMate").transform;
                         Vector3 teamMateDir = teamMate.position - transform.position;
                         // To make Y angle static, delete this.
                         //teamMateDir.y = 0;
@@ -216,7 +216,7 @@ public class WitchController : MonoBehaviour
             if(Input.GetButtonDown(playerInput.ShootOrTackle) && (character.tackleDelay.current >= character.tackleDelay.max)){
                 character.tackleDelay.current = 0f;
                 _isTackling = true;
-                Debug.Log("Tackle");
+                Debug.Log("Tackling");
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
                 // 2. If it posses
                 //      if its guard 0 short stun
@@ -406,8 +406,9 @@ public class WitchController : MonoBehaviour
         Ball b =  ball.GetComponent<Ball>();
         b.Released(Ball.BallState.Free);
         // Release the ball forward and little bit up
-        Vector3 targetDir = -ball.transform.forward;
-        targetDir.x += 0.25f;
+        Vector3 targetDir = transform.forward; //-ball.transform.forward;
+        targetDir.y += 0.5f;
+        ball.GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 5, 0);
         ball.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
         Debug.Log("ball direction:"+targetDir);
 
@@ -443,14 +444,32 @@ public class WitchController : MonoBehaviour
         return closestTeamMate;
     }
 
-    void OnCollisionEnter(Collision other) {
-        // Tackled
+    void OnCollisionStay(Collision other) {
         if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
         //if(other.gameObject.name == "damageCollider") {
-            //Debug.Log("Collide with " + other.gameObject.name);
+            Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
             if(character.getTackledDelay.current >= character.getTackledDelay.max){
-                Debug.Log("Tackled");
+                Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
+                Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
+                character.getTackledDelay.current = 0f;
+                // <Edit later> Attacker get a manna. 
+                // <Edit later> AddForce to the damaged witch
+            }
+        }   
+    }
+    void OnCollisionEnter(Collision other) {
+         // <Edit later> Collide with witch should be in OnCollisionStay. Or, make temp bool to store elapsed tackle
+         if(other.gameObject.tag == "Witch"){
+             Debug.Log("Collide with " + other.gameObject.name);
+         }
+        // Tackled 
+        if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
+        //if(other.gameObject.name == "damageCollider") {
+            Debug.Log("Collide with " + other.gameObject.name);
+            //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
+            if(character.getTackledDelay.current >= character.getTackledDelay.max){
+                Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
                 Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
                 character.getTackledDelay.current = 0f;
                 // <Edit later> Attacker get a manna. 
@@ -462,7 +481,9 @@ public class WitchController : MonoBehaviour
             if(character.usedMysteryBox == null) {
                 other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
-                Destroy(other.gameObject);
+                
+                // <Bug> When destoryed, the usedMysteryBox is also null, and we cant revert. 
+                //Destroy(other.gameObject);
             }
         }
 
@@ -475,7 +496,7 @@ public class WitchController : MonoBehaviour
         // <Edit later>
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
         // Ball 
-        if(other.gameObject == ball) {
+        if(other.gameObject == ball && character.stunnedDuration.current <= 0) {
             if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
                 // <Edit later> Must be Ballpossessing()
                 BallPossessing();
@@ -488,14 +509,15 @@ public class WitchController : MonoBehaviour
 
     void MysteryBoxControl(){
         if(character.usedMysteryBox != null){
+            //Debug.Log(character.usedMysteryBox.duration);
             // If already casted
             if(character.usedMysteryBox.duration > 0 && character.usedMysteryBox.casted) {
                 character.usedMysteryBox.duration -= Time.deltaTime;
             } else if (character.usedMysteryBox.duration <= 0 && character.usedMysteryBox.casted) {
-                // <Edit later> Not needed to make it false before the nullifying
-                character.usedMysteryBox.casted = false;
-                character.usedMysteryBox = null;
+                
+                character.RevertMysteryBox(character.usedMysteryBox);
             }
+            
         }
     }
 } 
