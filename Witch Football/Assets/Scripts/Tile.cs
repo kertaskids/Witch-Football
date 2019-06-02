@@ -39,6 +39,7 @@ public class Tile : MonoBehaviour
     public float typeMaxDelay;
     public GameObject[] mysteryBoxes;
     public GameObject[] rocks;
+    public GameObject[] smokes;
     private float _typeDuration;
     private float _typeDelay;
     private bool _effectPerformed; 
@@ -154,6 +155,11 @@ public class Tile : MonoBehaviour
                     }
                 }
             }
+            
+            if(smokes != null && smokes.Length > 0){
+                GameObject smoke = GameObject.Instantiate(smokes[0]);
+                smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            }                
             //if(triggerType != TriggerType.None) {
                 Destroy(this.gameObject);
             //}

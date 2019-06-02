@@ -400,8 +400,8 @@ public class WitchController : MonoBehaviour
             }
         }
     }
-
-    public void BallReleasing(){
+    
+    public void BallReleasing(bool addForce = false){
         // Need to check why the ball is releasing
         // character.guard.current = 0f; Already defined in GuardControl();
         _possessingBall = false;
@@ -410,7 +410,10 @@ public class WitchController : MonoBehaviour
         // Release the ball forward and little bit up
         Vector3 targetDir = transform.forward; //-ball.transform.forward;
         targetDir.y += 0.5f;
-        ball.GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 5, 0);
+        if(!addForce) {
+            targetDir.x = 0f;
+        }
+        ball.GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 4, 0);  
         ball.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
         Debug.Log("ball direction:"+targetDir);
 
@@ -489,17 +492,26 @@ public class WitchController : MonoBehaviour
         if(other.gameObject.tag == "Rock"){
             if(character.getTackledDelay.current >= character.getTackledDelay.max){
                 // <Edit later> Need to change the force when the ball is released
-                /* if(_possessingBall){
-                    BallReleasing();
-                    Debug.Break();
-                }*/
-
                 Rock rock = other.gameObject.GetComponent<Rock>();
                 Debug.Log(gameObject.name + " damaged by" + rock.gameObject.name);
                 Damaged(rock.damageGuard, rock.damageHealth);
-                transform.rotation = Quaternion.LookRotation(transform.position - rock.transform.position);
-                gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
-                Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
+                
+                if(_possessingBall){
+                    BallReleasing();
+                    GameObject.Find("Ball").GetComponent<Rigidbody>().position = new Vector3(transform.position.x,
+                                                                                         transform.position.y + 0.5f, transform.position.z);
+                    //Debug.Break();
+                    /* 
+                    ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
+                    ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                    ball.transform.rotation = Quaternion.identity; //<Need to change apparently>
+                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
+                    */
+                }
+                transform.rotation = Quaternion.LookRotation(rock.transform.position - transform.position);
+                //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
+                //Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
 
                 character.getTackledDelay.current = 0f;
             }

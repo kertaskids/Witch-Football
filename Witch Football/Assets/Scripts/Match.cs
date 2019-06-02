@@ -160,6 +160,12 @@ public class Match : MonoBehaviour
             if(TeamA != null && TeamB!=null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
+            //<Edit later> already implemented on SetupMatch
+            GameObject ball = GameObject.Find("Ball");
+            ball.transform.position = _initialBallPos;
+            ball.transform.rotation = Quaternion.identity; 
+            ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
             // Make the possessing player nullifies the ball
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");

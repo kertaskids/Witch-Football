@@ -97,6 +97,8 @@ MonoBehaviour:
   lifeTime: 5
   damageGuard: 1
   damageHealth: 3
+  smokeEffect: {fileID: 9198470993257382435, guid: 574e4bf898e96e44987f6e3ffee5e8b1,
+    type: 3}
 --- !u!65 &2741398636652915980
 BoxCollider:
   m_ObjectHideFlags: 0

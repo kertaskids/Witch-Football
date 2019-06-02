@@ -39,10 +39,11 @@ public class Ball : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }
     public void Released(BallState ballState){
-        this.possesingWitch  = null;
-        this.ballState       = ballState;
         // When the ball is posessed by player, the collider is trough.
         gameObject.GetComponent<SphereCollider>().enabled = true;
         Debug.Log("Ball released from: "+lastToucher.gameObject.name);
+        this.possesingWitch  = null;
+        this.ballState       = ballState;
+        
     }
 }

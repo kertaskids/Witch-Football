@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\PotionPreset.cs" />
      <Compile Include="Assets\Scripts\Rock.cs" />
+     <Compile Include="Assets\Scripts\Smoke.cs" />
      <Compile Include="Assets\Scripts\StatModifier.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />

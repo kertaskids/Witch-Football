@@ -12,6 +12,7 @@ TagManager:
   - Match
   - MysteryBox
   - Rock
+  - Smoke
   layers:
   - Default
   - TransparentFX
