@@ -97,6 +97,30 @@ public class Character
         //heavyMagicSkill.curDuration = 5f; 
         usedMysteryBox = null;
     }
+    public void Initiate(CharacterStat healthPoint, CharacterStat jumpForce, CharacterStat jumpDelay, CharacterStat moveSpeed,
+                        CharacterStat shootDelay, CharacterStat passDelay, CharacterStat shootPower, CharacterStat passPower, 
+                        CharacterStat guard, CharacterStat tackleDelay, CharacterStat manna, CharacterStat followDelay, 
+                        CharacterStat getTackledDelay, CharacterStat tackledDamageToGuard, CharacterStat tackledDamageToHealth,
+                        CharacterStat stunnedDuration, MagicSkill lightMagicSkill, MagicSkill heavyMagicSkill){
+                            this.healthPoint    = healthPoint;
+                            this.jumpForce      = jumpForce;
+                            this.jumpDelay      = jumpDelay;
+                            this.moveSpeed      = moveSpeed;
+                            this.shootDelay     = shootDelay;
+                            this.passDelay      = passDelay;
+                            this.shootPower     = shootPower;
+                            this.passPower      = passPower;
+                            this.guard          = guard;
+                            this.tackleDelay    = tackleDelay;
+                            this.manna          = manna;
+                            this.followDelay        = followDelay;
+                            this.getTackledDelay    = getTackledDelay;
+                            this.tackledDamageToGuard   = tackledDamageToGuard;
+                            this.tackledDamageToHealth  = tackledDamageToHealth;
+                            this.stunnedDuration    = stunnedDuration;
+                            this.lightMagicSkill    = lightMagicSkill;
+                            this.heavyMagicSkill    = heavyMagicSkill;
+    }
 
     public void CastMagic(MagicSkill magicSkill){
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);

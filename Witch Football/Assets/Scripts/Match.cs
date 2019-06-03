@@ -287,11 +287,11 @@ public class Match : MonoBehaviour
     }
     void SpawnMysteryBox(){
         if(mysteryBoxes != null || mysteryBoxes.Length >= 0){
-            int r = Random.Range(0, mysteryBoxes.Length-1);
+            int r = Random.Range(0, mysteryBoxes.Length);
             GameObject mysteryBox = GameObject.Instantiate(mysteryBoxes[r]);
             Transform rootTiles = GameObject.Find("Tiles").transform;
             
-            int rt = Random.Range(0, rootTiles.transform.childCount-1);
+            int rt = Random.Range(0, rootTiles.transform.childCount);
             Transform selectedTile = rootTiles.transform.GetChild(rt);
             mysteryBox.transform.position = new Vector3(selectedTile.position.x, selectedTile.position.y+4, selectedTile.position.z);
 
