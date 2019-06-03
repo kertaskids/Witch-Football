@@ -61,7 +61,7 @@ public class MysteryBox : MonoBehaviour
         } else if (affectTo == MagicSkill.AffectTo.OneTeamMate){
             // Randomly cast on one team mate, if not casting, the apply
             if(casterWitch.teamMatesWitches.Length >= 1){
-                int r = Random.Range(0, casterWitch.teamMatesWitches.Length - 1);
+                int r = Random.Range(0, casterWitch.teamMatesWitches.Length);
                 GameObject teamMate = casterWitch.teamMatesWitches[r].gameObject;
                 if(teamMate.GetComponent<WitchController>().character.usedMysteryBox == null){ // casted?
                     teamMate.GetComponent<WitchController>().character.CastMysteryBox(this);
@@ -97,7 +97,7 @@ public class MysteryBox : MonoBehaviour
                 }    
             }
             if(allOpponents.Count >= 1){
-                int r = Random.Range(0, allOpponents.Count - 1);
+                int r = Random.Range(0, allOpponents.Count);
                 if(allOpponents[r].GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
                     allOpponents[r].GetComponent<WitchController>().character.CastMysteryBox(this);
                     Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + allOpponents[r].name);

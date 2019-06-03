@@ -40,18 +40,23 @@ public class Tile : MonoBehaviour
     public GameObject[] mysteryBoxes;
     public GameObject[] rocks;
     public GameObject[] smokes;
+    public GameObject canon;
     private float _typeDuration;
     private float _typeDelay;
     private bool _effectPerformed; 
     private bool _typePerformed;
     private List<GameObject> _collidedWitches;
     private List<GameObject> _onRangeWitches;
+    //private GameObject souroff;
+    //private Transform trap;
 
     void Start() {
         //MaxDuration = 2f;
         //MaxDelay = 5f;
         _collidedWitches    = new List<GameObject>();
         _onRangeWitches     = new List<GameObject>();
+        //souroff = transform.Find("Souroff").gameObject;
+        //trap = transform.Find("Trap");
         OnRangeTrigger();
         //Transform trap = transform.Find("Trap");
         //Debug.Log(gameObject.name+" has children: "+transform.childCount);
@@ -93,8 +98,8 @@ public class Tile : MonoBehaviour
     }
     //<Edit later>
     public void Randomized(){
-        // Inclusive parameters. Ignore the None type.
-        int r       = Random.Range(2,6);
+        // Exclusive parameters. Ignore the None type.
+        int r       = Random.Range(2,7);
         tileType    = (TileType) r; 
         // Adding the children here
     }
@@ -168,7 +173,7 @@ public class Tile : MonoBehaviour
             if(_typeDelay <= 0f) {
                 // Spawn mystery box prefabs based on random
                 if(mysteryBoxes != null || mysteryBoxes.Length >= 0){
-                    int r = Random.Range(0, mysteryBoxes.Length-1);
+                    int r = Random.Range(0, mysteryBoxes.Length);
                     GameObject mysteryBox = GameObject.Instantiate(mysteryBoxes[r]);
                     Transform rootTiles = GameObject.Find("Tiles").transform;
                     mysteryBox.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
@@ -185,18 +190,17 @@ public class Tile : MonoBehaviour
             if(_typeDelay <= 0){
                 if(_onRangeWitches.Count > 0) {
                     // Prepare shooter
-                    GameObject canon = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    canon.AddComponent<Rigidbody>();
-                    canon.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+                    GameObject projectile = GameObject.Instantiate(canon); 
+                    projectile.transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
                     // <Edit later> moveup the shooter if the duration is available
-
+                    
                     // Random nearby target
-                    int r = Random.Range(0, _onRangeWitches.Count - 1);
-                    canon.transform.LookAt(_onRangeWitches[r].transform);
-                    canon.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    int r = Random.Range(0, _onRangeWitches.Count);
+                    projectile.transform.LookAt(_onRangeWitches[r].transform);
+                    //Debug.Log("Onrangedwitches: "+_onRangeWitches.Count);
                     // <Delete later> just to check the shooting
                     //canon.GetComponent<BoxCollider>().enabled = false;
-                    canon.GetComponent<Rigidbody>().AddForce(canon.transform.forward * 10f, ForceMode.Impulse);
+                    projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 10f, ForceMode.Impulse);
                     _typeDelay = typeMaxDelay;
                 }
             }
@@ -271,7 +275,7 @@ public class Tile : MonoBehaviour
         else if (tileType == TileType.FallingRock) {
             if(_typeDelay <= 0f) {
                 // Spawn rock randomly, <1> Small rock, <2> Big rock
-                int r = Random.Range(0, 1);
+                int r = Random.Range(0, rocks.Length);
                 GameObject rock = GameObject.Instantiate(rocks[r]);
                 rock.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
                 _typeDelay = typeMaxDelay;
@@ -360,6 +364,7 @@ public class Tile : MonoBehaviour
             PerformType();
         }
         OnRangeTrigger();
+        UpdateShootingSprite();
     }
 
     void OnCollisionEnter(Collision other) {        
@@ -398,6 +403,29 @@ public class Tile : MonoBehaviour
             // Exit 
             if(distance > triggerDistance && _onRangeWitches.Contains(w)){
                 _onRangeWitches.Remove(w);
+            }
+        }
+    }
+
+    void UpdateShootingSprite(){
+        if(tileType == TileType.Shooting){
+            GameObject souroff = transform.Find("Souroff").gameObject;
+            if(triggerType == TriggerType.None && !souroff.activeSelf){
+                souroff.SetActive(true);
+            }
+            if(triggerType == TriggerType.Collide){
+                if(_collidedWitches.Count > 0 && !souroff.activeSelf) {
+                    souroff.SetActive(true);
+                }else if(_collidedWitches.Count < 1) {
+                    souroff.SetActive(false);
+                }
+            }
+            if(triggerType == TriggerType.Distance){
+                if(_onRangeWitches.Count > 0 && !souroff.activeSelf) {
+                    souroff.SetActive(true);
+                }else if(_onRangeWitches.Count < 1) {
+                    souroff.SetActive(false);
+                }
             }
         }
     }

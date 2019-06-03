@@ -341,7 +341,7 @@ public class WitchController : MonoBehaviour
         } 
         // Move these codes into above block to not let player loss the HP when in guard. 
         // Health Point
-        Debug.Log(character.healthPoint.available + " " + (character.getTackledDelay.current >= character.getTackledDelay.max));
+        //Debug.Log(character.healthPoint.available + " " + (character.getTackledDelay.current >= character.getTackledDelay.max));
         if(character.healthPoint.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
             character.healthPoint.current -= healthReduced;
         }
