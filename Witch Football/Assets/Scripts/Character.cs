@@ -146,7 +146,7 @@ public class Character
         this.shootPower.current     -= magicSkill.statModifier.power;
         this.moveSpeed.current      -= magicSkill.statModifier.moveSpeed;
         magicSkill.duration.current = magicSkill.duration.max;
-        magicSkill.magicCasted = false;
+        magicSkill.casted = false;
         //lightMagicSkill.duration.current = lightMagicSkill.duration.max; 
         //heavyMagicSkill.duration.current = heavyMagicSkill.duration.max;
         Debug.Log("Revert.");

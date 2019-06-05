@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WitchController : MonoBehaviour
 {
+    // <New> delete character in this script. included in witch class. 
+    public Witch witch;
     public Character character;
     public Team.TeamParty teamParty;
     public bool _possessingBall;
@@ -251,13 +253,13 @@ public class WitchController : MonoBehaviour
          // Light Magic 
         if(Input.GetButtonDown(playerInput.LightMagic)){    
             // <Edit later> Check the TimeUse first
-            if(character.lightMagicSkill.delay.current >= character.lightMagicSkill.delay.max && !character.lightMagicSkill.magicCasted){
+            if(character.lightMagicSkill.delay.current >= character.lightMagicSkill.delay.max && !character.lightMagicSkill.casted){
                 if(character.manna.current >= character.lightMagicSkill.mannaNeed){
                     character.manna.current -= character.lightMagicSkill.mannaNeed;
                     //witchCharacter.lightMagicSkill.Cast();
                     character.CastMagic(character.lightMagicSkill);
                     character.lightMagicSkill.delay.current = 0f;
-                    character.lightMagicSkill.magicCasted = true;
+                    character.lightMagicSkill.casted = true;
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -272,13 +274,13 @@ public class WitchController : MonoBehaviour
                 Debug.Log("Not enough Manna");
             }*/
             // Check the TimeUse first
-            if(character.heavyMagicSkill.delay.current >= character.heavyMagicSkill.delay.max && !character.heavyMagicSkill.magicCasted){
+            if(character.heavyMagicSkill.delay.current >= character.heavyMagicSkill.delay.max && !character.heavyMagicSkill.casted){
                 if(character.manna.current >= character.heavyMagicSkill.mannaNeed){
                     character.manna.current -= character.heavyMagicSkill.mannaNeed;
                     //witchCharacter.heavyMagicSkill.Cast();
                     character.CastMagic(character.heavyMagicSkill);
                     character.heavyMagicSkill.delay.current = 0f;
-                    character.heavyMagicSkill.magicCasted = true;
+                    character.heavyMagicSkill.casted = true;
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -296,12 +298,12 @@ public class WitchController : MonoBehaviour
 
         // <Edit> Revert when the buff duration is over
         // if duration >= maxDuration
-        if(character.lightMagicSkill.duration.current >=  character.lightMagicSkill.duration.max && character.lightMagicSkill.magicCasted){
+        if(character.lightMagicSkill.duration.current >=  character.lightMagicSkill.duration.max && character.lightMagicSkill.casted){
             character.RevertMagic(character.lightMagicSkill);
             // <Edit> Pindahkan magic casted pada character
             //character.lightMagicSkill.magicCasted = false;
         }
-        if(character.heavyMagicSkill.duration.current >=  character.heavyMagicSkill.duration.max && character.heavyMagicSkill.magicCasted){
+        if(character.heavyMagicSkill.duration.current >=  character.heavyMagicSkill.duration.max && character.heavyMagicSkill.casted){
             character.RevertMagic(character.heavyMagicSkill);
             // <Edit> Pindahkan magic casted pada character
             //character.heavyMagicSkill.magicCasted = false;

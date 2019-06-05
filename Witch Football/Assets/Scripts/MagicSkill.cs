@@ -13,46 +13,48 @@ public class MagicSkill
         //TilesSelected,
         //TIlesSurround 
     }
-    public AffectTo affectTo;
     public enum TimeUse{
         Possessing, 
         NotPossessing,
         Both
     }
-    public TimeUse timeUse;
     public enum Category{
         Light, 
         Heavy,
         None
     }
-    public Category category;
     public enum Type{
         Damage,
         HealthPoint,
         Power,
         Speed, 
         None    
-    };
+    }
+    public AffectTo affectTo;
+    public TimeUse timeUse;
+    public Category category;
     public Type type;
 
     public string name;
     public float mannaNeed;
-    public bool magicCasted;
     public CharacterStat delay;
     public CharacterStat duration;
     public StatModifier statModifier;
-    
+    public bool casted;
+
     public MagicSkill(){
         affectTo    = AffectTo.Self;
         timeUse     = TimeUse.Both; 
         category    = Category.None;
         type        = Type.None; 
+
         name        = "Undefined";
+        mannaNeed   = 0f;
         delay       = new CharacterStat(0f, 0f);
         duration    = new CharacterStat(0f, 0f);
-        mannaNeed   = 0f;
-        magicCasted = false;
         statModifier = new StatModifier();
+
+        casted = false;
     }
 
     public void SetSkill(Category category, Type type, string name, TimeUse timeUse, AffectTo affecTo, 
@@ -131,6 +133,107 @@ public static class DefaultMagicSkill {
         return magicSkill;
     }
 
-    //<Edit later>
-    // Make list of Skill set; static class
+    // Light Skill 
+    public static MagicSkill LightHeal {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Light;
+            magicSkill.type         = MagicSkill.Type.HealthPoint; 
+            magicSkill.name         = "Light Heal";
+            magicSkill.mannaNeed    = 25f;
+            magicSkill.delay        = new CharacterStat(5f, 5f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(0f, 3f, 0f, 0f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill HeavyHeal {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Heavy;
+            magicSkill.type         = MagicSkill.Type.HealthPoint; 
+            magicSkill.name         = "Heavy Heal";
+            magicSkill.mannaNeed    = 100f;
+            magicSkill.delay        = new CharacterStat(10f, 10f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(0f, 10f, 0f, 0f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill LightBoost {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Light;
+            magicSkill.type         = MagicSkill.Type.Speed; 
+            magicSkill.name         = "Boost";
+            magicSkill.mannaNeed    = 25f;
+            magicSkill.delay        = new CharacterStat(5f, 5f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(0f, 0f, 0f, 3f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill HeavyBoost {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Heavy;
+            magicSkill.type         = MagicSkill.Type.Speed; 
+            magicSkill.name         = "Heavy Boost";
+            magicSkill.mannaNeed    = 25f;
+            magicSkill.delay        = new CharacterStat(10f, 10f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(0f, 0f, 0f, 5f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill LightRage {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Light;
+            magicSkill.type         = MagicSkill.Type.Damage; 
+            magicSkill.name         = "Rage";
+            magicSkill.mannaNeed    = 25f;
+            magicSkill.delay        = new CharacterStat(5f, 5f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(1f, 0f, 2f, 0f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill HeavyRage {
+        get {
+            MagicSkill magicSkill   = new MagicSkill();
+            magicSkill.affectTo     = MagicSkill.AffectTo.Self;
+            magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
+            magicSkill.category     = MagicSkill.Category.Heavy;
+            magicSkill.type         = MagicSkill.Type.Damage; 
+            magicSkill.name         = "Heavy Rage";
+            magicSkill.mannaNeed    = 100f;
+            magicSkill.delay        = new CharacterStat(10f, 10f);
+            magicSkill.duration     = new CharacterStat(5f, 5f);
+            magicSkill.statModifier = new StatModifier(2f, 0f, 4f, 0f);
+            magicSkill.casted       = false;
+            return magicSkill;
+        }
+    }
+    public static MagicSkill Guardian {
+        get {
+            
+            return null;
+        }
+    }
 }
