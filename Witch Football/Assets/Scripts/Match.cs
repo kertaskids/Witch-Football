@@ -231,13 +231,12 @@ public class Match : MonoBehaviour
             //Debug.Log(w.gameObject.name + " on " + TeamA.teamParty.ToString());
             if(w.enabled){
                 //Character Stat
-                Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
-                            ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
-                            ", PassPower" + w.character.passPower.current + 
-                            ", Speed: " + w.character.moveSpeed.current);
-                //MagicSkill
-                //Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                            //", HeavySkill: " + w.character.heavyMagicSkill.name);
+                Debug.Log(w.name + ", HP: " + w.witch.character.healthPoint.current + 
+                            ", DamageToHP: " + w.witch.character.tackledDamageToHealth.current + 
+                            ", PassPower" + w.witch.character.passPower.current + 
+                            ", Speed: " + w.witch.character.moveSpeed.current +
+                            ", LightSkill: " + w.witch.character.lightMagicSkill.name + 
+                            ", HeavySkill: " + w.witch.character.heavyMagicSkill.name);
             }
         }
         Debug.Log(TeamB.teamParty.ToString() + " Statistic:");
@@ -245,13 +244,12 @@ public class Match : MonoBehaviour
         {
             if(w.enabled){
                 //Character Stat
-                Debug.Log(w.name + ", HP: " + w.character.healthPoint.current + 
-                            ", DamageToHP: " + w.character.tackledDamageToHealth.current + 
-                            ", PassPower" + w.character.passPower.current + 
-                            ", Speed: " + w.character.moveSpeed.current);
-                //MagicSkill
-                //Debug.Log("LightSkill: " + w.character.lightMagicSkill.name + 
-                            //", HeavySkill: " + w.character.heavyMagicSkill.name);
+                Debug.Log(w.name + ", HP: " + w.witch.character.healthPoint.current + 
+                            ", DamageToHP: " + w.witch.character.tackledDamageToHealth.current + 
+                            ", PassPower" + w.witch.character.passPower.current + 
+                            ", Speed: " + w.witch.character.moveSpeed.current +
+                            ", LightSkill: " + w.witch.character.lightMagicSkill.name + 
+                            ", HeavySkill: " + w.witch.character.heavyMagicSkill.name);
             }
         }
     }

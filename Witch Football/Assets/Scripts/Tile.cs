@@ -112,7 +112,7 @@ public class Tile : MonoBehaviour
                foreach (GameObject cw in _onRangeWitches){
                     WitchController wc = cw.GetComponent<WitchController>();
                     // <Edit later>
-                    if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                         // Do damage here. Move code below to here  
                         cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
@@ -139,7 +139,7 @@ public class Tile : MonoBehaviour
                 foreach (GameObject cw in _collidedWitches){
                     //<Edit later>
                     WitchController wc = cw.GetComponent<WitchController>();
-                    if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                         // Do damage here. Move code below to here  
                         cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
@@ -225,8 +225,8 @@ public class Tile : MonoBehaviour
                                 // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
                                 // Need to check the ball possesion too 
                                 WitchController wc = w.GetComponent<WitchController>();
-                                Debug.Log("GetTackledDelayRemain: "+wc.character.getTackledDelay.current);
-                                if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                                Debug.Log("GetTackledDelayRemain: "+wc.witch.character.getTackledDelay.current);
+                                if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                                     w.GetComponent<WitchController>().Damaged(1f, 1f); 
                                     w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
                                     w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
@@ -258,8 +258,8 @@ public class Tile : MonoBehaviour
                             // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
                             // Need to check the ball possesion too 
                             WitchController wc = w.GetComponent<WitchController>();
-                            Debug.Log("GetTackledDelayRemain: "+wc.character.getTackledDelay.current);
-                            if(wc.character.getTackledDelay.current >= wc.character.getTackledDelay.max){
+                            Debug.Log("GetTackledDelayRemain: "+wc.witch.character.getTackledDelay.current);
+                            if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                                 w.GetComponent<WitchController>().Damaged(1f, 1f); 
                                 w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
                                 w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);

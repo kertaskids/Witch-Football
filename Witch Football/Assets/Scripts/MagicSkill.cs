@@ -173,7 +173,7 @@ public static class DefaultMagicSkill {
             magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
             magicSkill.category     = MagicSkill.Category.Light;
             magicSkill.type         = MagicSkill.Type.Speed; 
-            magicSkill.name         = "Boost";
+            magicSkill.name         = "Light Boost";
             magicSkill.mannaNeed    = 25f;
             magicSkill.delay        = new CharacterStat(5f, 5f);
             magicSkill.duration     = new CharacterStat(5f, 5f);
@@ -190,7 +190,7 @@ public static class DefaultMagicSkill {
             magicSkill.category     = MagicSkill.Category.Heavy;
             magicSkill.type         = MagicSkill.Type.Speed; 
             magicSkill.name         = "Heavy Boost";
-            magicSkill.mannaNeed    = 25f;
+            magicSkill.mannaNeed    = 100f;
             magicSkill.delay        = new CharacterStat(10f, 10f);
             magicSkill.duration     = new CharacterStat(5f, 5f);
             magicSkill.statModifier = new StatModifier(0f, 0f, 0f, 5f);
@@ -205,7 +205,7 @@ public static class DefaultMagicSkill {
             magicSkill.timeUse      = MagicSkill.TimeUse.Both; 
             magicSkill.category     = MagicSkill.Category.Light;
             magicSkill.type         = MagicSkill.Type.Damage; 
-            magicSkill.name         = "Rage";
+            magicSkill.name         = "Light Rage";
             magicSkill.mannaNeed    = 25f;
             magicSkill.delay        = new CharacterStat(5f, 5f);
             magicSkill.duration     = new CharacterStat(5f, 5f);

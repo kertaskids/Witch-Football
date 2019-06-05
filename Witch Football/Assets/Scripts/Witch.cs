@@ -18,17 +18,27 @@ public class Witch {
     public WitchClass witchClass;
     public WitchType witchType;
     public Character character; 
+    public Witch(){
+        witchClass  = WitchClass.None;
+        witchType   = WitchType.None;
+        character   = new Character();
+    }
+    public Witch(Witch witchBase){
+        witchClass = witchBase.witchClass;
+        witchType = witchBase.witchType;
+        character = witchBase.character;
+    }
 }
 
 public static class WitchBase {
     // When creating a witch, need to assign Class, Type, Character, and MagicSkills
     public static Witch Base{
         get {
-            Witch witch     = new Witch();
+            Witch witch         = new Witch();
             witch.witchClass    = Witch.WitchClass.None;
             witch.witchType     = Witch.WitchType.None;
             
-            witch.character     = new Character();
+            //witch.character     = new Character();
             witch.character.healthPoint     = new CharacterStat(10f, 10f);
             witch.character.jumpForce       = new CharacterStat(5f, 5f); 
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
@@ -54,11 +64,11 @@ public static class WitchBase {
 
     public static Witch Sorcerer{
         get {
-            Witch witch     = new Witch();
+            Witch witch         = new Witch();
             witch.witchClass    = Witch.WitchClass.Sorcerer;
             witch.witchType     = Witch.WitchType.Defender;
             
-            witch.character     = new Character();
+            //witch.character     = new Character();
             witch.character.healthPoint     = new CharacterStat(11f, 11f);
             witch.character.jumpForce       = new CharacterStat(5f, 5f); 
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
@@ -84,11 +94,11 @@ public static class WitchBase {
 
     public static Witch Cleric{
         get {
-            Witch witch     = new Witch();
+            Witch witch         = new Witch();
             witch.witchClass    = Witch.WitchClass.Cleric;
             witch.witchType     = Witch.WitchType.Defender;
             
-            witch.character     = new Character();
+            //witch.character     = new Character();
             witch.character.healthPoint     = new CharacterStat(12f, 12f);
             witch.character.jumpForce       = new CharacterStat(6f, 6f); 
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
@@ -114,11 +124,11 @@ public static class WitchBase {
 
     public static Witch Wizard{
         get {
-            Witch witch     = new Witch();
+            Witch witch         = new Witch();
             witch.witchClass    = Witch.WitchClass.Wizard;
             witch.witchType     = Witch.WitchType.Striker;
             
-            witch.character     = new Character();
+            //witch.character     = new Character();
             witch.character.healthPoint     = new CharacterStat(10f, 10f);
             witch.character.jumpForce       = new CharacterStat(5f, 5f); 
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
@@ -144,11 +154,11 @@ public static class WitchBase {
 
     public static Witch Druid{
         get {
-            Witch witch     = new Witch();
+            Witch witch         = new Witch();
             witch.witchClass    = Witch.WitchClass.Druid;
             witch.witchType     = Witch.WitchType.Striker;
             
-            witch.character     = new Character();
+            //witch.character     = new Character();
             witch.character.healthPoint     = new CharacterStat(10f, 10f);
             witch.character.jumpForce       = new CharacterStat(6f, 6f); 
             witch.character.jumpDelay       = new CharacterStat(4f, 4f);

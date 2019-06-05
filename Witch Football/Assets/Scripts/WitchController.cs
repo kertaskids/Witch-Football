@@ -4,33 +4,30 @@ using UnityEngine;
 
 public class WitchController : MonoBehaviour
 {
-    // <New> delete character in this script. included in witch class. 
-    public Witch witch;
-    public Character character;
-    public Team.TeamParty teamParty;
-    public bool _possessingBall;
-    public GameObject ball; 
-    public GameObject ballPosition; // <Edit later> get ball and its position by tag and transform at startup 
-    public WitchController[] teamMatesWitches;
-    private Rigidbody _rigidbody;
-    // <Edit later> The WitchState
-    public bool _isTackling = false;
-    // Edit later
-    public PlayerInput.ID playerID;
     private PlayerInput playerInput;
-
+    public PlayerInput.ID playerID;
+    public Witch.WitchClass baseClass;
+    public Witch witch;
+    public WitchController[] teamMatesWitches;
+    public Team.TeamParty teamParty;
+    private Rigidbody _rigidbody;
+    public bool _possessingBall;
+    public bool _isTackling; // = false;
+    public GameObject ball; 
+    public GameObject ballPosition;
+    
     void Start(){
-        Init();
         playerInput = PlayerInput.GetPlayer((int)playerID);
+        Init();
     }
 
     void Init(){
-        character       = new Character();
+        witch           = InitClass(baseClass); 
         _rigidbody      = GetComponent<Rigidbody>();
-        //teamParty
         _possessingBall = false;
+        _isTackling     = false;
         ball            = GameObject.FindGameObjectWithTag("Ball");
-        //ballposition
+        ballPosition    = transform.Find("BallPosition").gameObject; 
 
         if(teamMatesWitches == null || teamMatesWitches.Length < 1) {
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
@@ -39,25 +36,38 @@ public class WitchController : MonoBehaviour
                 WitchController witchController = w.GetComponent<WitchController>();
                 if(witchController.teamParty == this.teamParty && witchController != this) {
                     witchesTemp.Add(witchController);
-                    //Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate of " + gameObject.name); 
+                    Debug.Log("Add " + w.name + " on " + teamParty.ToString() + "as team mate of " + gameObject.name); 
                 }
             }
             teamMatesWitches = witchesTemp.ToArray();
         }
-        
-        //<Edit later> assign the ball and ball position here locally
+    }
+    Witch InitClass(Witch.WitchClass baseClass){
+        this.baseClass = baseClass;
+        if(baseClass == Witch.WitchClass.Sorcerer){
+            return WitchBase.Sorcerer;
+        }else if(baseClass == Witch.WitchClass.Cleric){
+            return WitchBase.Cleric;
+        }else if(baseClass == Witch.WitchClass.Wizard){
+            return WitchBase.Wizard;
+        }else if(baseClass == Witch.WitchClass.Druid){
+            return WitchBase.Druid;
+        }
+        // Class Base
+        return WitchBase.Base;
+        // Magic skills are included here
     }
 
     void Update(){
         // If not ispaused && not stunned
-        if(character.stunnedDuration.current <= 0) {
+        if(witch.character.stunnedDuration.current <= 0) {
             MoveControl();
             ActionControl();
             MagicControl();
             GuardControl();
             MysteryBoxControl();
         } else {
-            character.stunnedDuration.current = UpdateDuration(character.stunnedDuration.current);
+            witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
 
         /* -------FOR TESTING ONLY ---------*/
@@ -131,16 +141,16 @@ public class WitchController : MonoBehaviour
         } 
         //Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
         //Debug.Log("H, V: " + horizontal + ", " + vertical);
-        _rigidbody.MovePosition(new Vector3(transform.position.x + character.moveSpeed.current * horizontal * Time.deltaTime,
+        _rigidbody.MovePosition(new Vector3(transform.position.x + witch.character.moveSpeed.current * horizontal * Time.deltaTime,
                                             transform.position.y, 
-                                            transform.position.z + character.moveSpeed.current * vertical * Time.deltaTime));
+                                            transform.position.z + witch.character.moveSpeed.current * vertical * Time.deltaTime));
 
         // Jump
-        if(Input.GetButtonDown(playerInput.Jump) && (_rigidbody.velocity.y <= 0.1f) && (character.jumpDelay.full)){
-            _rigidbody.AddForce(character.jumpForce.current * Vector3.up, ForceMode.Impulse);
-            character.jumpDelay.current = 0f;
+        if(Input.GetButtonDown(playerInput.Jump) && (_rigidbody.velocity.y <= 0.1f) && (witch.character.jumpDelay.full)){
+            _rigidbody.AddForce(witch.character.jumpForce.current * Vector3.up, ForceMode.Impulse);
+            witch.character.jumpDelay.current = 0f;
         }
-        character.jumpDelay.current = UpdateTimer(character.jumpDelay.current, character.jumpDelay.max);
+        witch.character.jumpDelay.current = UpdateTimer(witch.character.jumpDelay.current, witch.character.jumpDelay.max);
 
         //Dribble
         if(ball != null){
@@ -165,7 +175,7 @@ public class WitchController : MonoBehaviour
         // Offense & Defense
         if(_possessingBall){
             // Shoot
-            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (character.shootDelay.current >= character.shootDelay.max)){
+            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (witch.character.shootDelay.current >= witch.character.shootDelay.max)){
                 if(_possessingBall && ball != null){
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
@@ -173,14 +183,14 @@ public class WitchController : MonoBehaviour
                     ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
                     ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                     ball.transform.rotation = Quaternion.identity;
-                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
+                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
                     //_possessingBall = false;
-                    character.shootDelay.current = 0f;
-                    Debug.Log("Shoot! Power: " +character.shootPower.current + ", at Euler: " + transform.eulerAngles);
+                    witch.character.shootDelay.current = 0f;
+                    Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
                 }
             }
             // Pass
-            if(Input.GetButtonDown(playerInput.PassOrFollow) && (character.passDelay.current >= character.passDelay.max)){
+            if(Input.GetButtonDown(playerInput.PassOrFollow) && (witch.character.passDelay.current >= witch.character.passDelay.max)){
                 if(_possessingBall && ball != null){
                     // Find the closest teammate then pass the ball toward it.
                     // Check closest teammate, and assign it.   
@@ -197,26 +207,26 @@ public class WitchController : MonoBehaviour
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                         ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         ball.transform.rotation = Quaternion.identity;
-                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.passPower.current, ForceMode.Impulse);
+                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
                         
                         //_possessingBall        = false;
-                        character.passDelay.current    = 0f;
-                        Debug.Log("Pass! Power: " + character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
+                        witch.character.passDelay.current    = 0f;
+                        Debug.Log("Pass! Power: " + witch.character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
                     } else {
                         Debug.Log("You have no friend :'(");
                         BallReleasing();
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.passPower.current, ForceMode.Impulse);
+                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
                         
                         //_possessingBall        = false;
-                        character.passDelay.current    = 0f;
+                        witch.character.passDelay.current    = 0f;
                     }
                 }
             }
         }else{
             // Tackle
-            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (character.tackleDelay.current >= character.tackleDelay.max)){
-                character.tackleDelay.current = 0f;
+            if(Input.GetButtonDown(playerInput.ShootOrTackle) && (witch.character.tackleDelay.current >= witch.character.tackleDelay.max)){
+                witch.character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackling");
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
@@ -228,38 +238,38 @@ public class WitchController : MonoBehaviour
                 _isTackling = false;
             }
             // Follow 
-            if(Input.GetButtonDown(playerInput.PassOrFollow) && (character.followDelay.current >= character.followDelay.max)){
+            if(Input.GetButtonDown(playerInput.PassOrFollow) && (witch.character.followDelay.current >= witch.character.followDelay.max)){
                 Debug.Log("Follow");
                 // Check if there is no team possesing the ball  
                 Vector3 ballDir     = ball.transform.position - transform.position;
                 // Turn off Y angle before make it as rotation
                 ballDir.y           = 0f;
                 transform.rotation  = Quaternion.LookRotation(ballDir.normalized); 
-                Vector3 tempMovePos = ballDir.normalized * character.moveSpeed.current * Time.deltaTime;
+                Vector3 tempMovePos = ballDir.normalized * witch.character.moveSpeed.current * Time.deltaTime;
                 _rigidbody.MovePosition(transform.position + tempMovePos);
             }
             // Un-Follow
             if(Input.GetButtonUp(playerInput.PassOrFollow)){
-                character.followDelay.current = 0f;
+                witch.character.followDelay.current = 0f;
             }
         }
-        character.shootDelay.current   = UpdateTimer(character.shootDelay.current, character.shootDelay.max);
-        character.passDelay.current    = UpdateTimer(character.passDelay.current, character.passDelay.max);
-        character.tackleDelay.current  = UpdateTimer(character.tackleDelay.current, character.tackleDelay.max);
-        character.followDelay.current  = UpdateTimer(character.followDelay.current, character.followDelay.max);
+        witch.character.shootDelay.current   = UpdateTimer(witch.character.shootDelay.current, witch.character.shootDelay.max);
+        witch.character.passDelay.current    = UpdateTimer(witch.character.passDelay.current, witch.character.passDelay.max);
+        witch.character.tackleDelay.current  = UpdateTimer(witch.character.tackleDelay.current, witch.character.tackleDelay.max);
+        witch.character.followDelay.current  = UpdateTimer(witch.character.followDelay.current, witch.character.followDelay.max);
     }
 
     void MagicControl(){
          // Light Magic 
         if(Input.GetButtonDown(playerInput.LightMagic)){    
             // <Edit later> Check the TimeUse first
-            if(character.lightMagicSkill.delay.current >= character.lightMagicSkill.delay.max && !character.lightMagicSkill.casted){
-                if(character.manna.current >= character.lightMagicSkill.mannaNeed){
-                    character.manna.current -= character.lightMagicSkill.mannaNeed;
+            if(witch.character.lightMagicSkill.delay.current >= witch.character.lightMagicSkill.delay.max && !witch.character.lightMagicSkill.casted){
+                if(witch.character.manna.current >= witch.character.lightMagicSkill.mannaNeed){
+                    witch.character.manna.current -= witch.character.lightMagicSkill.mannaNeed;
                     //witchCharacter.lightMagicSkill.Cast();
-                    character.CastMagic(character.lightMagicSkill);
-                    character.lightMagicSkill.delay.current = 0f;
-                    character.lightMagicSkill.casted = true;
+                    witch.character.CastMagic(witch.character.lightMagicSkill);
+                    witch.character.lightMagicSkill.delay.current = 0f;
+                    witch.character.lightMagicSkill.casted = true;
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -267,20 +277,14 @@ public class WitchController : MonoBehaviour
         }
         // Heavy Magic
         if(Input.GetButtonDown(playerInput.LightMagic)){
-            /*if(witchCharacter.manna >= witchCharacter.heavyMagicMannaNeed){
-                witchCharacter.manna -= witchCharacter.heavyMagicMannaNeed;
-                Debug.Log("Heavy Magic. Damage: " + witchCharacter.heavyMagicDamage + ". Manna: " + witchCharacter.manna);
-            }else{
-                Debug.Log("Not enough Manna");
-            }*/
             // Check the TimeUse first
-            if(character.heavyMagicSkill.delay.current >= character.heavyMagicSkill.delay.max && !character.heavyMagicSkill.casted){
-                if(character.manna.current >= character.heavyMagicSkill.mannaNeed){
-                    character.manna.current -= character.heavyMagicSkill.mannaNeed;
+            if(witch.character.heavyMagicSkill.delay.current >= witch.character.heavyMagicSkill.delay.max && !witch.character.heavyMagicSkill.casted){
+                if(witch.character.manna.current >= witch.character.heavyMagicSkill.mannaNeed){
+                    witch.character.manna.current -= witch.character.heavyMagicSkill.mannaNeed;
                     //witchCharacter.heavyMagicSkill.Cast();
-                    character.CastMagic(character.heavyMagicSkill);
-                    character.heavyMagicSkill.delay.current = 0f;
-                    character.heavyMagicSkill.casted = true;
+                    witch.character.CastMagic(witch.character.heavyMagicSkill);
+                    witch.character.heavyMagicSkill.delay.current = 0f;
+                    witch.character.heavyMagicSkill.casted = true;
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -290,31 +294,31 @@ public class WitchController : MonoBehaviour
         // <Update> Back to original coding, duration --; 
         // UpdateTimer duration dan delay dari magicskill!
         // When the delay is over, back to original stats
-        character.lightMagicSkill.delay.current = UpdateTimer(character.lightMagicSkill.delay.current, character.lightMagicSkill.delay.max);
-        character.heavyMagicSkill.delay.current = UpdateTimer(character.heavyMagicSkill.delay.current, character.heavyMagicSkill.delay.max);
+        witch.character.lightMagicSkill.delay.current = UpdateTimer(witch.character.lightMagicSkill.delay.current, witch.character.lightMagicSkill.delay.max);
+        witch.character.heavyMagicSkill.delay.current = UpdateTimer(witch.character.heavyMagicSkill.delay.current, witch.character.heavyMagicSkill.delay.max);
         
-        character.lightMagicSkill.duration.current = character.UpdateDurationMagic(character.lightMagicSkill);
-        character.heavyMagicSkill.duration.current = character.UpdateDurationMagic(character.heavyMagicSkill);
+        witch.character.lightMagicSkill.duration.current = witch.character.UpdateDurationMagic(witch.character.lightMagicSkill);
+        witch.character.heavyMagicSkill.duration.current = witch.character.UpdateDurationMagic(witch.character.heavyMagicSkill);
 
         // <Edit> Revert when the buff duration is over
         // if duration >= maxDuration
-        if(character.lightMagicSkill.duration.current >=  character.lightMagicSkill.duration.max && character.lightMagicSkill.casted){
-            character.RevertMagic(character.lightMagicSkill);
+        if(witch.character.lightMagicSkill.duration.current >=  witch.character.lightMagicSkill.duration.max && witch.character.lightMagicSkill.casted){
+            witch.character.RevertMagic(witch.character.lightMagicSkill);
             // <Edit> Pindahkan magic casted pada character
             //character.lightMagicSkill.magicCasted = false;
         }
-        if(character.heavyMagicSkill.duration.current >=  character.heavyMagicSkill.duration.max && character.heavyMagicSkill.casted){
-            character.RevertMagic(character.heavyMagicSkill);
+        if(witch.character.heavyMagicSkill.duration.current >= witch.character.heavyMagicSkill.duration.max && witch.character.heavyMagicSkill.casted){
+            witch.character.RevertMagic(witch.character.heavyMagicSkill);
             // <Edit> Pindahkan magic casted pada character
             //character.heavyMagicSkill.magicCasted = false;
         }
     }
 
     void GuardControl(){
-        if(!_possessingBall && (character.guard.available)){
-            character.guard.current = 0f;
+        if(!_possessingBall && (witch.character.guard.available)){
+            witch.character.guard.current = 0f;
         }
-        character.getTackledDelay.current = UpdateTimer(character.getTackledDelay.current, character.getTackledDelay.max);
+        witch.character.getTackledDelay.current = UpdateTimer(witch.character.getTackledDelay.current, witch.character.getTackledDelay.max);
         // Handle all the tackle and income damage here
         // if possessing && if(guard && health > 0)
     }
@@ -329,14 +333,14 @@ public class WitchController : MonoBehaviour
         // Need to check first if its possessing
         if(_possessingBall){
             // Guard
-            if(character.guard.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
-                character.guard.current -= guardReduced;
+            if(witch.character.guard.available && (witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max)){
+                witch.character.guard.current -= guardReduced;
             }
-            if(character.guard.empty) {
-                character.guard.current = 0;
+            if(witch.character.guard.empty) {
+                witch.character.guard.current = 0;
                 // Do short stun
-                character.stunnedDuration.current = 5f;
-                Debug.Log("Short stunned! Guard:" + character.guard.current + ", HP:" +character.healthPoint.current);
+                witch.character.stunnedDuration.current = 5f;
+                Debug.Log("Short stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
                 BallReleasing();
             }
             Debug.Log("Tackled when possesses"+_possessingBall);
@@ -344,25 +348,25 @@ public class WitchController : MonoBehaviour
         // Move these codes into above block to not let player loss the HP when in guard. 
         // Health Point
         //Debug.Log(character.healthPoint.available + " " + (character.getTackledDelay.current >= character.getTackledDelay.max));
-        if(character.healthPoint.available && (character.getTackledDelay.current >= character.getTackledDelay.max)){
-            character.healthPoint.current -= healthReduced;
+        if(witch.character.healthPoint.available && (witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max)){
+            witch.character.healthPoint.current -= healthReduced;
         }
         //Debug.Log("GetTackledDelay: "+character.getTackledDelay.current);
-        if(character.healthPoint.empty) {
-            character.healthPoint.current = 0;
-            character.guard.current       = 0;
+        if(witch.character.healthPoint.empty) {
+            witch.character.healthPoint.current = 0;
+            witch.character.guard.current       = 0;
             // Do long stun
-            character.stunnedDuration.current = 10f;
-            Debug.Log("Long stunned! Guard:" + character.guard.current + ", HP:" +character.healthPoint.current);
+            witch.character.stunnedDuration.current = 10f;
+            Debug.Log("Long stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
             if(_possessingBall){
                 BallReleasing();
                 Debug.Log("Ball Released because Long Stun.");
             }
         }
-        Debug.Log("Guard: "+character.guard.current +" .HP: "+character.healthPoint.current);
+        Debug.Log("Guard: "+witch.character.guard.current +" .HP: "+witch.character.healthPoint.current);
         
-        character.getTackledDelay.current = 0f;
-        Debug.Log("GetTackledDelay: "+character.getTackledDelay.current);
+        witch.character.getTackledDelay.current = 0f;
+        Debug.Log("GetTackledDelay: "+witch.character.getTackledDelay.current);
     }
 
     public void Damaged(float guardReduced, float healthReduced){
@@ -382,8 +386,8 @@ public class WitchController : MonoBehaviour
         // If in previous state ball is free, refresh the guard
         if(ball.GetComponent<Ball>().ballState != Ball.BallState.Possessed){// <Edit later> Check in oncollisionenter
             _possessingBall = true;
-            character.guard.current    = character.guard.max;
-            Debug.Log("Guard:"+character.guard.current);
+            witch.character.guard.current    = witch.character.guard.max;
+            Debug.Log("Guard:"+witch.character.guard.current);
             ball.GetComponent<Ball>().Possessed(this);
         }
         // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
@@ -456,10 +460,10 @@ public class WitchController : MonoBehaviour
         //if(other.gameObject.name == "damageCollider") {
             Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
-            if(character.getTackledDelay.current >= character.getTackledDelay.max){
+            if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
                 Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
-                Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
-                character.getTackledDelay.current = 0f;
+                Tackled(witch.character.tackledDamageToGuard.current, witch.character.tackledDamageToHealth.current);
+                witch.character.getTackledDelay.current = 0f;
                 // <Edit later> Attacker get a manna. 
                 // <Edit later> AddForce to the damaged witch
             }
@@ -475,24 +479,24 @@ public class WitchController : MonoBehaviour
         //if(other.gameObject.name == "damageCollider") {
             Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
-            if(character.getTackledDelay.current >= character.getTackledDelay.max){
+            if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
                 Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
-                Tackled(character.tackledDamageToGuard.current, character.tackledDamageToHealth.current);
-                character.getTackledDelay.current = 0f;
+                Tackled(witch.character.tackledDamageToGuard.current, witch.character.tackledDamageToHealth.current);
+                witch.character.getTackledDelay.current = 0f;
                 // <Edit later> Attacker get a manna. 
                 // <Edit later> AddForce to the damaged witch
             }
         }
         // MysteryBox
         if(other.gameObject.tag == "MysteryBox") { 
-            if(character.usedMysteryBox == null) {
+            if(witch.character.usedMysteryBox == null) {
                 other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
             }
         }
 
         if(other.gameObject.tag == "Rock"){
-            if(character.getTackledDelay.current >= character.getTackledDelay.max){
+            if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
                 // <Edit later> Need to change the force when the ball is released
                 Rock rock = other.gameObject.GetComponent<Rock>();
                 Debug.Log(gameObject.name + " damaged by" + rock.gameObject.name);
@@ -515,7 +519,7 @@ public class WitchController : MonoBehaviour
                 //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
                 //Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
 
-                character.getTackledDelay.current = 0f;
+                witch.character.getTackledDelay.current = 0f;
             }
         }
 
@@ -529,7 +533,7 @@ public class WitchController : MonoBehaviour
         // <Edit later>
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
         // Ball 
-        if(other.gameObject == ball && character.stunnedDuration.current <= 0) {
+        if(other.gameObject == ball && witch.character.stunnedDuration.current <= 0) {
             if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
                 // <Edit later> Must be Ballpossessing()
                 BallPossessing();
@@ -541,14 +545,14 @@ public class WitchController : MonoBehaviour
     }
 
     void MysteryBoxControl(){
-        if(character.usedMysteryBox != null){
+        if(witch.character.usedMysteryBox != null){
             //Debug.Log(character.usedMysteryBox.duration);
             // If already casted
-            if(character.usedMysteryBox.duration > 0 && character.usedMysteryBox.casted) {
-                character.usedMysteryBox.duration -= Time.deltaTime;
-            } else if (character.usedMysteryBox.duration <= 0 && character.usedMysteryBox.casted) {
+            if(witch.character.usedMysteryBox.duration > 0 && witch.character.usedMysteryBox.casted) {
+                witch.character.usedMysteryBox.duration -= Time.deltaTime;
+            } else if (witch.character.usedMysteryBox.duration <= 0 && witch.character.usedMysteryBox.casted) {
                 
-                character.RevertMysteryBox(character.usedMysteryBox);
+                witch.character.RevertMysteryBox(witch.character.usedMysteryBox);
             }
             
         }

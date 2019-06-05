@@ -50,9 +50,9 @@ public class MysteryBox : MonoBehaviour
 
         // Need to check if the player's box is null or not, and if its casting still or not
         if(affectTo == MagicSkill.AffectTo.Self){
-            if(casterWitch.character.usedMysteryBox == null) {
+            if(casterWitch.witch.character.usedMysteryBox == null) {
                 //if(!casterWitch.character.usedMysteryBox.casted){ // <Error> No need to check if its casted
-                    casterWitch.character.CastMysteryBox(this);
+                    casterWitch.witch.character.CastMysteryBox(this);
                     Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + casterWitch.gameObject.name);
                 //}
             } else {
@@ -63,8 +63,8 @@ public class MysteryBox : MonoBehaviour
             if(casterWitch.teamMatesWitches.Length >= 1){
                 int r = Random.Range(0, casterWitch.teamMatesWitches.Length);
                 GameObject teamMate = casterWitch.teamMatesWitches[r].gameObject;
-                if(teamMate.GetComponent<WitchController>().character.usedMysteryBox == null){ // casted?
-                    teamMate.GetComponent<WitchController>().character.CastMysteryBox(this);
+                if(teamMate.GetComponent<WitchController>().witch.character.usedMysteryBox == null){ // casted?
+                    teamMate.GetComponent<WitchController>().witch.character.CastMysteryBox(this);
                     Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + teamMate.name);
                 } else {
                     Debug.Log("Casting MysteryBox Failed.");
@@ -79,8 +79,8 @@ public class MysteryBox : MonoBehaviour
             foreach (GameObject w in allWitches)
             {
                 if(w.GetComponent<WitchController>().teamParty == casterWitch.teamParty){
-                    if(w.GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
-                        w.GetComponent<WitchController>().character.CastMysteryBox(this);
+                    if(w.GetComponent<WitchController>().witch.character.usedMysteryBox == null){ //casted?
+                        w.GetComponent<WitchController>().witch.character.CastMysteryBox(this);
                         Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + w.name);
                     } else {
                         Debug.Log("Casting MysteryBox Failed.");
@@ -98,8 +98,8 @@ public class MysteryBox : MonoBehaviour
             }
             if(allOpponents.Count >= 1){
                 int r = Random.Range(0, allOpponents.Count);
-                if(allOpponents[r].GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
-                    allOpponents[r].GetComponent<WitchController>().character.CastMysteryBox(this);
+                if(allOpponents[r].GetComponent<WitchController>().witch.character.usedMysteryBox == null){ //casted?
+                    allOpponents[r].GetComponent<WitchController>().witch.character.CastMysteryBox(this);
                     Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + allOpponents[r].name);
                 } else {
                     Debug.Log("Casting MysteryBox Failed.");
@@ -122,8 +122,8 @@ public class MysteryBox : MonoBehaviour
                 foreach (GameObject w in allOpponents)
                 {
                     if(w.GetComponent<WitchController>().teamParty != casterWitch.teamParty){
-                        if(w.GetComponent<WitchController>().character.usedMysteryBox == null){ //casted?
-                            w.GetComponent<WitchController>().character.CastMysteryBox(this);
+                        if(w.GetComponent<WitchController>().witch.character.usedMysteryBox == null){ //casted?
+                            w.GetComponent<WitchController>().witch.character.CastMysteryBox(this);
                             Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + w.name);
                         } else {
                             Debug.Log("Casting MysteryBox Failed.");
