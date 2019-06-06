@@ -65,12 +65,14 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\PotionPreset.cs" />
      <Compile Include="Assets\Scripts\Rock.cs" />
+     <Compile Include="Assets\Scripts\SkyboxRotator.cs" />
      <Compile Include="Assets\Scripts\Smoke.cs" />
      <Compile Include="Assets\Scripts\StatModifier.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\Witch.cs" />
      <Compile Include="Assets\Scripts\WitchController.cs" />
+     <None Include="Assets\Resources\Skyboxes\Readme.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/Bagus/Workspace/Unity Workspace/Witch Football/Witch-Football/Witch Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

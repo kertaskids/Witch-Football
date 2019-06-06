@@ -123,7 +123,7 @@ public class WitchController : MonoBehaviour
         /*---------------TESTING ONLY --------------- */
 
         // Direction  
-        if(Input.GetAxis(playerInput.HorizontalMove) < -0.2){
+        /* if(Input.GetAxis(playerInput.HorizontalMove) < -0.2){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
@@ -138,7 +138,21 @@ public class WitchController : MonoBehaviour
         if(Input.GetAxis(playerInput.VerticalMove) < -0.2){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
-        } 
+        } */
+        horizontal = Input.GetAxis(playerInput.HorizontalMove);
+        vertical = Input.GetAxis(playerInput.VerticalMove);
+        float angle;
+        angle = Mathf.Atan2(horizontal, vertical);
+        angle = Mathf.Rad2Deg * angle;
+        //angle += Camera.main.transform.eulerAngles.y;
+        Quaternion targetdir = Quaternion.Euler(0, angle, 0);
+        if(horizontal > -0.2 && horizontal < 0.2 && vertical < 0.2 && vertical > -0.2){
+            //Idle
+        } else {
+            transform.localRotation = Quaternion.Slerp(transform.rotation, targetdir, 10*Time.deltaTime);
+        }
+        
+        
         //Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
         //Debug.Log("H, V: " + horizontal + ", " + vertical);
         _rigidbody.MovePosition(new Vector3(transform.position.x + witch.character.moveSpeed.current * horizontal * Time.deltaTime,
@@ -177,6 +191,8 @@ public class WitchController : MonoBehaviour
             // Shoot
             if(Input.GetButtonDown(playerInput.ShootOrTackle) && (witch.character.shootDelay.current >= witch.character.shootDelay.max)){
                 if(_possessingBall && ball != null){
+                    //ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
+                    //Debug.Break();
                     BallReleasing();
                     // Check the rotation and the velocity before adding a force of shoot.
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -195,6 +211,7 @@ public class WitchController : MonoBehaviour
                     // Find the closest teammate then pass the ball toward it.
                     // Check closest teammate, and assign it.   
                     if(GetClosestTeamMate()!=null){
+                        //ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
                         BallReleasing();
                         // Needto check, if the closest team mates if not active, just pass forward. 
                         Transform teamMate = GetClosestTeamMate().transform;
