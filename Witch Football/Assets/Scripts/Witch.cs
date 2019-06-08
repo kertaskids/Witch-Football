@@ -176,7 +176,7 @@ public static class WitchBase {
             witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
             witch.character.stunnedDuration         = new CharacterStat(0f, 10f);
 
-            witch.character.lightMagicSkill = DefaultMagicSkill.LightBoost;
+            witch.character.lightMagicSkill = DefaultMagicSkill.LightBoost; 
             witch.character.heavyMagicSkill = DefaultMagicSkill.HeavyBoost; 
             return witch;
         }

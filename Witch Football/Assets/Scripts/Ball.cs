@@ -34,16 +34,20 @@ public class Ball : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
+        gameObject.transform.parent = witch.gameObject.transform;
+        gameObject.transform.localRotation = Quaternion.identity;
+
 
         // When the ball is posessed by player, the collider is trough.
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }
     public void Released(BallState ballState){
+        
         // When the ball is posessed by player, the collider is trough.
         gameObject.GetComponent<SphereCollider>().enabled = true;
         Debug.Log("Ball released from: "+lastToucher.gameObject.name);
         this.possesingWitch  = null;
         this.ballState       = ballState;
-        
+        gameObject.transform.parent = null;
     }
 }

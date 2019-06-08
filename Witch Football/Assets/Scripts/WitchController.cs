@@ -15,6 +15,7 @@ public class WitchController : MonoBehaviour
     public bool _isTackling; // = false;
     public GameObject ball; 
     public GameObject ballPosition;
+    public GameObject ballPosition1;
     
     void Start(){
         playerInput = PlayerInput.GetPlayer((int)playerID);
@@ -191,9 +192,11 @@ public class WitchController : MonoBehaviour
             // Shoot
             if(Input.GetButtonDown(playerInput.ShootOrTackle) && (witch.character.shootDelay.current >= witch.character.shootDelay.max)){
                 if(_possessingBall && ball != null){
-                    //ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
+                    ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
                     //Debug.Break();
                     BallReleasing();
+                    //ball.transform.position = ballPosition1.transform.position;
+                    //Debug.Break();
                     // Check the rotation and the velocity before adding a force of shoot.
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
@@ -211,14 +214,19 @@ public class WitchController : MonoBehaviour
                     // Find the closest teammate then pass the ball toward it.
                     // Check closest teammate, and assign it.   
                     if(GetClosestTeamMate()!=null){
-                        //ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
-                        BallReleasing();
-                        // Needto check, if the closest team mates if not active, just pass forward. 
+                         // Needto check, if the closest team mates if not active, just pass forward. 
                         Transform teamMate = GetClosestTeamMate().transform;
                         Vector3 teamMateDir = teamMate.position - transform.position;
                         // To make Y angle static, delete this.
                         //teamMateDir.y = 0;
                         transform.rotation = Quaternion.LookRotation(teamMateDir);
+                        
+                        ball.transform.localPosition += new Vector3(0f, 0f, 0.3f);
+                        BallReleasing();
+                        //ball.transform.position = ballPosition1.transform.position;
+                        
+                        //Debug.Break();
+                       
                         // If the ball is a passing ball, move the ball smoothly towards teammate except it is interrupted. 
                         // Check the rotation and the velocity before adding a force of pass.
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -293,7 +301,7 @@ public class WitchController : MonoBehaviour
             }
         }
         // Heavy Magic
-        if(Input.GetButtonDown(playerInput.LightMagic)){
+        if(Input.GetButtonDown(playerInput.HeavyMagic)){
             // Check the TimeUse first
             if(witch.character.heavyMagicSkill.delay.current >= witch.character.heavyMagicSkill.delay.max && !witch.character.heavyMagicSkill.casted){
                 if(witch.character.manna.current >= witch.character.heavyMagicSkill.mannaNeed){
@@ -423,8 +431,8 @@ public class WitchController : MonoBehaviour
             }
         }
     }
-    
-    public void BallReleasing(bool addForce = false){
+    //<Edit later> BallReleasing(direction, velocity, angularvelocity, force)
+    public void BallReleasing(bool addForce = true){
         // Need to check why the ball is releasing
         // character.guard.current = 0f; Already defined in GuardControl();
         _possessingBall = false;
@@ -524,13 +532,13 @@ public class WitchController : MonoBehaviour
                     GameObject.Find("Ball").GetComponent<Rigidbody>().position = new Vector3(transform.position.x,
                                                                                          transform.position.y + 0.5f, transform.position.z);
                     //Debug.Break();
-                    /* 
+                    
                     ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
                     ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                     ball.transform.rotation = Quaternion.identity; //<Need to change apparently>
-                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * character.shootPower.current, ForceMode.Impulse);
-                    */
+                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
+                    
                 }
                 transform.rotation = Quaternion.LookRotation(rock.transform.position - transform.position);
                 //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
