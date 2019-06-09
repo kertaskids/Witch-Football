@@ -209,68 +209,43 @@ public class Tile : MonoBehaviour
         else if(tileType == TileType.Spiky){
             // Only impact the CollidedWitches
             Transform trap = transform.Find("Trap");
-            if(_typePerformed){
-                // <Edit later> if trap != null
-                if(trap.gameObject.activeSelf){
-                    trap.gameObject.SetActive(false);   
-                } else {
-                    _typeDelay = _typeDelay + 1 * Time.deltaTime;
-                    if(_typeDelay > typeMaxDelay){
-                        _typePerformed = false;
-                        _typeDelay = 0;
-                        trap.gameObject.SetActive(false);
-
-                        if(_collidedWitches.Count > 0){
-                            foreach (GameObject w in _collidedWitches){
-                                // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
-                                // Need to check the ball possesion too 
-                                WitchController wc = w.GetComponent<WitchController>();
-                                Debug.Log("GetTackledDelayRemain: "+wc.witch.character.getTackledDelay.current);
-                                if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
-                                    w.GetComponent<WitchController>().Damaged(1f, 1f); 
-                                    w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
-                                    w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                                    Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
-                                }
-                            }
-                        } 
-                    }
-                }
-            }
             if(!_typePerformed){
-                //Debug.Log(gameObject.name+" has children: "+transform.childCount);
-                if(trap.gameObject.activeSelf){
-                    _typeDuration = _typeDuration - 1 * Time.deltaTime;
-                    if(_typeDuration < 0){
-                        _typePerformed = true;
-                        _typeDuration  = typeMaxDuration;
-                        trap.gameObject.SetActive(false);
-                    }
-                } else {
+                if(_typeDelay < typeMaxDelay) {
+                    _typeDelay += Time.deltaTime;
+                } else { // delay full
                     trap.gameObject.SetActive(true);
-                    //trap.GetComponent<BoxCollider>().enabled  = true; // <Delete> this, only need the Renderer
-                    
-                    // <Edit later> move these to witch?, collidewitch should be an array
-                    if(_collidedWitches.Count > 0) {
-                        // <Edit later> Need to check the ball possesion too 
-                        foreach (GameObject w in _collidedWitches)
-                        {
-                            // <Edit later> Need to check first if its Still in tackled duration (invulnerable)
-                            // Need to check the ball possesion too 
-                            WitchController wc = w.GetComponent<WitchController>();
-                            Debug.Log("GetTackledDelayRemain: "+wc.witch.character.getTackledDelay.current);
-                            if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
-                                w.GetComponent<WitchController>().Damaged(1f, 1f); 
-                                w.transform.rotation = Quaternion.LookRotation(transform.position - w.transform.position);
-                                w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
-                                Debug.Log("Collide with:" + w.name + " Direction:" + w.transform.rotation);
+                    _typeDuration = typeMaxDuration;
+                    _typePerformed = true;
+                }
+            } else { //typePerformed
+                if(_typeDuration > 0) {
+                    _typeDuration -= Time.deltaTime;
+                    //if(trap.gameObject.activeSelf) {
+                      //  trap.gameObject.SetActive(true);
+                    //}
+                    foreach (GameObject w in _collidedWitches){
+                    WitchController wc = w.GetComponent<WitchController>();
+                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
+                        w.transform.rotation = Quaternion.LookRotation(w.transform.position - transform.position);
+                        w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
+                        wc.Damaged(1f, 1f);
+                        Debug.Log(gameObject.name + " collide with " + w.name + " direction:" + w.transform.rotation);
+                        GameObject b = GameObject.FindWithTag("Ball");
+                        // <Edit later> Add force to the ball either before or after the witch rotation
+                        if(wc.witch.character.guard.current <= 0 || wc.witch.character.healthPoint.current <= 0){
+                            b.transform.position = w.transform.Find("BallPosition").position;
                             }
-                            
                         }
                     }
+                } 
+                else { // duration is empty
+                    trap.gameObject.SetActive(false);   
+                    _typeDelay = 0f; 
+                    _typePerformed = false;
                 }
-            }  
-            // <Edit later> if not collided, animation off immediatelly. 
+            }
+            Debug.Log("delay, duration" + _typeDelay + " " + _typeDuration);
+            // If(collided witch is 0, immediatelly _typeperform false)
         }
         else if (tileType == TileType.FallingRock) {
             if(_typeDelay <= 0f) {
@@ -364,7 +339,9 @@ public class Tile : MonoBehaviour
             PerformType();
         }
         OnRangeTrigger();
+        // <Edit later> Merge these methods. Then move it to the Fixed or LateUpdate. 
         UpdateShootingSprite();
+        UpdateSpiky();
     }
 
     void OnCollisionEnter(Collision other) {        
@@ -428,6 +405,28 @@ public class Tile : MonoBehaviour
                 }
             }
         }
+    }
+    void UpdateSpiky(){
+        if(tileType == TileType.Spiky){
+            if(_collidedWitches == null || _collidedWitches.Count <= 0){
+                /* if(_typePerformed) {
+                    Transform trap = transform.Find("Trap");
+                    trap.gameObject.SetActive(false);   
+                    _typeDelay = 0f; 
+                    _typePerformed = false;
+                }*/
+                if(_typeDuration > 0) {
+                    _typeDuration -= Time.deltaTime;
+                } else { // duration is empty
+                    Transform trap = transform.Find("Trap");
+                    trap.gameObject.SetActive(false);   
+                    _typeDelay = 0f; 
+                    _typePerformed = false;
+                }
+
+            }
+        }
+
     }
 }
 

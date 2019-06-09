@@ -172,7 +172,9 @@ public class Match : MonoBehaviour
             foreach (GameObject w in allWitches)
             {
                 if(w.GetComponent<WitchController>()._possessingBall) {
-                    w.GetComponent<WitchController>().BallReleasing();
+                    //w.GetComponent<WitchController>().BallReleasing();
+                    w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, 1 * transform.up * w.GetComponent<WitchController>().witch.character.shootPower.current);
+                
                 }
             }
             SetupMatch();

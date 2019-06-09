@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45369852, g: 0.76414603, b: 0.8659574, a: 1}
+  m_IndirectSpecularColor: {r: 0.40630087, g: 0.6893488, b: 0.7831646, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1083,6 +1083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile Shooting
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: 2f27edda3d99e6c4ca4996b2d344431b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: 2f27edda3d99e6c4ca4996b2d344431b,
         type: 3}
@@ -2837,6 +2842,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile FallingRock
       objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: 13568747b089ff8409fdeec94b0e8a97,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: 13568747b089ff8409fdeec94b0e8a97,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3925,7 +3935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1059708774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4199,6 +4209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile Exploding
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: 1f5ae2e22617487438de8ddbbef61309,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: 1f5ae2e22617487438de8ddbbef61309,
         type: 3}
@@ -4476,6 +4491,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile Base
       objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: 3b1026cbae3fc1948951c2eeb68c293e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: 3b1026cbae3fc1948951c2eeb68c293e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4656,7 +4676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 1
-  baseClass: 1
+  baseClass: 4
   teamMatesWitches: []
   teamParty: 1
   _possessingBall: 0
@@ -5666,6 +5686,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile Spiky
       objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: fc9eec1dc0f3ade4a92e4938cc859658,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: fc9eec1dc0f3ade4a92e4938cc859658,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5720,6 +5745,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622687, guid: fc9eec1dc0f3ade4a92e4938cc859658,
+        type: 3}
+      propertyPath: triggerType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622687, guid: fc9eec1dc0f3ade4a92e4938cc859658,
+        type: 3}
+      propertyPath: typeMaxDuration
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc9eec1dc0f3ade4a92e4938cc859658, type: 3}
@@ -6914,6 +6949,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile MysteryBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622656, guid: 7576c2f10e49ceb4e8f5080439c76713,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1076550976528622683, guid: 7576c2f10e49ceb4e8f5080439c76713,
         type: 3}
@@ -8200,7 +8240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1964189548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8841,7 +8881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &2015435765
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8928,7 +8968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2025507201
 Transform:
   m_ObjectHideFlags: 0
@@ -9691,6 +9731,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WitchBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 71184867770618398, guid: e431009689781914bbff13f1f705b14f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 71184867770618394, guid: e431009689781914bbff13f1f705b14f,
         type: 3}

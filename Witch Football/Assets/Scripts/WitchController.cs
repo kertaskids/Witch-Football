@@ -235,8 +235,7 @@ public class WitchController : MonoBehaviour
             // Pass
             if(Input.GetButtonDown(playerInput.PassOrFollow) && (witch.character.passDelay.current >= witch.character.passDelay.max)){
                 if(_possessingBall && ball != null){
-                    // Find the closest teammate then pass the ball toward it.
-                    // Check closest teammate, and assign it.   
+                    // Find the closest teammate then pass the ball toward it if any.  
                     if(GetClosestTeamMate()!=null){
                          // Needto check, if the closest team mates if not active, just pass forward. 
                         Transform teamMate = GetClosestTeamMate().transform;
@@ -245,8 +244,7 @@ public class WitchController : MonoBehaviour
                         //teamMateDir.y = 0;
                         transform.rotation = Quaternion.LookRotation(teamMateDir);
                         
-                        ball.transform.localPosition += new Vector3(0f, 0f, 0.3f);
-                        Debug.Break();
+                        /* ball.transform.localPosition += new Vector3(0f, 0f, 0.3f);
                         BallReleasing();
                         //ball.transform.position = ballPosition1.transform.position;
                         
@@ -258,19 +256,26 @@ public class WitchController : MonoBehaviour
                         ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         ball.transform.rotation = Quaternion.identity;
                         ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
-                        
-                        //_possessingBall        = false;
-                        witch.character.passDelay.current    = 0f;
+                        */
                         Debug.Log("Pass! Power: " + witch.character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
                     } else {
                         Debug.Log("You have no friend :'(");
-                        BallReleasing();
+                        /* BallReleasing();
                         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                         ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
-                        
-                        //_possessingBall        = false;
-                        witch.character.passDelay.current    = 0f;
+                        */
                     }
+                    //_possessingBall        = false;
+                    //Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                    //Vector3 vel = ball.transform.forward;
+                    //vel += new Vector3(0,2,0);
+                    //BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
+                    
+                    ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
+                    BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.passPower.current);
+                    
+
+                    witch.character.passDelay.current    = 0f;
                 }
             }
         }else{
@@ -391,7 +396,12 @@ public class WitchController : MonoBehaviour
                 // Do short stun
                 witch.character.stunnedDuration.current = 5f;
                 Debug.Log("Short stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
-                BallReleasing();
+                //BallReleasing();
+                Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                Vector3 vel = ball.transform.forward;
+                vel += new Vector3(0,1,0);
+                BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);   
+
             }
             Debug.Log("Tackled when possesses"+_possessingBall);
         } 
@@ -409,12 +419,17 @@ public class WitchController : MonoBehaviour
             witch.character.stunnedDuration.current = 10f;
             Debug.Log("Long stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
             if(_possessingBall){
-                BallReleasing();
+                Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                Vector3 vel = ball.transform.forward;
+                vel += new Vector3(0,1,0);
+                BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
+                
+                //BallReleasing();
                 Debug.Log("Ball Released because Long Stun.");
             }
         }
         Debug.Log("Guard: "+witch.character.guard.current +" .HP: "+witch.character.healthPoint.current);
-        
+        //Debug.Break();
         witch.character.getTackledDelay.current = 0f;
         Debug.Log("GetTackledDelay: "+witch.character.getTackledDelay.current);
     }
@@ -468,7 +483,7 @@ public class WitchController : MonoBehaviour
         //targetDir.y += 0.5f;
         
         ball.GetComponent<Ball>().Released(Ball.BallState.Free);
-        ball.transform.rotation = rotation;
+        //ball.transform.rotation = rotation;
         Rigidbody ballRigidBody = ball.GetComponent<Rigidbody>(); 
         ballRigidBody.velocity  = velocity;
         ballRigidBody.angularVelocity = angularVelocity;
@@ -579,21 +594,28 @@ public class WitchController : MonoBehaviour
                 Rock rock = other.gameObject.GetComponent<Rock>();
                 Debug.Log(gameObject.name + " damaged by" + rock.gameObject.name);
                 Damaged(rock.damageGuard, rock.damageHealth);
+                Physics.IgnoreCollision(ball.GetComponent<SphereCollider>(), rock.gameObject.GetComponent<BoxCollider>(), true);
+                //transform.rotation = Quaternion.LookRotation(rock.transform.position - transform.position);
                 
                 if(_possessingBall){
-                    BallReleasing();
-                    GameObject.Find("Ball").GetComponent<Rigidbody>().position = new Vector3(transform.position.x,
-                                                                                         transform.position.y + 0.5f, transform.position.z);
-                    //Debug.Break();
+                    Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                    Vector3 vel = ball.transform.forward;
+                    vel += new Vector3(0,2,0);
+                    BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
                     
-                    ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    
+                    //BallReleasing();
+                    //GameObject.Find("Ball").GetComponent<Rigidbody>().position = new Vector3(transform.position.x,
+                    //                                                                     transform.position.y + 0.5f, transform.position.z);
+                    
+                    /* ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
                     ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                     ball.transform.rotation = Quaternion.identity; //<Need to change apparently>
                     ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
-                    
+                    */
                 }
-                transform.rotation = Quaternion.LookRotation(rock.transform.position - transform.position);
+                
                 //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
                 //Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
 
