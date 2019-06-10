@@ -12,10 +12,9 @@ public class WitchController : MonoBehaviour
     public Team.TeamParty teamParty;
     private Rigidbody _rigidbody;
     public bool _possessingBall;
-    public bool _isTackling; // = false;
+    public bool _isTackling; 
     public GameObject ball; 
     public GameObject ballPosition;
-    public GameObject ballPosition1;
     
     void Start(){
         playerInput = PlayerInput.GetPlayer((int)playerID);
@@ -153,8 +152,9 @@ public class WitchController : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(transform.rotation, targetdir, 10*Time.deltaTime);
         }
         
-        
-        //Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
+        /* if(playerID == PlayerInput.ID.Player2){
+            Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
+        }*/
         //Debug.Log("H, V: " + horizontal + ", " + vertical);
         _rigidbody.MovePosition(new Vector3(transform.position.x + witch.character.moveSpeed.current * horizontal * Time.deltaTime,
                                             transform.position.y, 
@@ -293,7 +293,7 @@ public class WitchController : MonoBehaviour
                 _isTackling = false;
             }
             // Follow 
-            if(Input.GetButtonDown(playerInput.PassOrFollow) && (witch.character.followDelay.current >= witch.character.followDelay.max)){
+            if(Input.GetButton(playerInput.PassOrFollow) && (witch.character.followDelay.current >= witch.character.followDelay.max)){
                 Debug.Log("Follow");
                 // Check if there is no team possesing the ball  
                 Vector3 ballDir     = ball.transform.position - transform.position;
@@ -397,7 +397,7 @@ public class WitchController : MonoBehaviour
                 witch.character.stunnedDuration.current = 5f;
                 Debug.Log("Short stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
                 //BallReleasing();
-                Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                Vector3 startPos = new Vector3(ballPosition.transform.position.x, ballPosition.transform.position.y + 1.5f, ballPosition.transform.position.z); 
                 Vector3 vel = ball.transform.forward;
                 vel += new Vector3(0,1,0);
                 BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);   
@@ -419,7 +419,7 @@ public class WitchController : MonoBehaviour
             witch.character.stunnedDuration.current = 10f;
             Debug.Log("Long stunned! Guard:" + witch.character.guard.current + ", HP:" + witch.character.healthPoint.current);
             if(_possessingBall){
-                Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
+                Vector3 startPos = new Vector3(ballPosition.transform.position.x, ballPosition.transform.position.y + 1.5f, ballPosition.transform.position.z); 
                 Vector3 vel = ball.transform.forward;
                 vel += new Vector3(0,1,0);
                 BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
@@ -555,8 +555,10 @@ public class WitchController : MonoBehaviour
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
             if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
                 Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
+                // <Edit later> Check if later the HP is zero and player possessing the ball, then addforce to the ball. 
                 Tackled(witch.character.tackledDamageToGuard.current, witch.character.tackledDamageToHealth.current);
                 witch.character.getTackledDelay.current = 0f;
+                Debug.Break();
                 // <Edit later> Attacker get a manna. 
                 // <Edit later> AddForce to the damaged witch
             }
@@ -564,11 +566,11 @@ public class WitchController : MonoBehaviour
     }
     void OnCollisionEnter(Collision other) {
          // <Edit later> Collide with witch should be in OnCollisionStay. Or, make temp bool to store elapsed tackle
-         if(other.gameObject.tag == "Witch"){
+         /* if(other.gameObject.tag == "Witch"){
              Debug.Log("Collide with " + other.gameObject.name);
-         }
+         }*/
         // Tackled 
-        if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
+        /* if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
         //if(other.gameObject.name == "damageCollider") {
             Debug.Log("Collide with " + other.gameObject.name);
             //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
@@ -577,9 +579,9 @@ public class WitchController : MonoBehaviour
                 Tackled(witch.character.tackledDamageToGuard.current, witch.character.tackledDamageToHealth.current);
                 witch.character.getTackledDelay.current = 0f;
                 // <Edit later> Attacker get a manna. 
-                // <Edit later> AddForce to the damaged witch
+                // <Edit later> AddForce to the damaged witch & Set position
             }
-        }
+        }*/
         // MysteryBox
         if(other.gameObject.tag == "MysteryBox") { 
             if(witch.character.usedMysteryBox == null) {
