@@ -69,34 +69,6 @@ public class WitchController : MonoBehaviour
         } else {
             witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
-
-        /* -------FOR TESTING ONLY ---------*/
-        if(Input.GetButtonDown(playerInput.StartOrPause)){
-            Debug.Log("Start1 is pressed");
-        }
-        if(Input.GetButton(playerInput.HorizontalMove)){
-            Debug.Log("HMOVE");
-        }
-        if(Input.GetButton(playerInput.VerticalMove)){
-            Debug.Log("VMOve");
-        }
-        if(Input.GetButtonDown(playerInput.PassOrFollow)){
-            Debug.Log("pass");
-        }
-        if(Input.GetButtonDown(playerInput.ShootOrTackle)){
-            //Debug.Log("tackle");
-        }
-        if(Input.GetButtonDown(playerInput.LightMagic)){
-            Debug.Log("Light");
-        }
-        if(Input.GetButtonDown(playerInput.HeavyMagic)){
-            Debug.Log("Heavy");
-        }
-        if(Input.GetButtonDown(playerInput.Jump)){
-            //Debug.Log("Jump");
-            Debug.Log(playerInput.Jump);
-        }
-        /* -------FOR TESTING ONLY ---------*/
     }
 
     void MoveControl(){
@@ -121,29 +93,14 @@ public class WitchController : MonoBehaviour
             vertical = -1f;    
         }*/
         /*---------------TESTING ONLY --------------- */
-
-        // Direction  
-        /* if(Input.GetAxis(playerInput.HorizontalMove) < -0.2){
-            transform.localEulerAngles = new Vector3 (0, -90, 0);
-            horizontal = -1f;    
-        } 
-        if(Input.GetAxis(playerInput.HorizontalMove) > 0.2){
-            transform.localEulerAngles = new Vector3 (0, 90, 0);
-            horizontal = 1f;    
-        } 
-        if(Input.GetAxis(playerInput.VerticalMove) > 0.2){
-            transform.localEulerAngles = new Vector3 (0, 0, 0);
-            vertical = 1f;    
-        }
-        if(Input.GetAxis(playerInput.VerticalMove) < -0.2){
-            transform.localEulerAngles = new Vector3 (0, 180, 0);
-            vertical = -1f;    
-        } */
+        
+        // Direction
         horizontal = Input.GetAxis(playerInput.HorizontalMove);
         vertical = Input.GetAxis(playerInput.VerticalMove);
         float angle;
         angle = Mathf.Atan2(horizontal, vertical);
         angle = Mathf.Rad2Deg * angle;
+        //uncomment this if the camera rotation in dynamic
         //angle += Camera.main.transform.eulerAngles.y;
         Quaternion targetdir = Quaternion.Euler(0, angle, 0);
         if(horizontal > -0.2 && horizontal < 0.2 && vertical < 0.2 && vertical > -0.2){
@@ -152,10 +109,6 @@ public class WitchController : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(transform.rotation, targetdir, 10*Time.deltaTime);
         }
         
-        /* if(playerID == PlayerInput.ID.Player2){
-            Debug.Log("Axis X, Y: " + Input.GetAxis(playerInput.HorizontalMove) + ", " + Input.GetAxis(playerInput.VerticalMove));
-        }*/
-        //Debug.Log("H, V: " + horizontal + ", " + vertical);
         _rigidbody.MovePosition(new Vector3(transform.position.x + witch.character.moveSpeed.current * horizontal * Time.deltaTime,
                                             transform.position.y, 
                                             transform.position.z + witch.character.moveSpeed.current * vertical * Time.deltaTime));
@@ -173,7 +126,6 @@ public class WitchController : MonoBehaviour
                 // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
                 // <Edit this> in BallFollowing() 
                 ball.transform.position = ballPosition.transform.position;
-
             }
         }
     }
@@ -192,85 +144,30 @@ public class WitchController : MonoBehaviour
             // Shoot
             if(Input.GetButtonDown(playerInput.ShootOrTackle) && (witch.character.shootDelay.current >= witch.character.shootDelay.max)){
                 if(_possessingBall && ball != null){
-                    //Vector3 releasePos = 
-                    //new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z + 0.25f);
-                    //ball.transform.Translate(ball.transform.forward * 0.25f);
-                    /*Debug.Log(ball.transform.position);
-                    Debug.Log(ball.GetComponent<Rigidbody>().position);
-                    ball.transform.position += transform.forward * 0.25f;
-                    ball.GetComponent<Rigidbody>().position += transform.forward * 0.25f; 
-                    Debug.Log(ball.transform.position);
-                    Debug.Log(ball.GetComponent<Rigidbody>().position);
-                    BallReleasing();
-                    Debug.Log(ball.transform.position);
-                    Debug.Log(ball.GetComponent<Rigidbody>().position);
-                    ball.transform.rotation = Quaternion.identity;
-                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
-                    
-                    witch.character.shootDelay.current = 0f;
-                    Debug.Break();*/
-                    
-                    //ball.GetComponent<Rigidbody>().
-                    //BallReleasing(new Vector3)
-                     ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
-                     //ball.transform.position += ball.transform.forward * 0.25f;
-                     Debug.Log(ball.transform.forward);
-                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.shootPower.current);
-                    //Debug.Break();
-                    //BallReleasing();
-                    //ball.transform.position = ballPosition1.transform.position;
-                    //Debug.Break();
-                    // Check the rotation and the velocity before adding a force of shoot.
-                    //ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                   // ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
-                    //ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                   // ball.transform.rotation = Quaternion.identity;
-                   // ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
-                    //_possessingBall = false;
+                    ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
+                    BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.shootPower.current);
                     witch.character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
-                    
                 }
             }
             // Pass
             if(Input.GetButtonDown(playerInput.PassOrFollow) && (witch.character.passDelay.current >= witch.character.passDelay.max)){
                 if(_possessingBall && ball != null){
+                    // Determine the direction based on if there is any team mates
                     // Find the closest teammate then pass the ball toward it if any.  
-                    if(GetClosestTeamMate()!=null){
-                         // Needto check, if the closest team mates if not active, just pass forward. 
+                    // If the closest team mates if not found, just pass forward. 
+                    if(GetClosestTeamMate() != null){
                         Transform teamMate = GetClosestTeamMate().transform;
                         Vector3 teamMateDir = teamMate.position - transform.position;
                         // To make Y angle static, delete this.
                         //teamMateDir.y = 0;
                         transform.rotation = Quaternion.LookRotation(teamMateDir);
-                        
-                        /* ball.transform.localPosition += new Vector3(0f, 0f, 0.3f);
-                        BallReleasing();
-                        //ball.transform.position = ballPosition1.transform.position;
-                        
-                        //Debug.Break();
-                       
-                        // If the ball is a passing ball, move the ball smoothly towards teammate except it is interrupted. 
-                        // Check the rotation and the velocity before adding a force of pass.
-                        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                        ball.transform.rotation = Quaternion.identity;
-                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
-                        */
                         Debug.Log("Pass! Power: " + witch.character.passPower.current + ", at Euler: " + transform.eulerAngles + " To: " + teamMate.name);
                     } else {
                         Debug.Log("You have no friend :'(");
-                        /* BallReleasing();
-                        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.passPower.current, ForceMode.Impulse);
-                        */
                     }
-                    //_possessingBall        = false;
-                    //Vector3 startPos = new Vector3(ball.transform.position.x, ball.transform.position.y + 1.5f, ball.transform.position.z); 
-                    //Vector3 vel = ball.transform.forward;
-                    //vel += new Vector3(0,2,0);
-                    //BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
                     
+                    // Release the ball after direction calculation
                     ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.passPower.current);
                     
@@ -321,7 +218,6 @@ public class WitchController : MonoBehaviour
             if(witch.character.lightMagicSkill.delay.current >= witch.character.lightMagicSkill.delay.max && !witch.character.lightMagicSkill.casted){
                 if(witch.character.manna.current >= witch.character.lightMagicSkill.mannaNeed){
                     witch.character.manna.current -= witch.character.lightMagicSkill.mannaNeed;
-                    //witchCharacter.lightMagicSkill.Cast();
                     witch.character.CastMagic(witch.character.lightMagicSkill);
                     witch.character.lightMagicSkill.delay.current = 0f;
                     witch.character.lightMagicSkill.casted = true;
@@ -351,21 +247,15 @@ public class WitchController : MonoBehaviour
         // When the delay is over, back to original stats
         witch.character.lightMagicSkill.delay.current = UpdateTimer(witch.character.lightMagicSkill.delay.current, witch.character.lightMagicSkill.delay.max);
         witch.character.heavyMagicSkill.delay.current = UpdateTimer(witch.character.heavyMagicSkill.delay.current, witch.character.heavyMagicSkill.delay.max);
-        
         witch.character.lightMagicSkill.duration.current = witch.character.UpdateDurationMagic(witch.character.lightMagicSkill);
         witch.character.heavyMagicSkill.duration.current = witch.character.UpdateDurationMagic(witch.character.heavyMagicSkill);
 
-        // <Edit> Revert when the buff duration is over
-        // if duration >= maxDuration
+        // Revert when the buff duration is over
         if(witch.character.lightMagicSkill.duration.current >=  witch.character.lightMagicSkill.duration.max && witch.character.lightMagicSkill.casted){
             witch.character.RevertMagic(witch.character.lightMagicSkill);
-            // <Edit> Pindahkan magic casted pada character
-            //character.lightMagicSkill.magicCasted = false;
         }
         if(witch.character.heavyMagicSkill.duration.current >= witch.character.heavyMagicSkill.duration.max && witch.character.heavyMagicSkill.casted){
             witch.character.RevertMagic(witch.character.heavyMagicSkill);
-            // <Edit> Pindahkan magic casted pada character
-            //character.heavyMagicSkill.magicCasted = false;
         }
     }
 
@@ -382,10 +272,6 @@ public class WitchController : MonoBehaviour
         //Debug.Log("GetTackledDelayRemain: "+character.getTackledDelay.current);
         // Need to check first if its Still in tackled duration (invulnerable).
         // Code below is currently also implemented on tile.cs
-        //if(character.getTackledDelay.current < character.getTackledDelay.max){ // or make this as condition too, in checking guard.available and healthpoint available.
-        //    return;
-        //}
-        // Need to check first if its possessing
         if(_possessingBall){
             // Guard
             if(witch.character.guard.available && (witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max)){
@@ -565,23 +451,6 @@ public class WitchController : MonoBehaviour
         }   
     }
     void OnCollisionEnter(Collision other) {
-         // <Edit later> Collide with witch should be in OnCollisionStay. Or, make temp bool to store elapsed tackle
-         /* if(other.gameObject.tag == "Witch"){
-             Debug.Log("Collide with " + other.gameObject.name);
-         }*/
-        // Tackled 
-        /* if(other.gameObject.tag == "Witch" && other.gameObject.GetComponent<WitchController>()._isTackling){
-        //if(other.gameObject.name == "damageCollider") {
-            Debug.Log("Collide with " + other.gameObject.name);
-            //Debug.Log("tackledDelay: "+witchCharacter.tackledDelay + ". maxTackledDelay" + witchCharacter.maxTackledDelay);
-            if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
-                Debug.Log(gameObject.name + " tackled by" + other.gameObject.name);
-                Tackled(witch.character.tackledDamageToGuard.current, witch.character.tackledDamageToHealth.current);
-                witch.character.getTackledDelay.current = 0f;
-                // <Edit later> Attacker get a manna. 
-                // <Edit later> AddForce to the damaged witch & Set position
-            }
-        }*/
         // MysteryBox
         if(other.gameObject.tag == "MysteryBox") { 
             if(witch.character.usedMysteryBox == null) {
@@ -589,7 +458,7 @@ public class WitchController : MonoBehaviour
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
             }
         }
-
+        // Rock
         if(other.gameObject.tag == "Rock"){
             if(witch.character.getTackledDelay.current >= witch.character.getTackledDelay.max){
                 // <Edit later> Need to change the force when the ball is released
@@ -604,35 +473,11 @@ public class WitchController : MonoBehaviour
                     Vector3 vel = ball.transform.forward;
                     vel += new Vector3(0,2,0);
                     BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);
-                    
-                    
-                    //BallReleasing();
-                    //GameObject.Find("Ball").GetComponent<Rigidbody>().position = new Vector3(transform.position.x,
-                    //                                                                     transform.position.y + 0.5f, transform.position.z);
-                    
-                    /* ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 3, 0);
-                    ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                    ball.transform.rotation = Quaternion.identity; //<Need to change apparently>
-                    ball.GetComponent<Rigidbody>().AddForce(2 * transform.forward * witch.character.shootPower.current, ForceMode.Impulse);
-                    */
-                }
-                
+                }                
                 //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
-                //Debug.Log("Collide with:" + gameObject.name + " Direction:" + gameObject.transform.rotation);
-
                 witch.character.getTackledDelay.current = 0f;
             }
         }
-
-        // <Edit later> Spiky & Explode & Rock and need to check the ball possession
-        //if(other.gameObject.tag == "Tile") { && if typeperformed
-            
-            // spiky and exploding damage and addforce
-        //}
-        
-        
-        // <Edit later>
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
         // Ball 
         if(other.gameObject == ball && witch.character.stunnedDuration.current <= 0) {
@@ -653,7 +498,6 @@ public class WitchController : MonoBehaviour
             if(witch.character.usedMysteryBox.duration > 0 && witch.character.usedMysteryBox.casted) {
                 witch.character.usedMysteryBox.duration -= Time.deltaTime;
             } else if (witch.character.usedMysteryBox.duration <= 0 && witch.character.usedMysteryBox.casted) {
-                
                 witch.character.RevertMysteryBox(witch.character.usedMysteryBox);
             }
             

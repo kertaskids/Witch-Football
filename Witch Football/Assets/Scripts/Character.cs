@@ -59,6 +59,7 @@ public class Character
     public MagicSkill heavyMagicSkill;
 
     // Self Damage Stats
+    // <Edit this> Change this with armor.
     public CharacterStat tackledDamageToGuard; //<Delete later> Should not be passive. or just move it from the tackler.
     public CharacterStat tackledDamageToHealth; 
     public MysteryBox usedMysteryBox;
@@ -86,15 +87,8 @@ public class Character
         tackledDamageToHealth   = new CharacterStat(1f, 1f);
         stunnedDuration         = new CharacterStat(0f, 10f);
         
-        // <Edit later> Delete Later
-        lightMagicSkill = new MagicSkill();
-        lightMagicSkill = DefaultMagicSkill.DefaultSkill(MagicSkill.Category.Light, MagicSkill.Type.Speed,
-                                                        "Super Fast", MagicSkill.TimeUse.Both, MagicSkill.AffectTo.Self);
-        //lightMagicSkill.duration.current = 5f;                                               
-        heavyMagicSkill = new MagicSkill();
-        heavyMagicSkill = DefaultMagicSkill.DefaultSkill(MagicSkill.Category.Heavy, MagicSkill.Type.Speed, 
-                                                        "Godly Fast", MagicSkill.TimeUse.Both, MagicSkill.AffectTo.Self); 
-        //heavyMagicSkill.curDuration = 5f; 
+        lightMagicSkill = DefaultMagicSkill.LightBoost; 
+        heavyMagicSkill = DefaultMagicSkill.HeavyBoost;
         usedMysteryBox = null;
     }
     public void Initiate(CharacterStat healthPoint, CharacterStat jumpForce, CharacterStat jumpDelay, CharacterStat moveSpeed,
@@ -147,9 +141,7 @@ public class Character
         this.moveSpeed.current      -= magicSkill.statModifier.moveSpeed;
         magicSkill.duration.current = magicSkill.duration.max;
         magicSkill.casted = false;
-        //lightMagicSkill.duration.current = lightMagicSkill.duration.max; 
-        //heavyMagicSkill.duration.current = heavyMagicSkill.duration.max;
-        Debug.Log("Revert.");
+        Debug.Log("Revert " + magicSkill.name);
         Debug.Log("HP, Damage, Power, Speed: " + healthPoint.current + ", " + tackledDamageToGuard.current + ", " + passPower.current + ", " + moveSpeed.current);
     }
 

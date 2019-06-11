@@ -11,7 +11,7 @@ public class MysteryBox : MonoBehaviour
     public float duration;
     public bool casted;
 
-    // <Delete later> Add default mysterybox orsimply temp float variable
+    // <Edit later> Change this with StatsModifier
     public float modifierDamage;
     public float modifierHealthPoint;
     public float modifierPower;
@@ -51,10 +51,8 @@ public class MysteryBox : MonoBehaviour
         // Need to check if the player's box is null or not, and if its casting still or not
         if(affectTo == MagicSkill.AffectTo.Self){
             if(casterWitch.witch.character.usedMysteryBox == null) {
-                //if(!casterWitch.character.usedMysteryBox.casted){ // <Error> No need to check if its casted
-                    casterWitch.witch.character.CastMysteryBox(this);
-                    Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + casterWitch.gameObject.name);
-                //}
+                casterWitch.witch.character.CastMysteryBox(this);
+                Debug.Log("Casting MysteryBox" + this.gameObject.name + " on " + "" + casterWitch.gameObject.name);
             } else {
                 Debug.Log("Casting MysteryBox Failed.");
             }

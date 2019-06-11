@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// ------<FOR TESTING ONLY>------
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+// ------<FOR TESTING ONLY>------
 
 public class Match : MonoBehaviour
 {
@@ -44,7 +46,6 @@ public class Match : MonoBehaviour
         gamestate  = GameState.PreMatch;
         _initialBallPos = new Vector3(4.5f, 2, 2);
         _mysteryBoxDelay = mysteryBoxMaxDelay;
-
     }
     void Update(){
         if(!_isPaused){
@@ -63,11 +64,9 @@ public class Match : MonoBehaviour
 
     public void PreMatch(){
         if(!_initiated){
-            // <Edit later> Initialize Timer, Team, Ball position, Player's skill
             Timer = 180f; 
             TeamA = new Team(Team.TeamParty.TeamA);
             TeamB = new Team(Team.TeamParty.TeamB);
-            // <Edit later> Need to check with OnEnabled
             SetCharacterControl(true); 
             SetupMatch();
             ShowPlayersStats();
@@ -101,7 +100,6 @@ public class Match : MonoBehaviour
 
         _oneSecondTimer -= Time.deltaTime;
         if(_oneSecondTimer <= 0){
-            //Debug.Log("Timer: " + (int)(Timer/60) + "Minutes " + (int)(Timer%60) + "Seconds.");
             TimerText.text = ((int)(Timer/60)).ToString() + ":" + ((int)(Timer % 60)).ToString();
             _oneSecondTimer = 1f;
         }
@@ -157,31 +155,23 @@ public class Match : MonoBehaviour
             gamestate = GameState.MatchPlaying;
             _isPaused = false;
             _stateDelay = stateMaxDelay;
-            if(TeamA != null && TeamB!=null){
+            if(TeamA != null && TeamB != null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
-            //<Edit later> already implemented on SetupMatch
-            GameObject ball = GameObject.Find("Ball");
-            ball.transform.position = _initialBallPos;
-            ball.transform.rotation = Quaternion.identity; 
-            ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
+            
             // Make the possessing player nullifies the ball
+            GameObject ball = GameObject.Find("Ball");
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
             foreach (GameObject w in allWitches)
             {
                 if(w.GetComponent<WitchController>()._possessingBall) {
-                    //w.GetComponent<WitchController>().BallReleasing();
                     w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, 1 * transform.up * w.GetComponent<WitchController>().witch.character.shootPower.current);
-                
                 }
             }
             SetupMatch();
-            
         }
         _stateDelay -= Time.deltaTime;
-        Debug.Log("StateDelay:"+_stateDelay);
+        //Debug.Log("StateDelay:"+_stateDelay);
     }
     public void TimeOver(){
         // The time of match is over
@@ -275,6 +265,7 @@ public class Match : MonoBehaviour
         }
     }
     void SetCharacterControl(bool enable){
+        // <Edit later> Better using boolean in the update function to allow player control. 
         foreach (WitchController w in TeamA.witches)
         {
             w.enabled = enable;
@@ -283,7 +274,6 @@ public class Match : MonoBehaviour
         {
             w.enabled = enable;
         }
-        // <Edit later> Better using boolean in the update function to allow player control. 
     }
     void SpawnMysteryBox(){
         if(mysteryBoxes != null || mysteryBoxes.Length >= 0){

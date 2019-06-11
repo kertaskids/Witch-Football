@@ -14,17 +14,10 @@ public class Ball : MonoBehaviour
     public WitchController possesingWitch;
     public WitchController lastToucher;
 
-
-    void Start() {
+    void Start(){
         ballState       = BallState.Free;
         possesingWitch  = null;
         lastToucher     = null;
-    }
-    // <Delete later>
-    public void ChangeState(WitchController witch, BallState state){
-        possesingWitch  = witch;
-        ballState       = state;
-        lastToucher     = witch;
     }
     public void Possessed(WitchController witch){
         possesingWitch  = witch;
@@ -36,13 +29,10 @@ public class Ball : MonoBehaviour
         gameObject.transform.rotation = Quaternion.identity;
         gameObject.transform.parent = witch.gameObject.transform;
         gameObject.transform.localRotation = Quaternion.identity;
-
-
         // When the ball is posessed by player, the collider is trough.
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }
     public void Released(BallState ballState){
-        
         // When the ball is posessed by player, the collider is trough.
         gameObject.GetComponent<SphereCollider>().enabled = true;
         Debug.Log("Ball released from: "+lastToucher.gameObject.name);
