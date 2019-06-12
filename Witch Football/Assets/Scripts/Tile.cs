@@ -112,7 +112,8 @@ public class Tile : MonoBehaviour
                foreach (GameObject cw in _onRangeWitches){
                     WitchController wc = cw.GetComponent<WitchController>();
                     // <Edit later>
-                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
+                    if(wc.witch.character.getTackledDelay.full){
+                    //if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                         // Do damage here. Move code below to here  
                         cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
@@ -139,7 +140,8 @@ public class Tile : MonoBehaviour
                 foreach (GameObject cw in _collidedWitches){
                     //<Edit later>
                     WitchController wc = cw.GetComponent<WitchController>();
-                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
+                    if(wc.witch.character.getTackledDelay.full) {
+                    //if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                         // Do damage here. Move code below to here  
                         cw.GetComponent<WitchController>().Damaged(3f, 3f); // Make a variable to hold this
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
@@ -225,14 +227,15 @@ public class Tile : MonoBehaviour
                     //}
                     foreach (GameObject w in _collidedWitches){
                     WitchController wc = w.GetComponent<WitchController>();
-                    if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
+                    if(wc.witch.character.getTackledDelay.full){
+                    //if(wc.witch.character.getTackledDelay.current >= wc.witch.character.getTackledDelay.max){
                         w.transform.rotation = Quaternion.LookRotation(w.transform.position - transform.position);
                         w.GetComponent<Rigidbody>().AddExplosionForce(5f,transform.position, 2f, 2f, ForceMode.Impulse);
                         wc.Damaged(1f, 1f);
                         Debug.Log(gameObject.name + " collide with " + w.name + " direction:" + w.transform.rotation);
                         GameObject b = GameObject.FindWithTag("Ball");
                         // <Edit later> Add force to the ball either before or after the witch rotation
-                        if(wc.witch.character.guard.current <= 0 || wc.witch.character.healthPoint.current <= 0){
+                        if(wc.witch.character.guard.empty || wc.witch.character.healthPoint.empty){
                             b.transform.position = w.transform.Find("BallPosition").position;
                             }
                         }

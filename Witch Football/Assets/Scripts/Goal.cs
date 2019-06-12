@@ -7,7 +7,9 @@ public class Goal : MonoBehaviour
     public Team.TeamParty teamParty;
     public bool move;
     public float moveSpeed;
-    public Transform targetTransform;
+    public float minPosZ; // 0.75f
+    public float maxPosZ; // 3f
+    public Vector3 targetPos;
 
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.GetComponent<Ball>() != null){
@@ -20,13 +22,20 @@ public class Goal : MonoBehaviour
         }
     }
 
-    void Move(Transform targetTransform, float speed){
-        transform.position = Vector3.Lerp(transform.position, targetTransform.position, speed * Time.deltaTime);
+    void Move(Vector3 targetPos, float speed){
+        transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
+    }
+    Vector3 RandomTarget(){
+        float targetPosZ = Random.Range(minPosZ, maxPosZ);
+        return new Vector3(transform.position.x, transform.position.y, targetPosZ);
     }
 
-    void Update(){
+    void LateUpdate(){
         if(move) {
-            Move(targetTransform, moveSpeed);
+            Move(targetPos, moveSpeed);
+            if(transform.position == targetPos){
+                targetPos = RandomTarget();
+            }
         }
     }
 }

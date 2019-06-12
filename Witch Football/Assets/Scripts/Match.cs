@@ -39,6 +39,7 @@ public class Match : MonoBehaviour
     private bool _initiated;
 
     private Vector3 _initialBallPos;
+    private GameObject ball;
 
     void Start(){
         _initiated = false;
@@ -46,6 +47,9 @@ public class Match : MonoBehaviour
         gamestate  = GameState.PreMatch;
         _initialBallPos = new Vector3(4.5f, 2, 2);
         _mysteryBoxDelay = mysteryBoxMaxDelay;
+        if(ball == null) {
+            ball = GameObject.Find("Ball");
+        }
     }
     void Update(){
         if(!_isPaused){
@@ -61,7 +65,11 @@ public class Match : MonoBehaviour
             if(gamestate == GameState.PostGoal) PostGoal();
         }
     }
-
+    void LateUpdate() {
+        if(PlayerAndBallFallen()){
+            SetupMatch();
+        }
+    }
     public void PreMatch(){
         if(!_initiated){
             Timer = 180f; 
@@ -160,7 +168,6 @@ public class Match : MonoBehaviour
             }
             
             // Make the possessing player nullifies the ball
-            GameObject ball = GameObject.Find("Ball");
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
             foreach (GameObject w in allWitches)
             {
@@ -224,7 +231,7 @@ public class Match : MonoBehaviour
             if(w.enabled){
                 //Character Stat
                 Debug.Log(w.name + ", HP: " + w.witch.character.healthPoint.current + 
-                            ", DamageToHP: " + w.witch.character.tackledDamageToHealth.current + 
+                            ", DamageToHP: " + w.witch.character.damageHealth.current + 
                             ", PassPower" + w.witch.character.passPower.current + 
                             ", Speed: " + w.witch.character.moveSpeed.current +
                             ", LightSkill: " + w.witch.character.lightMagicSkill.name + 
@@ -237,7 +244,7 @@ public class Match : MonoBehaviour
             if(w.enabled){
                 //Character Stat
                 Debug.Log(w.name + ", HP: " + w.witch.character.healthPoint.current + 
-                            ", DamageToHP: " + w.witch.character.tackledDamageToHealth.current + 
+                            ", DamageToHP: " + w.witch.character.damageHealth.current + 
                             ", PassPower" + w.witch.character.passPower.current + 
                             ", Speed: " + w.witch.character.moveSpeed.current +
                             ", LightSkill: " + w.witch.character.lightMagicSkill.name + 
@@ -247,7 +254,6 @@ public class Match : MonoBehaviour
     }
     void SetupMatch(){
         // Ball Position
-        GameObject ball = GameObject.Find("Ball");
         ball.transform.position = _initialBallPos;
         ball.transform.rotation = Quaternion.identity; 
         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -287,5 +293,23 @@ public class Match : MonoBehaviour
 
             Debug.Log("Spawn " + mysteryBox.name);
         }   
+    }
+    bool PlayerAndBallFallen(){
+        bool fallen = false;
+        float minPosY = -50;
+        if(ball.transform.position.y < minPosY){
+            fallen = true;
+        }
+        foreach(WitchController w in TeamA.witches){
+            if(w.transform.position.y < minPosY) {
+                fallen = true;
+            } 
+        }
+        foreach(WitchController w in TeamB.witches){
+            if(w.transform.position.y < minPosY){
+                fallen = true;
+            }
+        }
+        return fallen;
     }
 }

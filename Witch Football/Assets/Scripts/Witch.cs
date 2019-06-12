@@ -51,10 +51,10 @@ public static class WitchBase {
             witch.character.tackleDelay     = new CharacterStat(1f, 1f); 
             witch.character.manna           = new CharacterStat(100f, 100f);
             witch.character.followDelay     = new CharacterStat(1f, 1f);
-            witch.character.getTackledDelay         = new CharacterStat(2f, 2f);
-            witch.character.tackledDamageToGuard    = new CharacterStat(1f, 1f);
-            witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
-            witch.character.stunnedDuration         = new CharacterStat(0f, 10f);
+            witch.character.getTackledDelay = new CharacterStat(2f, 2f);
+            witch.character.damageGuard     = new CharacterStat(1f, 1f);
+            witch.character.damageHealth    = new CharacterStat(1f, 1f);
+            witch.character.stunnedDuration = new CharacterStat(0f, 10f);
 
             witch.character.lightMagicSkill = new MagicSkill();
             witch.character.heavyMagicSkill = new MagicSkill();
@@ -81,10 +81,10 @@ public static class WitchBase {
             witch.character.tackleDelay     = new CharacterStat(1f, 1f); 
             witch.character.manna           = new CharacterStat(100f, 100f);
             witch.character.followDelay     = new CharacterStat(1f, 1f);
-            witch.character.getTackledDelay         = new CharacterStat(3f, 3f);
-            witch.character.tackledDamageToGuard    = new CharacterStat(1f, 1f);
-            witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
-            witch.character.stunnedDuration         = new CharacterStat(0f, 10f);
+            witch.character.getTackledDelay = new CharacterStat(3f, 3f);
+            witch.character.damageGuard     = new CharacterStat(1f, 1f);
+            witch.character.damageHealth    = new CharacterStat(1f, 1f);
+            witch.character.stunnedDuration = new CharacterStat(0f, 10f);
 
             witch.character.lightMagicSkill = DefaultMagicSkill.LightHeal;
             witch.character.heavyMagicSkill = DefaultMagicSkill.HeavyHeal; 
@@ -111,10 +111,10 @@ public static class WitchBase {
             witch.character.tackleDelay     = new CharacterStat(1f, 1f); 
             witch.character.manna           = new CharacterStat(100f, 100f);
             witch.character.followDelay     = new CharacterStat(1f, 1f);
-            witch.character.getTackledDelay         = new CharacterStat(3f, 3f);
-            witch.character.tackledDamageToGuard    = new CharacterStat(1f, 1f);
-            witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
-            witch.character.stunnedDuration         = new CharacterStat(0f, 10f);
+            witch.character.getTackledDelay = new CharacterStat(3f, 3f);
+            witch.character.damageGuard     = new CharacterStat(1f, 1f);
+            witch.character.damageHealth    = new CharacterStat(1f, 1f);
+            witch.character.stunnedDuration = new CharacterStat(0f, 10f);
 
             witch.character.lightMagicSkill = DefaultMagicSkill.LightHeal;
             witch.character.heavyMagicSkill = DefaultMagicSkill.HeavyHeal; 
@@ -141,10 +141,10 @@ public static class WitchBase {
             witch.character.tackleDelay     = new CharacterStat(0.75f, 0.75f); 
             witch.character.manna           = new CharacterStat(100f, 100f);
             witch.character.followDelay     = new CharacterStat(1f, 1f);
-            witch.character.getTackledDelay         = new CharacterStat(2f, 2f);
-            witch.character.tackledDamageToGuard    = new CharacterStat(1f, 1f);
-            witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
-            witch.character.stunnedDuration         = new CharacterStat(0f, 8f);
+            witch.character.getTackledDelay = new CharacterStat(2f, 2f);
+            witch.character.damageGuard     = new CharacterStat(1f, 1f);
+            witch.character.damageHealth    = new CharacterStat(1f, 1f);
+            witch.character.stunnedDuration = new CharacterStat(0f, 8f);
 
             witch.character.lightMagicSkill = DefaultMagicSkill.LightRage;
             witch.character.heavyMagicSkill = DefaultMagicSkill.HeavyRage; 
@@ -171,10 +171,10 @@ public static class WitchBase {
             witch.character.tackleDelay     = new CharacterStat(0.75f, 0.75f); 
             witch.character.manna           = new CharacterStat(100f, 100f);
             witch.character.followDelay     = new CharacterStat(0.75f, 0.75f);
-            witch.character.getTackledDelay         = new CharacterStat(2f, 2f);
-            witch.character.tackledDamageToGuard    = new CharacterStat(1f, 1f);
-            witch.character.tackledDamageToHealth   = new CharacterStat(1f, 1f);
-            witch.character.stunnedDuration         = new CharacterStat(0f, 10f);
+            witch.character.getTackledDelay = new CharacterStat(2f, 2f);
+            witch.character.damageGuard     = new CharacterStat(1f, 1f);
+            witch.character.damageHealth    = new CharacterStat(1f, 1f);
+            witch.character.stunnedDuration = new CharacterStat(0f, 10f);
 
             witch.character.lightMagicSkill = DefaultMagicSkill.LightBoost; 
             witch.character.heavyMagicSkill = DefaultMagicSkill.HeavyBoost; 

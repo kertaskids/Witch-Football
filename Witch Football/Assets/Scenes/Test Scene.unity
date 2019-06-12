@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.32110804, g: 0.5572543, b: 0.63904643, a: 1}
+  m_IndirectSpecularColor: {r: 0.45641476, g: 0.76835585, b: 0.8705677, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1202,9 +1202,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamParty: 1
-  move: 0
-  moveSpeed: 1
-  targetTransform: {fileID: 0}
+  move: 1
+  moveSpeed: 5
+  minPosZ: 0.75
+  maxPosZ: 3
+  targetPos: {x: -1, y: 1, z: 2}
 --- !u!65 &524511171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1917,8 +1919,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.2964983e+24, y: 7.4051693e+28, z: 1.089893e+27,
-    w: 1.6258937e+25}
+  m_BoundingSphereOverride: {x: 1.5309205e-28, y: NaN, z: NaN, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6146,9 +6147,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamParty: 2
-  move: 0
-  moveSpeed: 1
-  targetTransform: {fileID: 0}
+  move: 1
+  moveSpeed: 5
+  minPosZ: 0.75
+  maxPosZ: 3
+  targetPos: {x: 10, y: 1, z: 2}
 --- !u!65 &1704938198
 BoxCollider:
   m_ObjectHideFlags: 0
