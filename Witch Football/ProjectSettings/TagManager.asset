@@ -13,6 +13,7 @@ TagManager:
   - MysteryBox
   - Rock
   - Smoke
+  - PopUp
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PinUp
+    uniqueID: 448698191
     locked: 0

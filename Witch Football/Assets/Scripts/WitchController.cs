@@ -227,6 +227,9 @@ public class WitchController : MonoBehaviour
                     witch.character.CastMagic(witch.character.lightMagicSkill);
                     witch.character.lightMagicSkill.delay.current = 0f;
                     //witch.character.lightMagicSkill.casted = true;
+                    // PinUp
+                    PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
+                    pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
