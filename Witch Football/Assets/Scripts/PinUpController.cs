@@ -21,8 +21,15 @@ public class PinUpController : MonoBehaviour
             background.SetActive(false);
         }
     }
-
+    public void Perform(WitchController witchController, float duration){
+        GameObject pinUpWitch = GetMatchedPinUp(witchController).gameObject;
+        pinUpWitch.SetActive(true);
+        // Not necessarry
+        pinUpWitch.GetComponent<PinUp>().duration = duration; 
+        pinUpWitch.GetComponent<PinUp>().Perform(witchController, pinUpWitch.GetComponent<Image>());
+    }
     public void Perform(PinUp pinUpWitch, WitchController witchController){
+        //GetMatchedPinUp(witchController).gameObject.SetActive(true);
         pinUpWitch.gameObject.SetActive(true);
         pinUpWitch.Perform(witchController, pinUpWitch.GetComponent<Image>());
     }

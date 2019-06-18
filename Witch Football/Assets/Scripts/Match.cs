@@ -67,6 +67,7 @@ public class Match : MonoBehaviour
     }
     void LateUpdate() {
         if(PlayerAndBallFallen()){
+            // <Edit later> Simply respawn the player or the ball in the middle of arena, with stunned duration. 
             SetupMatch();
         }
     }
@@ -166,15 +167,6 @@ public class Match : MonoBehaviour
             if(TeamA != null && TeamB != null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
-            
-            // Make the possessing player nullifies the ball
-            GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
-            foreach (GameObject w in allWitches)
-            {
-                if(w.GetComponent<WitchController>()._possessingBall) {
-                    w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, 1 * transform.up * w.GetComponent<WitchController>().witch.character.shootPower.current);
-                }
-            }
             SetupMatch();
         }
         _stateDelay -= Time.deltaTime;
@@ -253,6 +245,14 @@ public class Match : MonoBehaviour
         }
     }
     void SetupMatch(){
+        // Nullifies the ball first 
+        GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+        foreach (GameObject w in allWitches)
+        {
+            if(w.GetComponent<WitchController>()._possessingBall) {
+                w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, Vector3.zero);
+            }
+        }
         // Ball Position
         ball.transform.position = _initialBallPos;
         ball.transform.rotation = Quaternion.identity; 
@@ -260,11 +260,14 @@ public class Match : MonoBehaviour
         ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         // Witches Position
         for(int i = 0; i < TeamA.witches.Length; i++){
+            TeamA.witches[i].gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             TeamA.witches[i].transform.position = new Vector3(ball.transform.position.x - (i+1), 
                                                                 ball.transform.position.y, 
-                                                                ball.transform.position.z);                                                        
+                                                                ball.transform.position.z);                             
+            
         }
         for(int i = 0; i < TeamB.witches.Length; i++){
+            TeamB.witches[i].gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             TeamB.witches[i].transform.position = new Vector3(ball.transform.position.x + (i+1), 
                                                                 ball.transform.position.y, 
                                                                 ball.transform.position.z);

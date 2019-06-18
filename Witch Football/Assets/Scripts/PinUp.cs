@@ -113,9 +113,13 @@ public class PinUp : MonoBehaviour
         imgTargetPos    = new Vector3(targetPos.transform.position.x, image.transform.position.y, image.transform.position.z);
         imgStartPos     = new Vector3(startPos.transform.position.x, image.transform.position.y, image.transform.position.z);
         imgEndPos       = new Vector3(endPos.transform.position.x, image.transform.position.y, image.transform.position.z); 
-        Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
+        //Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
         image.transform.position = imgStartPos;
-        Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
+        //Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
+        Debug.Log("Duration: " + duration + ", Current: " + currentDuration + ", FadeIn: " + fadeIn);    
     }
-    
+    public void SetDuration(float duration){
+        this.duration = duration;
+        this.currentDuration = duration;
+    }
 }

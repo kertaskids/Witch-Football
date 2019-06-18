@@ -144,7 +144,7 @@ public class WitchController : MonoBehaviour
             // Shoot
             if(Input.GetButtonDown(playerInput.ShootOrTackle) && witch.character.shootDelay.full){
                 if(_possessingBall && ball != null){
-                    ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
+                    ball.transform.localPosition += new Vector3(0f, 0f, 0.4f); 
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.shootPower.current);
                     witch.character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
@@ -229,7 +229,8 @@ public class WitchController : MonoBehaviour
                     //witch.character.lightMagicSkill.casted = true;
                     // PinUp
                     PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
-                    pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
+                    //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
+                    pUController.Perform(this, 1.5f);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -244,6 +245,9 @@ public class WitchController : MonoBehaviour
                     witch.character.CastMagic(witch.character.heavyMagicSkill);
                     witch.character.heavyMagicSkill.delay.current = 0f;
                     //witch.character.heavyMagicSkill.casted = true;
+                    PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
+                    //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
+                    pUController.Perform(this, 3f);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
