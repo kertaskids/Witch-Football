@@ -15,6 +15,18 @@ public class WitchController : MonoBehaviour
     public bool _isTackling; 
     public GameObject ball; 
     public GameObject ballPosition;
+
+    public bool ControlAllowed;
+    /* public bool ControlAllowed {
+        get {
+            bool allowed = false;
+            Match match = GameObject.FindObjectOfType<Match>();
+            if(witch.character.stunnedDuration.empty && match.gamestate == Match.GameState.MatchPlaying){
+                allowed = true;
+            }
+            return allowed;
+        }
+    }*/
     
     void Start(){
         playerInput = PlayerInput.GetPlayer((int)playerID);
@@ -26,6 +38,7 @@ public class WitchController : MonoBehaviour
         _rigidbody      = GetComponent<Rigidbody>();
         _possessingBall = false;
         _isTackling     = false;
+        ControlAllowed  = false;
         ball            = GameObject.FindGameObjectWithTag("Ball");
         ballPosition    = transform.Find("BallPosition").gameObject; 
 
@@ -59,8 +72,9 @@ public class WitchController : MonoBehaviour
     }
 
     void Update(){
-        // If not ispaused && not stunned
-        if(witch.character.stunnedDuration.empty) {
+        // If not ispaused && not stunned 
+        // <Edit later> Change this with ControlAllowed
+        if(witch.character.stunnedDuration.empty && ControlAllowed) {
             MoveControl();
             ActionControl();
             MagicControl();

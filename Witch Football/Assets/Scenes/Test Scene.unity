@@ -9357,8 +9357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c6a3aef8eb67142805354f3f83aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 4
-  tileEffect: 0
+  tileType: 0
+  tileEffect: 1
   triggerType: 2
   triggerDistance: 2
   effectMaxDuration: 2

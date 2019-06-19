@@ -13,11 +13,14 @@ public class Goal : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.GetComponent<Ball>() != null){
-            Debug.Log("Goal! OLE!");
-            Ball ball = other.gameObject.GetComponent<Ball>();
-            if(ball.lastToucher != null) {
-                Match matchController = GameObject.FindObjectOfType<Match>();
-                matchController.GoalScored(ball.lastToucher, this);
+            Match match = GameObject.FindObjectOfType<Match>();
+            if(match.gamestate == Match.GameState.MatchPlaying){
+                Debug.Log("Goal! OLE!");
+                Ball ball = other.gameObject.GetComponent<Ball>();
+                if(ball.lastToucher != null) {
+                    Match matchController = GameObject.FindObjectOfType<Match>();
+                    matchController.GoalScored(ball.lastToucher, this);
+                }
             }
         }
     }

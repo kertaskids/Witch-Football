@@ -76,18 +76,20 @@ public class Match : MonoBehaviour
             Timer = 180f; 
             TeamA = new Team(Team.TeamParty.TeamA);
             TeamB = new Team(Team.TeamParty.TeamB);
-            SetCharacterControl(true); 
+            SetPlayersControl(false); 
             SetupMatch();
             ShowPlayersStats();
             _isPaused   = false;
             _stateDelay = stateMaxDelay;
             _initiated  = true;
             _mysteryBoxDelay = mysteryBoxMaxDelay;
+            //SetPlayersControl(false);
         }
 
         if(_stateDelay <= 0) {
             gamestate   = GameState.MatchPlaying;
             _stateDelay = stateMaxDelay;
+            SetPlayersControl(true);
         }
         _stateDelay -= Time.deltaTime;
     }
@@ -95,6 +97,7 @@ public class Match : MonoBehaviour
         Timer -= Time.deltaTime;
         if(Timer <= 0){
             gamestate = GameState.TimeOver;
+            SetPlayersControl(false);
         }
 
         // <Edit later> 
@@ -111,7 +114,7 @@ public class Match : MonoBehaviour
         if(_oneSecondTimer <= 0){
             TimerText.text = ((int)(Timer/60)).ToString() + ":" + ((int)(Timer % 60)).ToString();
             _oneSecondTimer = 1f;
-        }
+        } 
     }
     public void Goal(){ 
         // <Edit later>
@@ -120,6 +123,7 @@ public class Match : MonoBehaviour
             gamestate = GameState.PostGoal;
             _isPaused = true;
             _stateDelay = stateMaxDelay;
+            SetPlayersControl(false);
         }
         _stateDelay -= Time.deltaTime;
 
@@ -151,6 +155,8 @@ public class Match : MonoBehaviour
         witchesTemp.Add(scorer);
         Scorers = witchesTemp.ToArray();
         gamestate = GameState.Goal;
+        // <Edit later> If we want to let player attack in postGoal to get manna, just uncomment it. 
+        //SetPlayersControl(true);
         Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
         
         _oneSecondTimer -= Time.deltaTime;
@@ -164,6 +170,7 @@ public class Match : MonoBehaviour
             gamestate = GameState.MatchPlaying;
             _isPaused = false;
             _stateDelay = stateMaxDelay;
+            SetPlayersControl(true);
             if(TeamA != null && TeamB != null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
@@ -171,19 +178,22 @@ public class Match : MonoBehaviour
         }
         _stateDelay -= Time.deltaTime;
         //Debug.Log("StateDelay:"+_stateDelay);
+
+        // <Edit later> Refresh the stun duration of the player
     }
     public void TimeOver(){
         // The time of match is over
         if(_stateDelay <= 0) {
             gamestate = GameState.PostMatch;
             _stateDelay = stateMaxDelay;
+            SetPlayersControl(false);
             if(TeamA != null && TeamB!=null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
         }
         _stateDelay -= Time.deltaTime;
-        // <Edit later>
-        // Play winning Animation
+        // <Edit later> 
+        // Play winning Animation 
     }
     public void PostMatch(){
         // Show the winner and stats
@@ -273,15 +283,13 @@ public class Match : MonoBehaviour
                                                                 ball.transform.position.z);
         }
     }
-    void SetCharacterControl(bool enable){
-        // <Edit later> Better using boolean in the update function to allow player control. 
-        foreach (WitchController w in TeamA.witches)
-        {
-            w.enabled = enable;
-        }
-        foreach (WitchController w in TeamB.witches)
-        {
-            w.enabled = enable;
+    void SetPlayersControl(bool allowed){
+        GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+        foreach (GameObject w in allWitches){
+            WitchController wc = w.GetComponent<WitchController>();
+            wc.ControlAllowed = allowed;
+            // Remove the stun duration
+            wc.witch.character.stunnedDuration.current = 0f;
         }
     }
     void SpawnMysteryBox(){
@@ -305,11 +313,13 @@ public class Match : MonoBehaviour
         }
         foreach(WitchController w in TeamA.witches){
             if(w.transform.position.y < minPosY) {
+                w.witch.character.stunnedDuration.current += 3f;
                 fallen = true;
             } 
         }
         foreach(WitchController w in TeamB.witches){
             if(w.transform.position.y < minPosY){
+                w.witch.character.stunnedDuration.current += 3f;
                 fallen = true;
             }
         }
