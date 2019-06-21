@@ -123,7 +123,10 @@ public class Match : MonoBehaviour
             gamestate = GameState.PostGoal;
             _isPaused = true;
             _stateDelay = stateMaxDelay;
-            SetPlayersControl(false);
+            SetPlayersControl(false); // <Creates a bug on ballposession>
+            Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
+            Debug.Log("GameState: " + gamestate.ToString());
+            Debug.Break();
         }
         _stateDelay -= Time.deltaTime;
 
@@ -178,7 +181,8 @@ public class Match : MonoBehaviour
         }
         _stateDelay -= Time.deltaTime;
         //Debug.Log("StateDelay:"+_stateDelay);
-
+        Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
+            
         // <Edit later> Refresh the stun duration of the player
     }
     public void TimeOver(){

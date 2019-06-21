@@ -26,7 +26,9 @@ public class PinUp : MonoBehaviour
     
     void LateUpdate() {
         // Background & Image Moving
-        if(teamParty == Team.TeamParty.TeamA){
+        // <Edit later> This will create error when the team is TeamB, but the player is Player1 and Player2.
+         // we can actually check the direction and use it as either increment or decrement. 
+        if(teamParty == Team.TeamParty.TeamA){   
             // Background 
             if(background.transform.position.x > bgEndPos.x){
                 background.transform.position -= new Vector3(bgSpeed * canvas.scaleFactor, 0f, 0f);
@@ -42,7 +44,7 @@ public class PinUp : MonoBehaviour
                 }
             }
             
-        } else { 
+        } else {    
             // Background
             if(background.transform.position.x < bgEndPos.x){
                 background.transform.position += new Vector3(bgSpeed * canvas.scaleFactor, 0f, 0f);

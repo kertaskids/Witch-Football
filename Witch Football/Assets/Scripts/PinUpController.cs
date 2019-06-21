@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class PinUpController : MonoBehaviour
 {
-    public GameObject[] pinUpWitches; // Index based on Player
+    // Index based on PlayerID
+    public GameObject[] pinUpWitches; 
     public GameObject[] backgrounds;
+    //private List<Sprite> pinUpSprites;
 
     void Start(){
         Init();
@@ -14,6 +16,21 @@ public class PinUpController : MonoBehaviour
         //Perform(pinUpWitches[0].GetComponent<PinUp>(), GameObject.Find("Red Witch").GetComponent<WitchController>());
     }
     void Init(){
+        // <Edit later> Adding PinUpImages based on the image on player
+        // Might need to set up the native size of image and the position as well 
+        /* pinUpSprites = new List<Sprite>();
+        GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
+        foreach (GameObject w in allWitches) {
+            pinUpSprites.Add(w.GetComponent<WitchController>().pinUpSprite);
+        }
+        for(int i = 0; i < pinUpWitches.Length; i++){
+            // <Edit later> must get the sprite based on the name, not on the index
+            pinUpWitches[i].GetComponent<Image>().sprite = pinUpSprites[i];
+            Debug.Log("Alpha "+ pinUpWitches[i].GetComponent<Image>().color.a);
+                
+            // Size and position here 
+        }*/
+        
         foreach(GameObject pinUp in pinUpWitches) {
             pinUp.SetActive(false);
         }
@@ -42,11 +59,12 @@ public class PinUpController : MonoBehaviour
         GameObject matchPinUp = null;
         foreach(GameObject pinUp in pinUpWitches) {
             if(pinUp.name.Contains(witchController.playerID.ToString())){
+                // <Edit later> Might need to nulify it again in future
+                pinUp.GetComponent<Image>().sprite = witchController.pinUpSprite;
                 matchPinUp = pinUp;
                 return matchPinUp;
             }
         }
         return matchPinUp;
     }
-
 }

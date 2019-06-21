@@ -15,6 +15,7 @@ public class WitchController : MonoBehaviour
     public bool _isTackling; 
     public GameObject ball; 
     public GameObject ballPosition;
+    public Sprite pinUpSprite;
 
     public bool ControlAllowed;
     /* public bool ControlAllowed {
@@ -72,14 +73,17 @@ public class WitchController : MonoBehaviour
     }
 
     void Update(){
-        // If not ispaused && not stunned 
-        // <Edit later> Change this with ControlAllowed
-        if(witch.character.stunnedDuration.empty && ControlAllowed) {
-            MoveControl();
-            ActionControl();
-            MagicControl();
-            GuardControl();
-            MysteryBoxControl();
+        // If not ispaused && not stunned. If not isPaused might cause a bug.
+        // Controlallowed should be inside each function. 
+        if(witch.character.stunnedDuration.empty) {
+            DribbleControl();
+            if(ControlAllowed){
+                MoveControl();
+                ActionControl();
+                MagicControl();
+                GuardControl();
+                MysteryBoxControl();
+            }
         } else {
             witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
@@ -135,6 +139,15 @@ public class WitchController : MonoBehaviour
         witch.character.jumpDelay.current = UpdateTimer(witch.character.jumpDelay.current, witch.character.jumpDelay.max);
 
         //Dribble
+        //if(ball != null){
+         //   if(_possessingBall){
+                // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
+                // <Edit this> in BallFollowing() 
+            //    ball.transform.position = ballPosition.transform.position;
+           // }
+       // }
+    }
+    void DribbleControl(){
         if(ball != null){
             if(_possessingBall){
                 // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 

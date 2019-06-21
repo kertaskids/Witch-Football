@@ -164,7 +164,7 @@ public class Character
     public void RevertMysteryBox(MysteryBox mysteryBox){
         damageGuard.current     -= mysteryBox.statModifier.damage;
         damageHealth.current    -= mysteryBox.statModifier.damage;
-        healthPoint.current     -= mysteryBox.statModifier.healthPoint;
+        //healthPoint.current     -= mysteryBox.statModifier.healthPoint;
         passPower.current       -= mysteryBox.statModifier.power;
         shootPower.current      -= mysteryBox.statModifier.power;
         moveSpeed.current       -= mysteryBox.statModifier.moveSpeed;
