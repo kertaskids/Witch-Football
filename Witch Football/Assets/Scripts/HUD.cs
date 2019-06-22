@@ -5,18 +5,24 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public WitchController witchController;
     public GameObject WitchHUD;
     public GameObject LightMagicHUD;
     public GameObject HeavyMagicHUD;
     public GameObject HealthBar;
     public GameObject MannaBar;
 
-    public WitchController witchController;
-
     // Start is called before the first frame update
     void Start()
     {
-        
+        // <Edit later> Call this in Match.cs
+        WitchHUD.transform.Find("PlayerHUD Image").GetComponent<Image>().sprite = witchController.pinUpSprite;
+    }
+
+    // <Edit later> Call this in Match.cs
+    void Init(WitchController witchController) {
+        this.witchController = witchController;
+        // <Edit later> Create functions to dynamically assign all the HUDs based on witchController / player
     }
 
     void LateUpdate(){

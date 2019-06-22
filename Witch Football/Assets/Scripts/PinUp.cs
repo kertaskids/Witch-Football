@@ -24,6 +24,9 @@ public class PinUp : MonoBehaviour
     private Team.TeamParty teamParty;
     private bool fadeIn = true;
     
+    public void Init(){
+        // <Edit later> Assign the witchController here, so we can refer this to the PlayerHUD
+    }
     void LateUpdate() {
         // Background & Image Moving
         // <Edit later> This will create error when the team is TeamB, but the player is Player1 and Player2.

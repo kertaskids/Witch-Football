@@ -124,9 +124,9 @@ public class Match : MonoBehaviour
             _isPaused = true;
             _stateDelay = stateMaxDelay;
             SetPlayersControl(false); // <Creates a bug on ballposession>
-            Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
-            Debug.Log("GameState: " + gamestate.ToString());
-            Debug.Break();
+            //Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
+            //Debug.Log("GameState: " + gamestate.ToString());
+            //Debug.Break();
         }
         _stateDelay -= Time.deltaTime;
 
