@@ -83,7 +83,8 @@ public class Match : MonoBehaviour
             _stateDelay = stateMaxDelay;
             _initiated  = true;
             _mysteryBoxDelay = mysteryBoxMaxDelay;
-            //SetPlayersControl(false);
+            // <Edit later> Init all the UIs (including PinUp and HUD) here
+            
         }
 
         if(_stateDelay <= 0) {

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PinUp : MonoBehaviour
 {
+    public WitchController witchController;
     public Image image;
     public GameObject background;
     public Canvas canvas;
@@ -24,8 +25,10 @@ public class PinUp : MonoBehaviour
     private Team.TeamParty teamParty;
     private bool fadeIn = true;
     
-    public void Init(){
-        // <Edit later> Assign the witchController here, so we can refer this to the PlayerHUD
+    public void Init(WitchController witchController){
+        this.witchController = witchController;
+        image.sprite = witchController.pinUpSprite;
+        // <Edit later> Assign the witchController here, so we can refer this like one in the PlayerHUD
     }
     void LateUpdate() {
         // Background & Image Moving
