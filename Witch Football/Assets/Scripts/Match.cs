@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
+
 // ------<FOR TESTING ONLY>------
 #if UNITY_EDITOR
 using UnityEditor;
@@ -41,6 +44,8 @@ public class Match : MonoBehaviour
     private Vector3 _initialBallPos;
     private GameObject ball;
 
+    private TitlePopUp _titlePopUp;
+
     void Start(){
         _initiated = false;
         _isPaused  = false;
@@ -50,6 +55,9 @@ public class Match : MonoBehaviour
         if(ball == null) {
             ball = GameObject.Find("Ball");
         }
+        _titlePopUp =  Resources.FindObjectsOfTypeAll<TitlePopUp>().FirstOrDefault();
+        //GameObject.FindObjectOfType<TitlePopUp>().gameObject; 
+        
     }
     void Update(){
         if(!_isPaused){
@@ -84,6 +92,7 @@ public class Match : MonoBehaviour
             _initiated  = true;
             _mysteryBoxDelay = mysteryBoxMaxDelay;
             // <Edit later> Init all the UIs (including PinUp and HUD) here
+            ShowTitle("READY?", 3f);
             
         }
 
@@ -91,6 +100,7 @@ public class Match : MonoBehaviour
             gamestate   = GameState.MatchPlaying;
             _stateDelay = stateMaxDelay;
             SetPlayersControl(true);
+            ShowTitle("GO!", 1f, 128f);
         }
         _stateDelay -= Time.deltaTime;
     }
@@ -128,6 +138,8 @@ public class Match : MonoBehaviour
             //Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
             //Debug.Log("GameState: " + gamestate.ToString());
             //Debug.Break();
+            ShowTitle("GOAL!", 3f, 128f);
+            //GameObject title = GameObject.Instantiate("Assests/Prefabs/UI/TitlePopUp", Vector3.zero, Quaternion.identity) as GameObject;
         }
         _stateDelay -= Time.deltaTime;
 
@@ -329,5 +341,13 @@ public class Match : MonoBehaviour
             }
         }
         return fallen;
+    }
+
+    void ShowTitle(string text, float duration, float fontSize = 96){
+        // Refresh FX
+        _titlePopUp.gameObject.SetActive(true);
+        _titlePopUp.duration = duration;
+        _titlePopUp.GetComponent<TextMeshProUGUI>().text = text;
+        _titlePopUp.GetComponent<TextMeshProUGUI>().fontSize = fontSize;
     }
 }

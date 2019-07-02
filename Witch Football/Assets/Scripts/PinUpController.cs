@@ -90,6 +90,9 @@ public class PinUpController : MonoBehaviour
         botCinematicBorder.SetActive(true);
         fadeIn = true;
         fadeOut = false;
+
+        botCinematicBorder.transform.position = botEndPos.position;
+        topCinematicBorder.transform.position = topEndPos.position;
     }
     void FadeOut(){
         //topCinematicBorder.SetActive(false);

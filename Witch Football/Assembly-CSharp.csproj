@@ -74,6 +74,12 @@
      <Compile Include="Assets\Scripts\StatModifier.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
+     <Compile Include="Assets\Scripts\TitlePopUp.cs" />
+     <Compile Include="Assets\Scripts\TMPFXAutoType.cs" />
+     <Compile Include="Assets\Scripts\TMPFXColorChanger.cs" />
+     <Compile Include="Assets\Scripts\TMPFXSkewText.cs" />
+     <Compile Include="Assets\Scripts\TMPFXVertexJitter.cs" />
+     <Compile Include="Assets\Scripts\TMPFXVertexZoom.cs" />
      <Compile Include="Assets\Scripts\Witch.cs" />
      <Compile Include="Assets\Scripts\WitchController.cs" />
      <None Include="Assets\Resources\Skyboxes\Readme.txt" />
