@@ -5377,6 +5377,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5463,6 +5464,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotationPerSecond: 2
   _rotate: 1
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3882a4e776657f74f9709f15a3212d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
+  shakeSpeed: 5
+  shakeDuration: 4
+  shakeAmount: 3
+  decreaseFactor: 1
 --- !u!1 &966314200
 GameObject:
   m_ObjectHideFlags: 0
@@ -15555,6 +15573,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008454889888524023, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a,
+        type: 3}
+      propertyPath: duration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008454889888524019, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008454889888524020, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008454889888524016, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008454889888524017, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b19b5ee3b4ec1ac4b96de71d352a2d0a, type: 3}

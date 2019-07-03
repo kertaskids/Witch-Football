@@ -8,7 +8,7 @@ public class TitlePopUp : MonoBehaviour
     private TextMeshProUGUI TMPUGUI;
 
     void Start(){
-        duration = 3f;
+        //duration = 3f;
         TMPUGUI = GetComponent<TextMeshProUGUI>();
         TMPUGUI.alignment = TextAlignmentOptions.Center; 
     }
@@ -16,7 +16,7 @@ public class TitlePopUp : MonoBehaviour
     void Update(){
         if(duration <= 0){
             gameObject.SetActive(false);
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
         duration -= Time.deltaTime;
     }
