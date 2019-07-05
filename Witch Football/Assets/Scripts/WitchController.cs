@@ -87,6 +87,15 @@ public class WitchController : MonoBehaviour
         } else {
             witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
+        CheckPauseOrResume();
+    }
+
+    void CheckPauseOrResume(){
+        if(Input.GetButtonDown(playerInput.StartOrPause)){
+            Match match = GameObject.FindObjectOfType<Match>();
+            match.PauseOrResume();
+            Debug.Log("Start Pressed" + playerInput.StartOrPause.ToString());
+        }
     }
 
     void MoveControl(){

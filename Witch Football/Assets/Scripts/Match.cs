@@ -44,6 +44,10 @@ public class Match : MonoBehaviour
     private Vector3 _initialBallPos;
     private GameObject ball;
 
+    public GameObject MatchStats;
+    public GameObject BlurBackground;
+    public GameObject PauseText;
+
     void Start(){
         _initiated = false;
         _isPaused  = false;
@@ -54,6 +58,11 @@ public class Match : MonoBehaviour
             ball = GameObject.Find("Ball");
         }
         //_titlePopUp =  Resources.FindObjectsOfTypeAll<TitlePopUp>().FirstOrDefault();
+
+        //MatchStats = GameObject.Find("MatchStats");
+        //MatchStats.SetActive(false);
+
+        //Debug.Log("MatchStats: " + GameObject.Find("MatchStats")==null);
     }
     void Update(){
         if(!_isPaused){
@@ -69,6 +78,7 @@ public class Match : MonoBehaviour
             if(gamestate == GameState.PostGoal) PostGoal();
         }
     }
+
     void LateUpdate() {
         if(PlayerAndBallFallen()){
             // <Edit later> Simply respawn the player or the ball in the middle of arena, with stunned duration. 
@@ -89,15 +99,14 @@ public class Match : MonoBehaviour
             _mysteryBoxDelay = mysteryBoxMaxDelay;
             // <Edit later> Init all the UIs (including PinUp and HUD) here
             //ShowTitle("READY?", 3f);
-            ShowTitleNew("Get Ready!", 3f);
+            ShowTitle("Get Ready!", 3f);
         }
 
         if(_stateDelay <= 0) {
             gamestate   = GameState.MatchPlaying;
             _stateDelay = stateMaxDelay;
             SetPlayersControl(true);
-            //ShowTitle("GO!", 1f, 128f);
-            ShowTitleNew("Go!", 2f);
+            ShowTitle("Kick Off!", 1f);
         }
         _stateDelay -= Time.deltaTime;
     }
@@ -106,6 +115,7 @@ public class Match : MonoBehaviour
         if(Timer <= 0){
             gamestate = GameState.TimeOver;
             SetPlayersControl(false);
+            ShowTitle("Time's Up!", 2f);
         }
 
         // <Edit later> 
@@ -132,10 +142,7 @@ public class Match : MonoBehaviour
             _isPaused = true;
             _stateDelay = stateMaxDelay;
             SetPlayersControl(false); // <Creates a bug on ballposession>
-            //Debug.Log("Ball State:" + ball.GetComponent<Ball>().ballState + " ");
-            //Debug.Log("GameState: " + gamestate.ToString());
-            //Debug.Break();
-            ShowTitleNew("Goal!", 3f);
+            ShowTitle("Kick Off!", 3f);
         }
         _stateDelay -= Time.deltaTime;
 
@@ -171,6 +178,9 @@ public class Match : MonoBehaviour
         //SetPlayersControl(true);
         Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
         
+        ShowTitle("Goal!", 3f);
+        Camera.main.GetComponent<CameraShake>().ShakeCamera(3f, 2f);
+
         _oneSecondTimer -= Time.deltaTime;
         if(_oneSecondTimer<=0){
             //Debug.Log("Timer: " + (int)(Timer/60) + "Minutes " + (int)(Timer%60) + "Seconds.");
@@ -203,7 +213,8 @@ public class Match : MonoBehaviour
             if(TeamA != null && TeamB!=null){
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
-            ShowTitleNew("Time's Up!", 2f);
+            ShowMatchStats(true);
+            
         }
         _stateDelay -= Time.deltaTime;
         // <Edit later> 
@@ -228,7 +239,8 @@ public class Match : MonoBehaviour
             #if UNITY_EDITOR
             EditorApplication.isPaused = true;
             #endif
-
+            // <Edit later> ShowMatchStatsUI
+            
             // <Edit later> Go back to menu screen
             
         } else {
@@ -268,6 +280,7 @@ public class Match : MonoBehaviour
             }
         }
     }
+
     void SetupMatch(){
         // Nullifies the ball first 
         GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
@@ -340,7 +353,7 @@ public class Match : MonoBehaviour
         return fallen;
     }
 
-    void ShowTitleNew(string text, float duration, float fontSize = 96f){
+    public void ShowTitle(string text, float duration, float fontSize = 96f){
         UnityEngine.Object titleObject = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/UI/TitlePopUp.prefab", typeof(object));
         GameObject UICanvas = GameObject.Find("UI Canvas");
         GameObject titleGameObject = Instantiate(titleObject, Vector3.zero, Quaternion.identity, UICanvas.transform) as GameObject;
@@ -348,5 +361,29 @@ public class Match : MonoBehaviour
         titleGameObject.GetComponent<TitlePopUp>().GetComponent<TextMeshProUGUI>().text = text;
         titleGameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
         titleGameObject.GetComponent<TextMeshProUGUI>().fontSize = fontSize;
+    }
+    
+    void ShowMatchStats(bool show){
+        // Historical stats
+        BlurBackground.SetActive(show);
+        MatchStats.SetActive(show);
+    }
+
+    public void PauseOrResume(){
+        if(_isPaused == false) {
+            _isPaused = true;
+            BlurBackground.SetActive(true);
+            SetPlayersControl(false);
+            PauseText.SetActive(true);
+            //<Edit later>
+            // Pause UI
+        } else if(_isPaused == true){
+            _isPaused = false;
+            BlurBackground.SetActive(false);
+            SetPlayersControl(true);
+            PauseText.SetActive(false);
+            //<Edit later>
+            // Pause UI
+        }
     }
 }

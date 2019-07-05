@@ -5,6 +5,8 @@ using TMPro;
 
 public class TMPFXVertexZoom : MonoBehaviour
 {
+    public float minScale = 1f;
+    public float maxScale = 1.1f;
     private TMP_Text _TextComponent;
     private bool _isTextChanged;
 
@@ -14,6 +16,7 @@ public class TMPFXVertexZoom : MonoBehaviour
     void OnEnable(){
         // Subscribe to event fired when text object has been regenerated. 
         TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
+        StartCoroutine(AnimateVertexColors());
     }
     void OnDisable() {
         TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
@@ -88,7 +91,7 @@ public class TMPFXVertexZoom : MonoBehaviour
                 destinationVertices[vertexIndex + 3] = sourceVertices[vertexIndex + 3] - offset;
 
                 // Determine the random scale change for each character. 
-                float randomScale = Random.Range(1f, 1.5f);
+                float randomScale = Random.Range(minScale, maxScale);
                 // Add modified scale and index.
                 modifiedCharScale.Add(randomScale);
                 scaleSortingOrder.Add(modifiedCharScale.Count - 1);

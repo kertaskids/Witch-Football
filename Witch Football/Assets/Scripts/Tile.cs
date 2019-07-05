@@ -119,6 +119,7 @@ public class Tile : MonoBehaviour
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
                         cw.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, triggerDistance * 2f, 3f, ForceMode.Impulse);
                         Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);  
+                        Camera.main.GetComponent<CameraShake>().ShakeCamera(0.5f, 2f);
                     }
                     
                     
@@ -147,6 +148,7 @@ public class Tile : MonoBehaviour
                         cw.transform.rotation = Quaternion.LookRotation(transform.position - cw.transform.position);
                         cw.GetComponent<Rigidbody>().AddExplosionForce(7f, transform.position, 2f, 3f, ForceMode.Impulse);
                         Debug.Log("Collide with:" + cw.name + " direction:" + cw.transform.rotation);  
+                        Camera.main.GetComponent<CameraShake>().ShakeCamera(0.5f, 2f);
                     }
                     
                 

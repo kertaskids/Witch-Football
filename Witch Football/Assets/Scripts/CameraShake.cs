@@ -21,7 +21,7 @@ public class CameraShake : MonoBehaviour
      }
 
      void Start(){
-         ShakeCamera(5, 3);
+         //ShakeCamera(5, 3);
      }
 
      void OnEnable(){
