@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1ff083d0021be0c4ea7d8b965935b5d1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5aff8988cef40e9408363019650dcc1a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapSampler:
