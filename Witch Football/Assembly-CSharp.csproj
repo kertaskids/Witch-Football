@@ -58,6 +58,7 @@
      <Compile Include="Assets\Resources\Shader\3D Glass Blur\CommandBufferBlurRefraction.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\BillboardSprite.cs" />
+     <Compile Include="Assets\Scripts\CameraRotator.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Goal.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\PopUp.cs" />
      <Compile Include="Assets\Scripts\PotionPreset.cs" />
+     <Compile Include="Assets\Scripts\RandomBGM.cs" />
      <Compile Include="Assets\Scripts\Rock.cs" />
      <Compile Include="Assets\Scripts\SkyboxRotator.cs" />
      <Compile Include="Assets\Scripts\Smoke.cs" />
