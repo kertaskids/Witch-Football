@@ -7980,14 +7980,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundtracks:
-  - {fileID: 8300000, guid: 50bdfb0208a241b429a443ba994c33ef, type: 3}
-  - {fileID: 8300000, guid: cbfeec79398031341aa29efb72045814, type: 3}
-  - {fileID: 8300000, guid: 8ecbc03b06e702340a3d61d1309a18d3, type: 3}
-  - {fileID: 8300000, guid: 6cd8cb1d4daeb9b4d9411f343565266a, type: 3}
-  - {fileID: 8300000, guid: f0d841ac3e088b441979865be001eaf2, type: 3}
-  - {fileID: 8300000, guid: c3a59d34579d0244793c7d31e56ff209, type: 3}
-  - {fileID: 8300000, guid: 59637337c9f484a46b611f3e875d548a, type: 3}
-  - {fileID: 8300000, guid: c8bbfd47a119c8340904632334dc08f2, type: 3}
+  - {fileID: 8300000, guid: 2303cb3000cf38145b097a36ab6da1a2, type: 3}
+  - {fileID: 8300000, guid: 13ae4e76e9db9a34fbc1a64fa3c4daef, type: 3}
+  - {fileID: 8300000, guid: 6674e523c244aa84cbfa3c7ef6eddf9f, type: 3}
+  - {fileID: 8300000, guid: 7ad0c04495b958243b0755faca4d860d, type: 3}
 --- !u!4 &1169770700
 Transform:
   m_ObjectHideFlags: 0
