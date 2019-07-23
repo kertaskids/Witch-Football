@@ -354,9 +354,10 @@ public class Match : MonoBehaviour
     }
 
     public void ShowTitle(string text, float duration, float fontSize = 96f){
-        UnityEngine.Object titleObject = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/UI/TitlePopUp.prefab", typeof(object));
+        //UnityEngine.Object titleObject = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/UI/TitlePopUp.prefab", typeof(object));
+        GameObject G = Resources.Load("TitlePopUp1") as GameObject;
         GameObject UICanvas = GameObject.Find("UI Canvas");
-        GameObject titleGameObject = Instantiate(titleObject, Vector3.zero, Quaternion.identity, UICanvas.transform) as GameObject;
+        GameObject titleGameObject = Instantiate(G, Vector3.zero, Quaternion.identity, UICanvas.transform) as GameObject;
         titleGameObject.GetComponent<TitlePopUp>().duration = duration;
         titleGameObject.GetComponent<TitlePopUp>().GetComponent<TextMeshProUGUI>().text = text;
         titleGameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;

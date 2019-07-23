@@ -27,7 +27,7 @@ public class HUD : MonoBehaviour
         MannaBar        = transform.Find("MannaBar").gameObject;
         LightMagicHUD   = transform.Find("LightMagic").gameObject;
         HeavyMagicHUD   = transform.Find("HeavyMagic").gameObject;
-        WitchHUDMask.transform.Find("PlayerHUD Image").GetComponent<Image>().sprite = witchController.pinUpSprite;
+        WitchHUDMask.transform.Find("PlayerHUD Image").GetComponent<Image>().sprite = witchController.HUDSprite;
     }
 
     void LateUpdate(){

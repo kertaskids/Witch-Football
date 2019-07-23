@@ -16,6 +16,7 @@ public class WitchController : MonoBehaviour
     public GameObject ball; 
     public GameObject ballPosition;
     public Sprite pinUpSprite;
+    public Sprite HUDSprite;
 
     public bool ControlAllowed;
     /* public bool ControlAllowed {
