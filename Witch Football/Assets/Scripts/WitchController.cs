@@ -18,6 +18,10 @@ public class WitchController : MonoBehaviour
     public Sprite pinUpSprite;
     public Sprite HUDSprite;
 
+    public WitchVoiceManager VoiceManager;
+    public WitchSFXManager SFXManager;
+    public bool IsFalling;
+
     public bool ControlAllowed;
     /* public bool ControlAllowed {
         get {
@@ -43,6 +47,9 @@ public class WitchController : MonoBehaviour
         ControlAllowed  = false;
         ball            = GameObject.FindGameObjectWithTag("Ball");
         ballPosition    = transform.Find("BallPosition").gameObject; 
+        VoiceManager    = GetComponent<WitchVoiceManager>();
+        SFXManager      = GetComponent<WitchSFXManager>(); 
+        IsFalling      = false;
 
         if(teamMatesWitches == null || teamMatesWitches.Length < 1) {
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
@@ -85,10 +92,18 @@ public class WitchController : MonoBehaviour
                 GuardControl();
                 MysteryBoxControl();
             }
+            // Regen HP after stunned
+            if(witch.character.healthPoint.current <= 0f){
+                witch.character.healthPoint.current += 5f;
+            }
         } else {
             witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
         CheckPauseOrResume();
+        if(transform.position.y <= 0 && IsFalling == false){
+            SFXManager.Play(SFXManager.Falling);
+            IsFalling = true;
+        }
     }
 
     void CheckPauseOrResume(){
@@ -145,6 +160,7 @@ public class WitchController : MonoBehaviour
         if(Input.GetButtonDown(playerInput.Jump) && (_rigidbody.velocity.y <= 0.1f) && (witch.character.jumpDelay.full)){
             _rigidbody.AddForce(witch.character.jumpForce.current * Vector3.up, ForceMode.Impulse);
             witch.character.jumpDelay.current = 0f;
+            SFXManager.Play(SFXManager.Jumping);
         }
         witch.character.jumpDelay.current = UpdateTimer(witch.character.jumpDelay.current, witch.character.jumpDelay.max);
 
@@ -185,6 +201,7 @@ public class WitchController : MonoBehaviour
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.shootPower.current);
                     witch.character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
+                    SFXManager.Play(SFXManager.Shooting);
                 }
             }
             // Pass
@@ -208,8 +225,8 @@ public class WitchController : MonoBehaviour
                     ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.passPower.current);
                     
-
                     witch.character.passDelay.current    = 0f;
+                    SFXManager.Play(SFXManager.Passing);
                 }
             }
         }else{
@@ -224,6 +241,7 @@ public class WitchController : MonoBehaviour
                 witch.character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackling");
+                SFXManager.Play(SFXManager.Tackling);
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
                 // 2. If it posses
                 //      if its guard 0 short stun
@@ -268,6 +286,8 @@ public class WitchController : MonoBehaviour
                     PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
                     //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
                     pUController.Perform(this, 1.5f);
+                    
+                    SFXManager.PlayMagicSFX(witch.character.lightMagicSkill);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -285,6 +305,8 @@ public class WitchController : MonoBehaviour
                     PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
                     //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
                     pUController.Perform(this, 3f);
+
+                    SFXManager.PlayMagicSFX(witch.character.heavyMagicSkill);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -337,6 +359,7 @@ public class WitchController : MonoBehaviour
                 vel += new Vector3(0,1,0);
                 BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);   
 
+                SFXManager.Play(SFXManager.Stunned);
             }
             Debug.Log("Tackled when possesses"+_possessingBall);
         } 
@@ -362,11 +385,15 @@ public class WitchController : MonoBehaviour
                 //BallReleasing();
                 Debug.Log("Ball Released because Long Stun.");
             }
+
+            SFXManager.Play(SFXManager.Stunned);
         }
         Debug.Log("Guard: "+witch.character.guard.current +" .HP: "+witch.character.healthPoint.current);
         //Debug.Break();
         witch.character.getTackledDelay.current = 0f;
         Debug.Log("GetTackledDelay: "+witch.character.getTackledDelay.current);
+        
+        SFXManager.Play(SFXManager.Tackled);
     }
 
     public void Damaged(float guardReduced, float healthReduced){

@@ -214,7 +214,8 @@ public class Match : MonoBehaviour
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
             ShowMatchStats(true);
-            
+            MatchStats.transform.Find("TeamA Score").GetComponent<TextMeshProUGUI>().text = TeamA.Score.ToString();
+            MatchStats.transform.Find("TeamB Score").GetComponent<TextMeshProUGUI>().text = TeamB.Score.ToString();
         }
         _stateDelay -= Time.deltaTime;
         // <Edit later> 
@@ -289,6 +290,11 @@ public class Match : MonoBehaviour
             if(w.GetComponent<WitchController>()._possessingBall) {
                 w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, Vector3.zero);
             }
+
+            // <Edit later> Refresh the falling state
+            if(w.GetComponent<WitchController>().IsFalling){
+                w.GetComponent<WitchController>().IsFalling = false;
+            }
         }
         // Ball Position
         ball.transform.position = _initialBallPos;
@@ -341,12 +347,14 @@ public class Match : MonoBehaviour
         foreach(WitchController w in TeamA.witches){
             if(w.transform.position.y < minPosY) {
                 w.witch.character.stunnedDuration.current += 3f;
+                w.witch.character.healthPoint.current -= 3f;
                 fallen = true;
             } 
         }
         foreach(WitchController w in TeamB.witches){
             if(w.transform.position.y < minPosY){
                 w.witch.character.stunnedDuration.current += 3f;
+                w.witch.character.healthPoint.current -= 3f;
                 fallen = true;
             }
         }

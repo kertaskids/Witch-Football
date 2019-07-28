@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Resources\Shader\3D Glass Blur\CommandBufferBlurRefraction.cs" />
+     <Compile Include="Assets\Scenes\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\BillboardSprite.cs" />
      <Compile Include="Assets\Scripts\CameraRotator.cs" />
@@ -71,10 +72,16 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\PopUp.cs" />
      <Compile Include="Assets\Scripts\PotionPreset.cs" />
-     <Compile Include="Assets\Scripts\RandomBGM.cs" />
      <Compile Include="Assets\Scripts\Rock.cs" />
      <Compile Include="Assets\Scripts\SkyboxRotator.cs" />
      <Compile Include="Assets\Scripts\Smoke.cs" />
+     <Compile Include="Assets\Scripts\Sounds\AmbientSFXManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\BallSFXManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\BGMManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\TileSFXManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\UISFXManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\WitchSFXManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\WitchVoiceManager.cs" />
      <Compile Include="Assets\Scripts\StatModifier.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />

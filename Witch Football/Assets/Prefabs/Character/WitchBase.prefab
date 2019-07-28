@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 71184867770618393}
   - component: {fileID: 71184867770618392}
   - component: {fileID: 71184867770618399}
+  - component: {fileID: 2392610681111606170}
+  - component: {fileID: -3854337104642627153}
+  - component: {fileID: -7557196615753160054}
   m_Layer: 0
   m_Name: WitchBase
   m_TagString: Witch
@@ -55,6 +58,12 @@ MonoBehaviour:
   _isTackling: 0
   ball: {fileID: 0}
   ballPosition: {fileID: 71184869375936633}
+  pinUpSprite: {fileID: 0}
+  HUDSprite: {fileID: 0}
+  VoiceManager: {fileID: 0}
+  SFXManager: {fileID: 0}
+  IsFalling: 0
+  ControlAllowed: 0
 --- !u!136 &71184867770618392
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -85,6 +94,161 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2392610681111606170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71184867770618398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833906a47bb00f84a9aad335799c42f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shooting: {fileID: 0}
+  Passing: {fileID: 0}
+  Tackling: {fileID: 0}
+  Controlling: {fileID: 0}
+  Scoring: {fileID: 0}
+  Falling: {fileID: 0}
+  Tackled: {fileID: 0}
+  Happy: {fileID: 0}
+  Sad: {fileID: 0}
+  Laugh: {fileID: 0}
+  Cry: {fileID: 0}
+  Boring: {fileID: 0}
+  LightDamage: {fileID: 0}
+  HeavyDamage: {fileID: 0}
+  LightHeal: {fileID: 0}
+  HeavyHeal: {fileID: 0}
+  LightPower: {fileID: 0}
+  HeavyPower: {fileID: 0}
+  LightSpeed: {fileID: 0}
+  HeavySpeed: {fileID: 0}
+--- !u!114 &-3854337104642627153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71184867770618398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05dce6d4fa15bc04099bf616f3dcc591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shooting: {fileID: 8300000, guid: 365b148814b350b4d9d2dee7c4de1fac, type: 3}
+  Passing: {fileID: 8300000, guid: f1f18fc926bcc4a4883d51b09f79461d, type: 3}
+  Tackling: {fileID: 8300000, guid: ee561a96c6e470c42af044ecb1b22f8b, type: 3}
+  Tackled: {fileID: 8300000, guid: 03a04a0ec1e27d84c94255c925c00a77, type: 3}
+  Stunned: {fileID: 8300000, guid: aca51b8baa3ab824face5b072685dfab, type: 3}
+  Falling: {fileID: 8300000, guid: c910b153e2ef7c84eb6829d56d0cbb0c, type: 3}
+  Jumping: {fileID: 8300000, guid: 4b41fc064fdd0f74ea7b024eb980707d, type: 3}
+  LightDamage: {fileID: 8300000, guid: 9d950cb142193b8429168d74b6d068fc, type: 3}
+  HeavyDamage: {fileID: 8300000, guid: 46647a2eca350374ca0962f38f9b86d2, type: 3}
+  LightHeal: {fileID: 8300000, guid: d7129fe6d0c7a254499ebd645916c739, type: 3}
+  HeavyHeal: {fileID: 8300000, guid: 2b9d16effb88dde4886256ffaa5a400f, type: 3}
+  LightPower: {fileID: 8300000, guid: cc473e0595c28d74798cee169dbe722a, type: 3}
+  HeavyPower: {fileID: 8300000, guid: 65764b96fe422c74a9deceea073aae94, type: 3}
+  LightSpeed: {fileID: 8300000, guid: 612b75b883a351b468d9d93dd2bd4639, type: 3}
+  HeavySpeed: {fileID: 8300000, guid: 45bfcb7d3d6740c40aad3ffe0151dc33, type: 3}
+--- !u!82 &-7557196615753160054
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71184867770618398}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &71184868288426043
 GameObject:
   m_ObjectHideFlags: 0

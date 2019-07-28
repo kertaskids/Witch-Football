@@ -8,6 +8,7 @@ ScriptsOnlyBuild:
     - CommandBufferBlurRefraction
     - Goal
     - HUD
+    - MainMenu
     - Match
     - MysteryBox
     - PinUp
@@ -49,7 +50,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Mask
     - UnityEngine.UI.Text
   sceneClasses:
-    Assets/Scenes/Test Scene.unity:
+    Assets/Scenes/Main Menu.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -70,6 +71,91 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 109
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9358}
+    - Class: 114
+      Script: {instanceID: 9364}
+    - Class: 114
+      Script: {instanceID: 9370}
+    - Class: 114
+      Script: {instanceID: 9378}
+    - Class: 114
+      Script: {instanceID: 9414}
+    - Class: 114
+      Script: {instanceID: 9552}
+    - Class: 114
+      Script: {instanceID: 9596}
+    - Class: 114
+      Script: {instanceID: 9734}
+    - Class: 114
+      Script: {instanceID: 9740}
+    - Class: 114
+      Script: {instanceID: 9782}
+    - Class: 114
+      Script: {instanceID: 9820}
+    - Class: 114
+      Script: {instanceID: 9944}
+    - Class: 114
+      Script: {instanceID: 10128}
+    - Class: 114
+      Script: {instanceID: 10138}
+    - Class: 114
+      Script: {instanceID: 10272}
+    - Class: 114
+      Script: {instanceID: 10514}
+    - Class: 114
+      Script: {instanceID: 10568}
+    - Class: 114
+      Script: {instanceID: 10666}
+    - Class: 114
+      Script: {instanceID: 64754}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 134
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Test Scene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
     - Class: 65
@@ -86,82 +172,74 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 109
-      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9238}
+      Script: {instanceID: 9240}
     - Class: 114
-      Script: {instanceID: 9316}
+      Script: {instanceID: 9318}
     - Class: 114
-      Script: {instanceID: 9356}
+      Script: {instanceID: 9358}
     - Class: 114
-      Script: {instanceID: 9362}
+      Script: {instanceID: 9364}
     - Class: 114
-      Script: {instanceID: 9368}
+      Script: {instanceID: 9370}
     - Class: 114
-      Script: {instanceID: 9376}
+      Script: {instanceID: 9378}
     - Class: 114
-      Script: {instanceID: 9384}
-    - Class: 114
-      Script: {instanceID: 9412}
+      Script: {instanceID: 9386}
     - Class: 114
       Script: {instanceID: 9414}
     - Class: 114
-      Script: {instanceID: 9550}
+      Script: {instanceID: 9416}
     - Class: 114
       Script: {instanceID: 9552}
     - Class: 114
-      Script: {instanceID: 9594}
+      Script: {instanceID: 9554}
     - Class: 114
-      Script: {instanceID: 9626}
+      Script: {instanceID: 9596}
     - Class: 114
-      Script: {instanceID: 9732}
+      Script: {instanceID: 9628}
     - Class: 114
-      Script: {instanceID: 9738}
+      Script: {instanceID: 9734}
     - Class: 114
       Script: {instanceID: 9740}
     - Class: 114
-      Script: {instanceID: 9780}
+      Script: {instanceID: 9742}
     - Class: 114
-      Script: {instanceID: 9798}
+      Script: {instanceID: 9800}
     - Class: 114
-      Script: {instanceID: 9818}
+      Script: {instanceID: 9820}
     - Class: 114
-      Script: {instanceID: 9828}
+      Script: {instanceID: 9830}
     - Class: 114
-      Script: {instanceID: 9886}
+      Script: {instanceID: 9888}
     - Class: 114
-      Script: {instanceID: 9942}
+      Script: {instanceID: 9944}
     - Class: 114
-      Script: {instanceID: 9968}
+      Script: {instanceID: 9970}
     - Class: 114
-      Script: {instanceID: 10032}
+      Script: {instanceID: 10034}
     - Class: 114
-      Script: {instanceID: 10126}
+      Script: {instanceID: 10128}
     - Class: 114
-      Script: {instanceID: 10136}
+      Script: {instanceID: 10272}
     - Class: 114
-      Script: {instanceID: 10270}
+      Script: {instanceID: 10316}
     - Class: 114
-      Script: {instanceID: 10314}
+      Script: {instanceID: 10500}
     - Class: 114
-      Script: {instanceID: 10498}
+      Script: {instanceID: 10568}
     - Class: 114
-      Script: {instanceID: 10512}
+      Script: {instanceID: 10572}
     - Class: 114
-      Script: {instanceID: 10566}
-    - Class: 114
-      Script: {instanceID: 10570}
-    - Class: 114
-      Script: {instanceID: 10574}
-    - Class: 114
-      Script: {instanceID: 10588}
+      Script: {instanceID: 10576}
     - Class: 114
       Script: {instanceID: 10590}
     - Class: 114
-      Script: {instanceID: 10606}
+      Script: {instanceID: 10592}
     - Class: 114
-      Script: {instanceID: 10664}
+      Script: {instanceID: 10608}
+    - Class: 114
+      Script: {instanceID: 10666}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -979,7 +1057,14 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 054c11ebe7357ca64685056210b17e5a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenu
   platform: 19
   scenePathNames:
+  - Assets/Scenes/Main Menu.unity
   - Assets/Scenes/Test Scene.unity
-  playerPath: C:/Users/Harisa/Desktop/Witch Baller/Witch Football.exe
+  playerPath: C:/Users/Harisa/Desktop/Witch Football/Witch Football.exe
