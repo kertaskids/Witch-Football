@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class WitchController : MonoBehaviour
 {
     private PlayerInput playerInput;
@@ -21,6 +23,8 @@ public class WitchController : MonoBehaviour
     public WitchVoiceManager VoiceManager;
     public WitchSFXManager SFXManager;
     public bool IsFalling;
+    public float DribbleDur = 0.5f;
+    public CharacterStat DribbleDuration;
 
     public bool ControlAllowed;
     /* public bool ControlAllowed {
@@ -49,7 +53,8 @@ public class WitchController : MonoBehaviour
         ballPosition    = transform.Find("BallPosition").gameObject; 
         VoiceManager    = GetComponent<WitchVoiceManager>();
         SFXManager      = GetComponent<WitchSFXManager>(); 
-        IsFalling      = false;
+        IsFalling       = false;
+        DribbleDuration = new CharacterStat(DribbleDur, DribbleDur);
 
         if(teamMatesWitches == null || teamMatesWitches.Length < 1) {
             GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
@@ -100,7 +105,7 @@ public class WitchController : MonoBehaviour
             witch.character.stunnedDuration.current = UpdateDuration(witch.character.stunnedDuration.current);
         }
         CheckPauseOrResume();
-        if(transform.position.y <= 0 && IsFalling == false){
+        if(transform.position.y <= -1 && IsFalling == false){
             SFXManager.Play(SFXManager.Falling);
             IsFalling = true;
         }
@@ -179,6 +184,11 @@ public class WitchController : MonoBehaviour
                 // <Edit later> Refresh ball velocity and rotation or simply just make the ball as children 
                 // <Edit this> in BallFollowing() 
                 ball.transform.position = ballPosition.transform.position;
+
+                if(DribbleDuration.current > 0){
+                    DribbleDuration.current -= Time.deltaTime;
+                }
+                //DribbleDuration.current = UpdateDuration(DribbleDuration.current);
             }
         }
     }
@@ -187,6 +197,7 @@ public class WitchController : MonoBehaviour
     float UpdateTimer(float curVal, float maxVal){
         return curVal >= maxVal ? maxVal : (curVal += 1f * Time.deltaTime); 
     }
+    //<Edit later> Better use void to avoid the bias.
     float UpdateDuration(float curVal){
         return curVal <= 0 ? 0 : (curVal -= 1f * Time.deltaTime);
     }
@@ -202,6 +213,14 @@ public class WitchController : MonoBehaviour
                     witch.character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
                     SFXManager.Play(SFXManager.Shooting);
+
+                    Ball b = ball.GetComponent<Ball>();
+                    if(witch.character.lightMagicSkill.casted || witch.character.heavyMagicSkill.casted){
+                        b.SFXManager.Play(b.SFXManager.Raged);
+                    } else {
+                        b.SFXManager.Play(b.SFXManager.Kicked);
+                    }
+                    
                 }
             }
             // Pass
@@ -225,8 +244,15 @@ public class WitchController : MonoBehaviour
                     ball.transform.localPosition += new Vector3(0f, 0f, 0.3f); 
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.passPower.current);
                     
-                    witch.character.passDelay.current    = 0f;
+                    witch.character.passDelay.current = 0f;
                     SFXManager.Play(SFXManager.Passing);
+                    
+                    Ball b = ball.GetComponent<Ball>();
+                    if(witch.character.lightMagicSkill.casted || witch.character.heavyMagicSkill.casted){
+                        b.SFXManager.Play(b.SFXManager.Raged);
+                    } else {
+                        b.SFXManager.Play(b.SFXManager.Kicked);
+                    }
                 }
             }
         }else{
@@ -278,14 +304,14 @@ public class WitchController : MonoBehaviour
             // <Edit later> Check the TimeUse first
             if(witch.character.lightMagicSkill.delay.full && !witch.character.lightMagicSkill.casted){
                 if(witch.character.manna.current >= witch.character.lightMagicSkill.mannaNeed){
-                    witch.character.manna.current -= witch.character.lightMagicSkill.mannaNeed;
+                    //witch.character.manna.current -= witch.character.lightMagicSkill.mannaNeed;
                     witch.character.CastMagic(witch.character.lightMagicSkill);
                     witch.character.lightMagicSkill.delay.current = 0f;
                     //witch.character.lightMagicSkill.casted = true;
                     // PinUp
                     PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
                     //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
-                    pUController.Perform(this, 1.5f);
+                    pUController.Perform(this, 0.25f);
                     
                     SFXManager.PlayMagicSFX(witch.character.lightMagicSkill);
                 } else {
@@ -298,13 +324,13 @@ public class WitchController : MonoBehaviour
             // Check the TimeUse first
             if(witch.character.heavyMagicSkill.delay.full && !witch.character.heavyMagicSkill.casted){
                 if(witch.character.manna.current >= witch.character.heavyMagicSkill.mannaNeed){
-                    witch.character.manna.current -= witch.character.heavyMagicSkill.mannaNeed;
+                    //witch.character.manna.current -= witch.character.heavyMagicSkill.mannaNeed;
                     witch.character.CastMagic(witch.character.heavyMagicSkill);
                     witch.character.heavyMagicSkill.delay.current = 0f;
                     //witch.character.heavyMagicSkill.casted = true;
                     PinUpController pUController = GameObject.FindObjectOfType<PinUpController>();
                     //pUController.Perform(pUController.GetMatchedPinUp(this).GetComponent<PinUp>(), this);
-                    pUController.Perform(this, 3f);
+                    pUController.Perform(this, 0.5f);
 
                     SFXManager.PlayMagicSFX(witch.character.heavyMagicSkill);
                 } else {
@@ -360,6 +386,8 @@ public class WitchController : MonoBehaviour
                 BallReleasing(startPos, ball.transform.localRotation, ball.transform.forward, vel, Vector3.zero, 1 * transform.up * witch.character.shootPower.current);   
 
                 SFXManager.Play(SFXManager.Stunned);
+                Ball b = ball.GetComponent<Ball>();
+                b.SFXManager.Play(b.SFXManager.Release);
             }
             Debug.Log("Tackled when possesses"+_possessingBall);
         } 
@@ -387,6 +415,8 @@ public class WitchController : MonoBehaviour
             }
 
             SFXManager.Play(SFXManager.Stunned);
+            Ball b = ball.GetComponent<Ball>();
+            b.SFXManager.Play(b.SFXManager.Kicked);
         }
         Debug.Log("Guard: "+witch.character.guard.current +" .HP: "+witch.character.healthPoint.current);
         //Debug.Break();
@@ -550,6 +580,8 @@ public class WitchController : MonoBehaviour
                 }                
                 //gameObject.GetComponent<Rigidbody>().AddExplosionForce(5f, rock.transform.position, 2f, 2f, ForceMode.Impulse);
                 witch.character.getTackledDelay.current = 0f;
+                
+                SFXManager.Play(SFXManager.Exploding);
             }
         }
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
@@ -560,7 +592,10 @@ public class WitchController : MonoBehaviour
                 BallPossessing();
                 ball.GetComponent<Ball>().Possessed(this);
                 Debug.Log("Possessed by "+gameObject.name);
-                // <Edit later> Refresh ball velocity and rotation                 
+                // <Edit later> Refresh ball velocity and rotation 
+
+                Ball b = ball.GetComponent<Ball>();
+                b.SFXManager.Play(b.SFXManager.Controlled);                
             }
         }
     }

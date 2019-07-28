@@ -12,7 +12,7 @@ public class PinUp : MonoBehaviour
     public float duration = 2f;
     public float fadeSpeed = 5f;
     public float imgSpeed = 20f;
-    public float bgSpeed = 20f;
+    public float bgSpeed = 30f;
     public RectTransform startPos;
     public RectTransform targetPos;
     public RectTransform endPos;
@@ -124,7 +124,7 @@ public class PinUp : MonoBehaviour
         //Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
         image.transform.position = imgStartPos;
         //Debug.Log("current, target, start, end" + transform.position.x + ", " + imgTargetPos.x + ", " + imgStartPos.x + ", " + imgEndPos.x); 
-        Debug.Log("Duration: " + duration + ", Current: " + currentDuration + ", FadeIn: " + fadeIn);    
+        //Debug.Log("Duration: " + duration + ", Current: " + currentDuration + ", FadeIn: " + fadeIn);    
     }
     public void SetDuration(float duration){
         this.duration = duration;

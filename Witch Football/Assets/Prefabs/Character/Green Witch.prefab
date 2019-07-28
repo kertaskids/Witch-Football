@@ -224,6 +224,7 @@ MonoBehaviour:
   Stunned: {fileID: 8300000, guid: aca51b8baa3ab824face5b072685dfab, type: 3}
   Falling: {fileID: 8300000, guid: c910b153e2ef7c84eb6829d56d0cbb0c, type: 3}
   Jumping: {fileID: 8300000, guid: 4b41fc064fdd0f74ea7b024eb980707d, type: 3}
+  Exploding: {fileID: 8300000, guid: a8af73f1e4dbbce4abd5397bf875efb2, type: 3}
   LightDamage: {fileID: 8300000, guid: 9d950cb142193b8429168d74b6d068fc, type: 3}
   HeavyDamage: {fileID: 8300000, guid: 46647a2eca350374ca0962f38f9b86d2, type: 3}
   LightHeal: {fileID: 8300000, guid: d7129fe6d0c7a254499ebd645916c739, type: 3}

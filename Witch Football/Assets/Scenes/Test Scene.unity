@@ -867,7 +867,7 @@ MonoBehaviour:
   duration: 2
   fadeSpeed: 2.5
   imgSpeed: 15
-  bgSpeed: 20
+  bgSpeed: 30
   startPos: {fileID: 2026753908}
   targetPos: {fileID: 1200023980}
   endPos: {fileID: 933554293}
@@ -1952,7 +1952,7 @@ MonoBehaviour:
   duration: 2
   fadeSpeed: 2.5
   imgSpeed: 15
-  bgSpeed: 20
+  bgSpeed: 30
   startPos: {fileID: 2026753908}
   targetPos: {fileID: 1200023980}
   endPos: {fileID: 933554293}
@@ -2937,7 +2937,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: -1.75}
+  m_Size: {x: 0.5, y: 1, z: 1.75}
   m_Center: {x: 0.125, y: 0, z: 0}
 --- !u!4 &524511174
 Transform:
@@ -4376,7 +4376,7 @@ GameObject:
   - component: {fileID: 776993365}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7465,7 +7465,7 @@ GameObject:
   - component: {fileID: 1114583420}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11505,7 +11505,7 @@ MonoBehaviour:
   duration: 2
   fadeSpeed: 2.5
   imgSpeed: 15
-  bgSpeed: 20
+  bgSpeed: 30
   startPos: {fileID: 933554293}
   targetPos: {fileID: 2104173735}
   endPos: {fileID: 2026753908}
@@ -12089,7 +12089,7 @@ GameObject:
   - component: {fileID: 1634391430}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13678,7 +13678,7 @@ GameObject:
   - component: {fileID: 1845083400}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14950,7 +14950,7 @@ GameObject:
   - component: {fileID: 1968247459}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16562,7 +16562,7 @@ GameObject:
   - component: {fileID: 2116594699}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Goal Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16733,7 +16733,7 @@ MonoBehaviour:
   duration: 2
   fadeSpeed: 2.5
   imgSpeed: 15
-  bgSpeed: 15
+  bgSpeed: 30
   startPos: {fileID: 933554293}
   targetPos: {fileID: 2104173735}
   endPos: {fileID: 2026753908}

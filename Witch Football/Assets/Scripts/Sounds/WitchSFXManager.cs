@@ -12,6 +12,7 @@ public class WitchSFXManager : MonoBehaviour
     public AudioClip Stunned;
     public AudioClip Falling;
     public AudioClip Jumping;
+    public AudioClip Exploding;
 
     //Skills
     public AudioClip LightDamage;
@@ -60,7 +61,7 @@ public class WitchSFXManager : MonoBehaviour
         audioSource.clip = clips[Random.Range(0, clips.Length)];
         audioSource.Play();
     }
-    void StopSounds(){
+    public void StopSounds(){
         audioSource.enabled = false;
         audioSource.enabled = true;
     }

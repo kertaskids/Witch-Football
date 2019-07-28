@@ -51,6 +51,8 @@ MonoBehaviour:
   ballState: 0
   possesingWitch: {fileID: 0}
   lastToucher: {fileID: 0}
+  SFXManager: {fileID: 0}
+  IsFalling: 0
 --- !u!212 &8263371166129942003
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -140,17 +142,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f2ac10735881d4fb495732207fd337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kicked: {fileID: 0}
-  Controlled: {fileID: 0}
-  Falling: {fileID: 0}
-  Goal: {fileID: 0}
-  HitingPole: {fileID: 0}
-  Raged: {fileID: 0}
-  DribbleNormal: {fileID: 0}
-  DribbleSpring: {fileID: 0}
-  DribbleSummer: {fileID: 0}
-  DribbleAutumn: {fileID: 0}
-  DribbleWinter: {fileID: 0}
+  Kicked: {fileID: 8300000, guid: eb2c994b55382544592d2a5886bb1e4a, type: 3}
+  Controlled: {fileID: 8300000, guid: 1fdc287564c87384dae2502195e4488a, type: 3}
+  Falling: {fileID: 8300000, guid: dc463e655110caa428bd70a7db5b56f8, type: 3}
+  Goal: {fileID: 8300000, guid: 181e1029e7ab2004c9c371d9b87560dd, type: 3}
+  HitingPole: {fileID: 8300000, guid: 7348536b8f0552a48b6902b57a90c853, type: 3}
+  Raged: {fileID: 8300000, guid: a9c9e6df3211a86478ef675820227c27, type: 3}
+  Release: {fileID: 8300000, guid: c4969ed9844bca8449de8b0f226202be, type: 3}
+  BallBounce: {fileID: 8300000, guid: 9332964feca7e9b4ea36224a649c51fd, type: 3}
+  DribbleNormal: {fileID: 8300000, guid: 65043ffcc779a6f4d9065d74586ab752, type: 3}
+  DribbleSpring: {fileID: 8300000, guid: cbc0bdd4b81317446a480f21b9f9f553, type: 3}
+  DribbleSummer: {fileID: 8300000, guid: 74460c59847cea8468be4f1ed99ea3cf, type: 3}
+  DribbleAutumn: {fileID: 8300000, guid: 16cbb7b2a6e3d3d43a885cfa47e9b7d9, type: 3}
+  DribbleWinter: {fileID: 8300000, guid: e6614143de54bb4438beb2b4108700eb, type: 3}
 --- !u!82 &-8644558706379752141
 AudioSource:
   m_ObjectHideFlags: 0

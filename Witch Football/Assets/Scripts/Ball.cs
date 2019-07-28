@@ -13,11 +13,22 @@ public class Ball : MonoBehaviour
     public BallState ballState; 
     public WitchController possesingWitch;
     public WitchController lastToucher;
+    
+    public BallSFXManager SFXManager;
+    public bool IsFalling;
 
     void Start(){
         ballState       = BallState.Free;
         possesingWitch  = null;
         lastToucher     = null;
+        SFXManager      = GetComponent<BallSFXManager>(); 
+        IsFalling       = false;
+    }
+    void LateUpdate() {
+        if(transform.localPosition.y <= -1 && IsFalling == false){
+            SFXManager.Play(SFXManager.Falling);
+            IsFalling = true;
+        }
     }
     public void Possessed(WitchController witch){
         possesingWitch  = witch;
@@ -39,5 +50,19 @@ public class Ball : MonoBehaviour
         this.possesingWitch  = null;
         this.ballState       = ballState;
         gameObject.transform.parent = null;
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag == "Goal Pole"){
+            SFXManager.Play(SFXManager.HitingPole);
+        }
+        if(other.gameObject.tag == "Goal"){
+            SFXManager.Play(SFXManager.Goal);
+        }
+
+        if(other.gameObject.tag == "Tile"){
+            // <Edit later> Sounds based on type of tile
+            SFXManager.Play(SFXManager.BallBounce);
+        }
     }
 }

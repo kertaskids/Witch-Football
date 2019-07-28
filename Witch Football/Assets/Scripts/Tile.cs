@@ -27,6 +27,14 @@ public class Tile : MonoBehaviour
         Distance
     }
     public TriggerType triggerType;
+    public enum SeasonType{
+        None,
+        Spring,
+        Autumn,
+        Winter,
+        Summer
+    }
+    public SeasonType season;
     public GridPosition gridPos;
     // <Edit later> make a CharacterStat variable rather than these. Need a custom inspector or 
     // just simply pass this variable's value to the characterstat variable.
@@ -65,6 +73,7 @@ public class Tile : MonoBehaviour
         tileType    = TileType.Normal;
         tileEffect  = TileEffect.None;
         triggerType = TriggerType.None;
+        season      = SeasonType.None;
         gridPos     = new GridPosition(0,0,0);
         triggerDistance     = 0f;
         _effectDuration     = 0f;
@@ -356,6 +365,14 @@ public class Tile : MonoBehaviour
             }
             if(!_collidedWitches.Contains(other.gameObject)){ // Need to refine this, because the collision object might be different. 
                 _collidedWitches.Add(other.gameObject);
+            }
+
+            WitchController witchController = other.gameObject.GetComponent<WitchController>(); 
+            if(witchController._possessingBall && witchController.DribbleDuration.current <= 0f){
+                Ball ball = witchController.ball.GetComponent<Ball>();
+                
+                ball.SFXManager.PlayDribbleSFX(season);
+                witchController.DribbleDuration.current = witchController.DribbleDuration.max; 
             }
         }
     }

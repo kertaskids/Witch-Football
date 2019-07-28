@@ -287,20 +287,31 @@ public class Match : MonoBehaviour
         GameObject[] allWitches = GameObject.FindGameObjectsWithTag("Witch");
         foreach (GameObject w in allWitches)
         {
-            if(w.GetComponent<WitchController>()._possessingBall) {
-                w.GetComponent<WitchController>().BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, Vector3.zero);
+            WitchController wc = w.GetComponent<WitchController>();
+            if(wc._possessingBall) {
+                wc.BallReleasing(_initialBallPos, Quaternion.identity, ball.transform.forward, Vector3.zero, Vector3.zero, Vector3.zero);
             }
 
-            // <Edit later> Refresh the falling state
-            if(w.GetComponent<WitchController>().IsFalling){
-                w.GetComponent<WitchController>().IsFalling = false;
+            // Refresh the falling state
+            if(wc.IsFalling){
+                wc.IsFalling = false;
+                wc.SFXManager.StopSounds();
+                wc.SFXManager.Play(wc.SFXManager.Jumping);
             }
         }
+        
         // Ball Position
         ball.transform.position = _initialBallPos;
         ball.transform.rotation = Quaternion.identity; 
         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        // Refresh the falling state
+        Ball b = ball.GetComponent<Ball>();
+        if(b.IsFalling){
+            b.IsFalling = false; 
+            b.SFXManager.StopSounds();
+        }
+
         // Witches Position
         for(int i = 0; i < TeamA.witches.Length; i++){
             TeamA.witches[i].gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
