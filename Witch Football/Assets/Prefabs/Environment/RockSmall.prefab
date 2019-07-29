@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacdc7a44c5b6e94e8d80a79ebf407ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 5
+  lifeTime: 3
   damageGuard: 1
   damageHealth: 3
   smokeEffect: {fileID: 9198470993257382435, guid: 574e4bf898e96e44987f6e3ffee5e8b1,

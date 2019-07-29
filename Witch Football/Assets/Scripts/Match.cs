@@ -48,6 +48,9 @@ public class Match : MonoBehaviour
     public GameObject BlurBackground;
     public GameObject PauseText;
 
+    public MatchSFXManager SFXManager;
+    public UIController _UISFXController;
+
     void Start(){
         _initiated = false;
         _isPaused  = false;
@@ -57,6 +60,10 @@ public class Match : MonoBehaviour
         if(ball == null) {
             ball = GameObject.Find("Ball");
         }
+
+        _UISFXController = GameObject.Find("UISFXController").GetComponent<UIController>();
+
+        SFXManager = GetComponent<MatchSFXManager>();
         //_titlePopUp =  Resources.FindObjectsOfTypeAll<TitlePopUp>().FirstOrDefault();
 
         //MatchStats = GameObject.Find("MatchStats");
@@ -107,6 +114,9 @@ public class Match : MonoBehaviour
             _stateDelay = stateMaxDelay;
             SetPlayersControl(true);
             ShowTitle("Kick Off!", 1f);
+
+            SFXManager.PlayTemp(SFXManager.Whistle, Camera.main.transform.position);
+            //SFXManager.Play(SFXManager.Whistle);
         }
         _stateDelay -= Time.deltaTime;
     }
@@ -116,6 +126,9 @@ public class Match : MonoBehaviour
             gamestate = GameState.TimeOver;
             SetPlayersControl(false);
             ShowTitle("Time's Up!", 2f);
+
+            SFXManager.PlayTemp(SFXManager.Whistle, Camera.main.transform.position);
+            //SFXManager.Play(SFXManager.Whistle);
         }
 
         // <Edit later> 
@@ -143,6 +156,9 @@ public class Match : MonoBehaviour
             _stateDelay = stateMaxDelay;
             SetPlayersControl(false); // <Creates a bug on ballposession>
             ShowTitle("Kick Off!", 3f);
+
+            SFXManager.PlayTemp(SFXManager.Whistle, Camera.main.transform.position);
+            //SFXManager.Play(SFXManager.Whistle);
         }
         _stateDelay -= Time.deltaTime;
 
@@ -179,7 +195,8 @@ public class Match : MonoBehaviour
         Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
         
         ShowTitle("Goal!", 3f);
-        Camera.main.GetComponent<CameraShake>().ShakeCamera(3f, 2f);
+        Camera.main.GetComponent<CameraShake>().ShakeCamera(2f, 1f);
+        _UISFXController.SFXManager.Play(_UISFXController.SFXManager.Earthquake);
 
         _oneSecondTimer -= Time.deltaTime;
         if(_oneSecondTimer<=0){
@@ -197,6 +214,9 @@ public class Match : MonoBehaviour
                 Debug.Log("Score A: "+TeamA.Score + ". Score B:"+TeamB.Score);
             }
             SetupMatch();
+
+            //SFXManager.Play(SFXManager.Whistle);
+            //SFXManager.PlayTemp(SFXManager.Whistle, Camera.main.transform.position);
         }
         _stateDelay -= Time.deltaTime;
         //Debug.Log("StateDelay:"+_stateDelay);
@@ -347,6 +367,9 @@ public class Match : MonoBehaviour
             mysteryBox.transform.position = new Vector3(selectedTile.position.x, selectedTile.position.y+4, selectedTile.position.z);
 
             Debug.Log("Spawn " + mysteryBox.name);
+
+            SFXManager.PlayTemp(SFXManager.MysteryBox, mysteryBox.transform.position);
+            //SFXManager.Play(SFXManager.MysteryBox);
         }   
     }
     bool PlayerAndBallFallen(){
@@ -397,6 +420,7 @@ public class Match : MonoBehaviour
             PauseText.SetActive(true);
             //<Edit later>
             // Pause UI
+            _UISFXController.SFXManager.Play(_UISFXController.SFXManager.StartOrPause);
         } else if(_isPaused == true){
             _isPaused = false;
             BlurBackground.SetActive(false);
@@ -404,6 +428,7 @@ public class Match : MonoBehaviour
             PauseText.SetActive(false);
             //<Edit later>
             // Pause UI
+            _UISFXController.SFXManager.Play(_UISFXController.SFXManager.Back);
         }
     }
 }

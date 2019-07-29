@@ -319,6 +319,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -328,6 +329,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &31951878
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -435,6 +437,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -444,6 +447,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &46475874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -632,6 +636,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -641,6 +646,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &113533996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1448,6 +1454,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -1457,6 +1464,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &204865972
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1564,6 +1572,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -1573,6 +1582,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &208651381
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2030,6 +2040,164 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291157053}
   m_CullTransparentMesh: 0
+--- !u!1 &312644267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312644270}
+  - component: {fileID: 312644269}
+  - component: {fileID: 312644268}
+  - component: {fileID: 312644271}
+  m_Layer: 0
+  m_Name: UISFXController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &312644268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312644267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb744d900c035f045b7e859d184e68f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartOrPause: {fileID: 8300000, guid: ed8bef46efe8faf41adac662440b789a, type: 3}
+  OK: {fileID: 8300000, guid: 1167be0b6ec278a4fbe5c177445d60ca, type: 3}
+  Back: {fileID: 8300000, guid: e9e1c61fcf19e35479535371bc8e2b15, type: 3}
+  Earthquake: {fileID: 8300000, guid: 373dcf7432117284ebeb283be28cb39f, type: 3}
+--- !u!114 &312644269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312644267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c836b73349e57c14cac4d3602048455d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXManager: {fileID: 0}
+--- !u!4 &312644270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312644267}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &312644271
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312644267}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &318300946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,6 +2247,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -2088,6 +2257,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &318300949
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2526,6 +2696,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -2535,6 +2706,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &439099419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3084,6 +3256,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -3093,6 +3266,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &535686231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3200,6 +3374,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -3209,6 +3384,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &552681823
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3539,6 +3715,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -3548,6 +3725,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &649114643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3655,6 +3833,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -3664,6 +3843,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &679300576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4105,6 +4285,7 @@ MonoBehaviour:
   tileType: 0
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -4114,6 +4295,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &726155714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4295,6 +4477,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -4304,6 +4487,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &764967453
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4502,6 +4686,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -4511,6 +4696,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &782354970
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4847,6 +5033,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -4856,6 +5043,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &843299241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5316,6 +5504,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -5325,6 +5514,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &895673638
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5506,6 +5696,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -5515,6 +5706,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &921561760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5942,6 +6134,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -5951,6 +6144,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &966314203
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6132,6 +6326,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -6141,6 +6336,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &981568148
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6353,6 +6549,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -6362,6 +6559,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &992058388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6469,6 +6667,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -6478,6 +6677,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1013621880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6990,6 +7190,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -6999,6 +7200,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1074778402
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7185,6 +7387,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -7194,6 +7397,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1094973844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7591,6 +7795,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -7600,6 +7805,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1141228699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8457,6 +8663,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -8466,6 +8673,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1239699416
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9100,6 +9308,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -9109,6 +9318,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1319159627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9216,6 +9426,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -9225,6 +9436,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1321698475
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9406,6 +9618,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -9415,6 +9628,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1334658445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9927,6 +10141,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -9936,6 +10151,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1415761740
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10595,6 +10811,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -10604,6 +10821,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1490684365
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10711,6 +10929,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -10720,6 +10939,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1499302903
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10833,6 +11053,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -10842,6 +11063,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1525839044
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11061,6 +11283,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -11070,6 +11293,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1536075407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11707,6 +11931,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -11716,6 +11941,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1587428908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12215,6 +12441,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -12224,6 +12451,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1634465842
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12331,6 +12559,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -12340,6 +12569,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1637046581
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12447,6 +12677,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -12456,6 +12687,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1639245110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12598,6 +12830,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1669794577}
   - component: {fileID: 1669794576}
+  - component: {fileID: 1669794579}
+  - component: {fileID: 1669794578}
   m_Layer: 0
   m_Name: Match Controller
   m_TagString: Match
@@ -12635,6 +12869,8 @@ MonoBehaviour:
   MatchStats: {fileID: 501755659}
   BlurBackground: {fileID: 1668098198}
   PauseText: {fileID: 2026806758}
+  SFXManager: {fileID: 0}
+  _UIController: {fileID: 0}
 --- !u!4 &1669794577
 Transform:
   m_ObjectHideFlags: 0
@@ -12649,6 +12885,117 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1669794578
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669794575}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1669794579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669794575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b785a35882e0ff448bd24245e263ff31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Whistle: {fileID: 8300000, guid: e1c30ed3b543fb74985ec3a9731b2894, type: 3}
+  MysteryBox: {fileID: 8300000, guid: f76b9f49e2ed4cb449b64bbd03907ea4, type: 3}
+  audioSource: {fileID: 0}
 --- !u!1 &1688855742
 GameObject:
   m_ObjectHideFlags: 0
@@ -13023,6 +13370,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622686, guid: 7576c2f10e49ceb4e8f5080439c76713,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076550976528622687, guid: 7576c2f10e49ceb4e8f5080439c76713,
+        type: 3}
+      propertyPath: typeMaxDelay
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7576c2f10e49ceb4e8f5080439c76713, type: 3}
 --- !u!1 &1773081345
@@ -13074,6 +13431,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13083,6 +13441,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1773081348
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13190,6 +13549,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13199,6 +13559,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1776545956
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13312,6 +13673,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13321,6 +13683,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1814648841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13428,6 +13791,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13437,6 +13801,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1822208892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13804,6 +14169,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13813,6 +14179,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1852227804
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13920,6 +14287,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -13929,6 +14297,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1858578343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14036,6 +14405,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -14045,6 +14415,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1884827262
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14399,6 +14770,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -14408,6 +14780,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1897435406
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14589,6 +14962,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -14598,6 +14972,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1943317552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14705,6 +15080,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -14714,6 +15090,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1952604667
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15076,6 +15453,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -15085,6 +15463,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &1987348618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15365,6 +15744,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -15374,6 +15754,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2007386772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15481,6 +15862,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -15490,6 +15872,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2013421631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15597,6 +15980,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -15606,6 +15990,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2013564520
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15715,6 +16100,7 @@ MonoBehaviour:
   tileType: 0
   tileEffect: 1
   triggerType: 2
+  season: 0
   triggerDistance: 2
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -15731,6 +16117,7 @@ MonoBehaviour:
   smokes:
   - {fileID: 1852721588654702414, guid: 56cd3da5f0f791d41ab51964649520b2, type: 3}
   canon: {fileID: 2741398636652915978, guid: e778655ece4a1044397bba66744f1cf7, type: 3}
+  SFXManager: {fileID: 0}
 --- !u!65 &2025507203
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16049,6 +16436,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -16058,6 +16446,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2037122460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16217,6 +16606,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -16226,6 +16616,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2057431314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16786,6 +17177,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -16795,6 +17187,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2127563403
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16902,6 +17295,7 @@ MonoBehaviour:
   tileType: 1
   tileEffect: 0
   triggerType: 0
+  season: 0
   triggerDistance: 1.5
   effectMaxDuration: 2
   effectMaxDelay: 2
@@ -16911,6 +17305,7 @@ MonoBehaviour:
   rocks: []
   smokes: []
   canon: {fileID: 0}
+  SFXManager: {fileID: 0}
 --- !u!65 &2128585778
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -406,6 +406,7 @@ MonoBehaviour:
   tileType: 6
   tileEffect: 0
   triggerType: 1
+  season: 0
   triggerDistance: 1
   effectMaxDuration: 0
   effectMaxDelay: 1
@@ -422,6 +423,7 @@ MonoBehaviour:
   smokes:
   - {fileID: 1852721588654702414, guid: 56cd3da5f0f791d41ab51964649520b2, type: 3}
   canon: {fileID: 2741398636652915978, guid: e778655ece4a1044397bba66744f1cf7, type: 3}
+  SFXManager: {fileID: 0}
 --- !u!82 &-8088865063548417240
 AudioSource:
   m_ObjectHideFlags: 0
@@ -530,11 +532,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9556412788f784f958a6ab9125e5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FallingRock: {fileID: 0}
-  Shooter: {fileID: 0}
-  SpikySlash: {fileID: 0}
-  Explode: {fileID: 0}
-  Rise: {fileID: 0}
-  Fall: {fileID: 0}
-  Invisible: {fileID: 0}
-  Reveal: {fileID: 0}
+  FallingRock: {fileID: 8300000, guid: b354e6e9d9a81244e8ac928a6d21eef0, type: 3}
+  Shooter: {fileID: 8300000, guid: b8c1cdd6f6da94e46b51940d1469be6b, type: 3}
+  SpikySlash: {fileID: 8300000, guid: 57b395d8ef6c52740b75de90a0653b41, type: 3}
+  Explode: {fileID: 8300000, guid: a3768add9e710414591305c1831a21d9, type: 3}
+  Rise: {fileID: 8300000, guid: 78c04e527dd817548af7f8831b33d8c8, type: 3}
+  Fall: {fileID: 8300000, guid: 66682cc0ebfc4ca4eb06eb07d7baad7f, type: 3}
+  Invisible: {fileID: 8300000, guid: ac8d2979fe5cc544a983f0d84a6ed3c7, type: 3}
+  Reveal: {fileID: 8300000, guid: 032fdabf4c115464180238e1151e9056, type: 3}
+  MysteryBox: {fileID: 8300000, guid: f76b9f49e2ed4cb449b64bbd03907ea4, type: 3}
+  PotionGlass: {fileID: 8300000, guid: 9ab2e9902523bf6449a4d22829205cff, type: 3}
+  ObjectLanded: {fileID: 8300000, guid: 7c4155f515a9eb742980a1dbe7befb5e, type: 3}

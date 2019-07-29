@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class UISFXManager : MonoBehaviour
 {
-    public AudioClip StartBtn;
-    public AudioClip Pause;
-    public AudioClip Clicked;
-    public AudioClip Released;
+    public AudioClip StartOrPause;
+    public AudioClip OK;
+    public AudioClip Back;
     public AudioClip Earthquake;
-    public AudioClip Go;
-    public AudioClip TimeUp;
+
     private AudioSource audioSource;
     
-    void Start()
-    {
+    void Start(){
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void VoicePlay(AudioClip clip){
+    public void Play(AudioClip clip){
         audioSource.PlayOneShot(clip);
     }
-    public void VoicePlayRandom(AudioClip[] clips){
+    public void PlayRandom(AudioClip[] clips){
         audioSource.clip = clips[Random.Range(0, clips.Length)];
         audioSource.Play();
     }
-    void StopVoices(){
+    void StopSounds(){
         audioSource.enabled = false;
         audioSource.enabled = true;
     }

@@ -5,18 +5,33 @@ using UnityEngine;
 public class AmbientSFXManager : MonoBehaviour
 {
     // Seasons
-    
+    public AudioClip Lava;
+    public AudioClip Snow;
+    public AudioClip Snowing;
+    public AudioClip SteamUp;
+
     // Weather
-    
+    public AudioClip Wind;
+    public AudioClip Storm;
+    public AudioClip Rain;
+    public AudioClip HeavyThunder;
+    public AudioClip RainAndThunder;
+    public AudioClip ThunderStorm;
+
     // Day & Night
     public AudioClip Ghostly;
-    public AudioClip Lava;
     public AudioClip Night;
-    public AudioClip Rainy;
-    public AudioClip Snowy;
-    public AudioClip Stormy;
     public AudioClip Sunny;
-    public AudioClip Windy;
+    public AudioClip NightFrog;
+    
+    // Other
+    public AudioClip Frogs;
+    public AudioClip Crickets;
+    public AudioClip BirdsCricketsDogs;
+    public AudioClip Wolves;
+    public AudioClip Raven;
+
+
     private AudioSource audioSource;
     
     public float minTimeBetween = 5;
@@ -24,8 +39,7 @@ public class AmbientSFXManager : MonoBehaviour
     private float TimeBetween = 10;
      
 
-    void Start()
-    {
+    void Start(){
         audioSource = GetComponent<AudioSource>();
     }
 

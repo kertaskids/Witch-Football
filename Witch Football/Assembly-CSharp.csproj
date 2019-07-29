@@ -78,6 +78,7 @@
      <Compile Include="Assets\Scripts\Sounds\AmbientSFXManager.cs" />
      <Compile Include="Assets\Scripts\Sounds\BallSFXManager.cs" />
      <Compile Include="Assets\Scripts\Sounds\BGMManager.cs" />
+     <Compile Include="Assets\Scripts\Sounds\MatchSFXManager.cs" />
      <Compile Include="Assets\Scripts\Sounds\TileSFXManager.cs" />
      <Compile Include="Assets\Scripts\Sounds\UISFXManager.cs" />
      <Compile Include="Assets\Scripts\Sounds\WitchSFXManager.cs" />
@@ -92,6 +93,7 @@
      <Compile Include="Assets\Scripts\TMPFXSkewText.cs" />
      <Compile Include="Assets\Scripts\TMPFXVertexJitter.cs" />
      <Compile Include="Assets\Scripts\TMPFXVertexZoom.cs" />
+     <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\Scripts\Witch.cs" />
      <Compile Include="Assets\Scripts\WitchController.cs" />
      <None Include="Assets\Resources\Shader\3D Glass Blur\SeparableBlur.shader" />

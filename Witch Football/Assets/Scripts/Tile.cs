@@ -57,12 +57,14 @@ public class Tile : MonoBehaviour
     private List<GameObject> _onRangeWitches;
     //private GameObject souroff;
     //private Transform trap;
+    public TileSFXManager SFXManager;
 
     void Start() {
         //MaxDuration = 2f;
         //MaxDelay = 5f;
         _collidedWitches    = new List<GameObject>();
         _onRangeWitches     = new List<GameObject>();
+        SFXManager          = GetComponent<TileSFXManager>();
         //souroff = transform.Find("Souroff").gameObject;
         //trap = transform.Find("Trap");
         OnRangeTrigger();
@@ -177,7 +179,9 @@ public class Tile : MonoBehaviour
             if(smokes != null && smokes.Length > 0){
                 GameObject smoke = GameObject.Instantiate(smokes[0]);
                 smoke.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            }                
+            }
+
+            AudioSource.PlayClipAtPoint(SFXManager.Explode, transform.position);                
             //if(triggerType != TriggerType.None) {
                 Destroy(this.gameObject);
             //}
@@ -193,6 +197,8 @@ public class Tile : MonoBehaviour
                     
                     _typeDelay = typeMaxDelay;
                     Debug.Log("Spawn " + mysteryBox.name);
+
+                    SFXManager.Play(SFXManager.MysteryBox);
                 }  
             }
             _typeDelay -= Time.deltaTime;
@@ -215,6 +221,8 @@ public class Tile : MonoBehaviour
                     //canon.GetComponent<BoxCollider>().enabled = false;
                     projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 10f, ForceMode.Impulse);
                     _typeDelay = typeMaxDelay;
+
+                    SFXManager.Play(SFXManager.Shooter);
                 }
             }
             _typeDelay -= Time.deltaTime;
@@ -229,6 +237,8 @@ public class Tile : MonoBehaviour
                     trap.gameObject.SetActive(true);
                     _typeDuration = typeMaxDuration;
                     _typePerformed = true;
+
+                    SFXManager.Play(SFXManager.SpikySlash);
                 }
             } else { //typePerformed
                 if(_typeDuration > 0) {
@@ -256,6 +266,8 @@ public class Tile : MonoBehaviour
                     trap.gameObject.SetActive(false);   
                     _typeDelay = 0f; 
                     _typePerformed = false;
+
+                    SFXManager.Play(SFXManager.Invisible);
                 }
             }
             Debug.Log("delay, duration" + _typeDelay + " " + _typeDuration);
@@ -268,6 +280,8 @@ public class Tile : MonoBehaviour
                 GameObject rock = GameObject.Instantiate(rocks[r]);
                 rock.transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
                 _typeDelay = typeMaxDelay;
+
+                SFXManager.Play(SFXManager.FallingRock);
             }
             _typeDelay -= Time.deltaTime;
         }
@@ -289,6 +303,8 @@ public class Tile : MonoBehaviour
                     transform.position = new Vector3(transform.position.x, 
                                                         transform.position.y + 1 * Time.deltaTime, 
                                                         transform.position.z);
+                    
+                    SFXManager.PlaySafe(SFXManager.Rise);
                 }
             } 
             if(!_effectPerformed){
@@ -303,6 +319,7 @@ public class Tile : MonoBehaviour
                     transform.position = new Vector3(transform.position.x, 
                                                         transform.position.y - 1 * Time.deltaTime, 
                                                         transform.position.z);
+                    SFXManager.PlaySafe(SFXManager.Fall);
                 }
             }    
         }
@@ -310,7 +327,9 @@ public class Tile : MonoBehaviour
             if(_effectPerformed){
                 if(gameObject.GetComponent<MeshRenderer>().enabled){
                     gameObject.GetComponent<MeshRenderer>().enabled = false;  
-                    gameObject.GetComponent<BoxCollider>().enabled  = false;   
+                    gameObject.GetComponent<BoxCollider>().enabled  = false;
+
+                    //SFXManager.Play(SFXManager.Invisible);   
                 } else {
                     _effectDuration = _effectDuration + 1 * Time.deltaTime;
                     if(_effectDuration > effectMaxDuration){
@@ -318,6 +337,8 @@ public class Tile : MonoBehaviour
                         _effectDuration = 0;
                         gameObject.GetComponent<MeshRenderer>().enabled = true;
                         gameObject.GetComponent<BoxCollider>().enabled  = true;
+
+                        SFXManager.Play(SFXManager.Reveal);
                     }
                 }
             }
@@ -329,10 +350,14 @@ public class Tile : MonoBehaviour
                         _effectDelay    = 0f;
                         gameObject.GetComponent<MeshRenderer>().enabled = false;
                         gameObject.GetComponent<BoxCollider>().enabled  = false;
+
+                        SFXManager.Play(SFXManager.Invisible);
                     }
                 } else {
                     gameObject.GetComponent<MeshRenderer>().enabled = true;
                     gameObject.GetComponent<BoxCollider>().enabled  = true;
+
+                    //SFXManager.Play(SFXManager.Reveal);
                 }
             }       
         }
@@ -375,6 +400,11 @@ public class Tile : MonoBehaviour
                 witchController.DribbleDuration.current = witchController.DribbleDuration.max; 
             }
         }
+        if(other.gameObject.tag == "MysteryBox"){
+            SFXManager.Play(SFXManager.PotionGlass);
+        }
+        //<Edit later>
+        //SFXManager.Play(SFXManager.ObjectLanded);
     }
     void OnCollisionExit(Collision other) {
         if(other.gameObject.tag == "Witch"){
