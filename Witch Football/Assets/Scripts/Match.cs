@@ -165,19 +165,25 @@ public class Match : MonoBehaviour
         // Add Celebration 
     }
     public void GoalScored(WitchController scorer, Goal goal){ 
+        Ball b = ball.GetComponent<Ball>();
+
         if(scorer.teamParty == Team.TeamParty.TeamA) {
             if(goal.teamParty == Team.TeamParty.TeamB){
                 // Normal Goal
                 TeamA.Score += 1;
+                b.lastToucher.VoiceManager.VoicePlayChance(b.lastToucher.VoiceManager.Scoring);
             } else if (goal.teamParty == Team.TeamParty.TeamA){
                 // Own Goal
                 TeamB.Score += 1;
+                b.lastToucher.VoiceManager.VoicePlayChance(b.lastToucher.VoiceManager.Sad);
             }
         } else if (scorer.teamParty == Team.TeamParty.TeamB){
             if(goal.teamParty == Team.TeamParty.TeamA){
                 TeamB.Score += 1;
+                b.lastToucher.VoiceManager.VoicePlayChance(b.lastToucher.VoiceManager.Scoring);
             } else if (goal.teamParty == Team.TeamParty.TeamB){
                 TeamA.Score += 1;
+                b.lastToucher.VoiceManager.VoicePlayChance(b.lastToucher.VoiceManager.Sad);
             }
         }
         TeamAScore.text= TeamA.Score.ToString();
@@ -317,6 +323,7 @@ public class Match : MonoBehaviour
                 wc.IsFalling = false;
                 wc.SFXManager.StopSounds();
                 wc.SFXManager.Play(wc.SFXManager.Jumping);
+                wc.VoiceManager.VoicePlayChance(wc.VoiceManager.Falling);
             }
         }
         

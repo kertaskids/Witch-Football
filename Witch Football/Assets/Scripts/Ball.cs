@@ -55,6 +55,7 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Goal Pole"){
             SFXManager.Play(SFXManager.HitingPole);
+            lastToucher.VoiceManager.VoicePlayChance(lastToucher.VoiceManager.Sad);
         }
         if(other.gameObject.tag == "Goal"){
             SFXManager.Play(SFXManager.Goal);

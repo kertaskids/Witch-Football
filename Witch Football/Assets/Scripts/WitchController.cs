@@ -106,8 +106,9 @@ public class WitchController : MonoBehaviour
         }
         CheckPauseOrResume();
         if(transform.position.y <= -1 && IsFalling == false){
-            SFXManager.Play(SFXManager.Falling);
             IsFalling = true;
+            SFXManager.Play(SFXManager.Falling);
+            VoiceManager.VoicePlayChance(VoiceManager.Falling);
         }
     }
 
@@ -212,8 +213,9 @@ public class WitchController : MonoBehaviour
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.shootPower.current);
                     witch.character.shootDelay.current = 0f;
                     Debug.Log("Shoot! Power: " + witch.character.shootPower.current + ", at Euler: " + transform.eulerAngles);
+                    
+                    VoiceManager.VoicePlayChance(VoiceManager.Shooting);
                     SFXManager.Play(SFXManager.Shooting);
-
                     Ball b = ball.GetComponent<Ball>();
                     if(witch.character.lightMagicSkill.casted || witch.character.heavyMagicSkill.casted){
                         b.SFXManager.Play(b.SFXManager.Raged);
@@ -245,8 +247,9 @@ public class WitchController : MonoBehaviour
                     BallReleasing(ball.transform.position, ball.transform.localRotation, ball.transform.forward, new Vector3(0,0,0), Vector3.zero, 2 * transform.forward * witch.character.passPower.current);
                     
                     witch.character.passDelay.current = 0f;
-                    SFXManager.Play(SFXManager.Passing);
                     
+                    VoiceManager.VoicePlayChance(VoiceManager.Passing);
+                    SFXManager.Play(SFXManager.Passing);
                     Ball b = ball.GetComponent<Ball>();
                     if(witch.character.lightMagicSkill.casted || witch.character.heavyMagicSkill.casted){
                         b.SFXManager.Play(b.SFXManager.Raged);
@@ -267,6 +270,8 @@ public class WitchController : MonoBehaviour
                 witch.character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackling");
+
+                VoiceManager.VoicePlayChance(VoiceManager.Tackling);
                 SFXManager.Play(SFXManager.Tackling);
                 // 1. Check the enemy collider, if it is hit by this.collider reduce enemy health & get low manna
                 // 2. If it posses
@@ -314,6 +319,7 @@ public class WitchController : MonoBehaviour
                     pUController.Perform(this, 0.25f);
                     
                     SFXManager.PlayMagicSFX(witch.character.lightMagicSkill);
+                    VoiceManager.PlayMagicVoice(witch.character.lightMagicSkill);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -333,6 +339,7 @@ public class WitchController : MonoBehaviour
                     pUController.Perform(this, 0.5f);
 
                     SFXManager.PlayMagicSFX(witch.character.heavyMagicSkill);
+                    VoiceManager.PlayMagicVoice(witch.character.heavyMagicSkill);
                 } else {
                     Debug.Log("Not enough Manna");
                 }
@@ -388,6 +395,7 @@ public class WitchController : MonoBehaviour
                 SFXManager.Play(SFXManager.Stunned);
                 Ball b = ball.GetComponent<Ball>();
                 b.SFXManager.Play(b.SFXManager.Release);
+                VoiceManager.VoicePlayChance(VoiceManager.Sad);
             }
             Debug.Log("Tackled when possesses"+_possessingBall);
         } 
@@ -417,6 +425,7 @@ public class WitchController : MonoBehaviour
             SFXManager.Play(SFXManager.Stunned);
             Ball b = ball.GetComponent<Ball>();
             b.SFXManager.Play(b.SFXManager.Kicked);
+            VoiceManager.VoicePlayChance(VoiceManager.Cry);
         }
         Debug.Log("Guard: "+witch.character.guard.current +" .HP: "+witch.character.healthPoint.current);
         //Debug.Break();
@@ -424,6 +433,7 @@ public class WitchController : MonoBehaviour
         Debug.Log("GetTackledDelay: "+witch.character.getTackledDelay.current);
         
         SFXManager.Play(SFXManager.Tackled);
+        VoiceManager.VoicePlayChance(VoiceManager.Tackled);
     }
 
     public void Damaged(float guardReduced, float healthReduced){
@@ -558,7 +568,9 @@ public class WitchController : MonoBehaviour
         // MysteryBox
         if(other.gameObject.tag == "MysteryBox") { 
             if(witch.character.usedMysteryBox == null) {
-                other.gameObject.GetComponent<MysteryBox>().UseEffect(this);
+                MysteryBox mysteryBox = other.gameObject.GetComponent<MysteryBox>();
+                mysteryBox.UseEffect(this);
+                VoiceManager.PlayMysteryBoxVoice(mysteryBox.type);
                 Debug.Log("Taking MysteryBox: " + other.gameObject.name);
             }
         }
@@ -582,6 +594,7 @@ public class WitchController : MonoBehaviour
                 witch.character.getTackledDelay.current = 0f;
                 
                 SFXManager.Play(SFXManager.Exploding);
+                VoiceManager.VoicePlayChance(VoiceManager.Tackled);
             }
         }
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
@@ -595,7 +608,8 @@ public class WitchController : MonoBehaviour
                 // <Edit later> Refresh ball velocity and rotation 
 
                 Ball b = ball.GetComponent<Ball>();
-                b.SFXManager.Play(b.SFXManager.Controlled);                
+                b.SFXManager.Play(b.SFXManager.Controlled);  
+                VoiceManager.VoicePlayChance(VoiceManager.Controlling);              
             }
         }
     }

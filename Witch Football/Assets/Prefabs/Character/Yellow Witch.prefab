@@ -63,6 +63,7 @@ MonoBehaviour:
   VoiceManager: {fileID: 0}
   SFXManager: {fileID: 0}
   IsFalling: 0
+  DribbleDur: 0.5
   ControlAllowed: 0
 --- !u!136 &3228173024748880976
 CapsuleCollider:
@@ -106,26 +107,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833906a47bb00f84a9aad335799c42f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shooting: {fileID: 0}
-  Passing: {fileID: 0}
-  Tackling: {fileID: 0}
-  Controlling: {fileID: 0}
-  Scoring: {fileID: 0}
-  Falling: {fileID: 0}
-  Tackled: {fileID: 0}
-  Happy: {fileID: 0}
-  Sad: {fileID: 0}
-  Laugh: {fileID: 0}
-  Cry: {fileID: 0}
-  Boring: {fileID: 0}
-  LightDamage: {fileID: 0}
-  HeavyDamage: {fileID: 0}
-  LightHeal: {fileID: 0}
-  HeavyHeal: {fileID: 0}
-  LightPower: {fileID: 0}
-  HeavyPower: {fileID: 0}
-  LightSpeed: {fileID: 0}
-  HeavySpeed: {fileID: 0}
+  Shooting: {fileID: 8300000, guid: fdac711764697344a8a9f88e40eea1e3, type: 3}
+  Passing: {fileID: 8300000, guid: 13289678fdca6ab4bb71316efb903f04, type: 3}
+  Tackling: {fileID: 8300000, guid: e0131f39f985a734ea485325a370ef20, type: 3}
+  Controlling: {fileID: 8300000, guid: e429c81aea52f26479f66412cbdec17a, type: 3}
+  Scoring: {fileID: 8300000, guid: 0106187e0fd463348aa582e34ffb32c3, type: 3}
+  Falling: {fileID: 8300000, guid: 2e909e4b44800944db71979a434d31f7, type: 3}
+  Tackled: {fileID: 8300000, guid: 97f862c7c3f20094e89973679d2d44da, type: 3}
+  Happy: {fileID: 8300000, guid: fcaebdba27944b945bd76f13ad066831, type: 3}
+  Sad: {fileID: 8300000, guid: 55bb61b9e05dc66428d07fefef33357f, type: 3}
+  Laugh: {fileID: 8300000, guid: 55074018bdb74d046bcaf3b016ff39f0, type: 3}
+  Cry: {fileID: 8300000, guid: 55bb61b9e05dc66428d07fefef33357f, type: 3}
+  Boring: {fileID: 8300000, guid: 1dba75bbf089e3b41b0f82c932aa7a80, type: 3}
+  LightDamage: {fileID: 8300000, guid: f8bdf0ed99933044cb042b34f41bb23f, type: 3}
+  HeavyDamage: {fileID: 8300000, guid: f8bdf0ed99933044cb042b34f41bb23f, type: 3}
+  LightHeal: {fileID: 8300000, guid: bf0a7eef96bee2a4ea57093f6b932df6, type: 3}
+  HeavyHeal: {fileID: 8300000, guid: 1b265f5b95cc8564786b67227f29725f, type: 3}
+  LightPower: {fileID: 8300000, guid: 26cb637d6dc6d884ba2ad39039117be9, type: 3}
+  HeavyPower: {fileID: 8300000, guid: 26cb637d6dc6d884ba2ad39039117be9, type: 3}
+  LightSpeed: {fileID: 8300000, guid: a529453fbb08b28439c51e69a48b910b, type: 3}
+  HeavySpeed: {fileID: 8300000, guid: 32982c5de997c784db21b7b4dbe59a43, type: 3}
+  DamageUp: {fileID: 8300000, guid: d557bf4f3d695a645b370f4743a8fad5, type: 3}
+  HealUp: {fileID: 8300000, guid: b371f088a6b910d429fc5caf0f87dfeb, type: 3}
+  PowerUp: {fileID: 8300000, guid: 26cb637d6dc6d884ba2ad39039117be9, type: 3}
+  SpeedUp: {fileID: 8300000, guid: ecf182c345eff7945b38ae528a9cdc9f, type: 3}
 --- !u!114 &-1542732528652564976
 MonoBehaviour:
   m_ObjectHideFlags: 0
