@@ -323,7 +323,6 @@ public class Match : MonoBehaviour
                 wc.IsFalling = false;
                 wc.SFXManager.StopSounds();
                 wc.SFXManager.Play(wc.SFXManager.Jumping);
-                wc.VoiceManager.VoicePlayChance(wc.VoiceManager.Falling);
             }
         }
         

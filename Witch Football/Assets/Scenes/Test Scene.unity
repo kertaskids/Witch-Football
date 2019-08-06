@@ -10033,6 +10033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4befdb8d02c2b174e9aac992e34c4ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Flipable: 0
 --- !u!212 &1338660606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10683,6 +10684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4befdb8d02c2b174e9aac992e34c4ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Flipable: 0
 --- !u!212 &1417908257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13294,7 +13296,7 @@ MonoBehaviour:
   - {fileID: 5834327906989631844, guid: 8fe67f0250683b249bce1db985729fdb, type: 3}
   - {fileID: 619529502353491527, guid: 480f1c770c0968646b52b2a13e8c4e5b, type: 3}
   stateMaxDelay: 3
-  mysteryBoxMaxDelay: 5
+  mysteryBoxMaxDelay: 30
   MatchStats: {fileID: 501755659}
   BlurBackground: {fileID: 1668098198}
   PauseText: {fileID: 2026806758}
