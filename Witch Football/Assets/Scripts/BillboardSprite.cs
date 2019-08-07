@@ -4,26 +4,45 @@ using UnityEngine;
 
 public class BillboardSprite : MonoBehaviour
 {
-    public bool Flipable;
-    private float lastDir = 0; // 0 = left/ forward, 180 = right/ backward from the camera
+    public bool FlipablePlayer;
+    public bool RotatedBall;
+    public float addRotation = 0f;
     private PlayerInput playerInput;
     private bool flip;
     private SpriteRenderer spriteRenderer;
 
     void Start(){
-        if(Flipable){
+        if(FlipablePlayer){
             spriteRenderer = GetComponent<SpriteRenderer>();
             playerInput = PlayerInput.GetPlayer((int) transform.parent.GetComponent<WitchController>().playerID);
         }
     }
 
     void LateUpdate(){
-        if(Flipable){
+        if(FlipablePlayer){
             ChangeDirection();
         } else {
             
         }
-        transform.forward = Camera.main.transform.forward;
+        //transform.forward = Camera.main.transform.forward;
+ 
+        Transform mainCamTransform = Camera.main.transform;
+        Vector3 newRotation = Vector3.zero;
+        newRotation = new Vector3(mainCamTransform.eulerAngles.x, mainCamTransform.eulerAngles.y, mainCamTransform.eulerAngles.z);
+        
+        if(RotatedBall) {
+            newRotation.z += addRotation;
+            // <Edit later> change the constant
+            float velocityX = -transform.parent.GetComponent<Rigidbody>().velocity.x * 10; 
+            addRotation += velocityX; 
+            if(addRotation >= 360f || addRotation <= -360f) {
+                addRotation = 0f;
+            }
+            //<Edit later> If use the method below, put it on the Update()
+            //newRotation = new Vector3(newRotation.x, newRotation.y, transform.parent.rotation.eulerAngles.x); 
+        }
+        transform.eulerAngles = newRotation; 
+        
     }
 
     void ChangeDirection(){
@@ -34,11 +53,9 @@ public class BillboardSprite : MonoBehaviour
         vertical = Input.GetAxis(playerInput.VerticalMove);
 
         if(horizontal > 0.1){
-            lastDir = 0;
             flip = false;
         }
         if(horizontal < -0.1){
-            lastDir = 180;
             flip = true;
         }
         spriteRenderer.flipX = flip;

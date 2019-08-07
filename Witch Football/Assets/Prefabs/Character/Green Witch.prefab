@@ -92,7 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4befdb8d02c2b174e9aac992e34c4ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flipable: 1
+  FlipablePlayer: 1
+  RotatedBall: 0
+  addRotation: 0
 --- !u!1 &390311783640829633
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +511,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f95b948e2445c764788e7ab989043f35, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6862745}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

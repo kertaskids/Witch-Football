@@ -10033,7 +10033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4befdb8d02c2b174e9aac992e34c4ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flipable: 0
+  FlipablePlayer: 0
+  RotatedBall: 0
+  addRotation: 0
 --- !u!212 &1338660606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10684,7 +10686,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4befdb8d02c2b174e9aac992e34c4ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flipable: 0
+  FlipablePlayer: 0
+  RotatedBall: 0
+  addRotation: 0
 --- !u!212 &1417908257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18856,6 +18860,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263371166129942003, guid: 3a7c9a0867cd4154bb8a6e138f40c115,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263371166129941997, guid: 3a7c9a0867cd4154bb8a6e138f40c115,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379122826240999867, guid: 3a7c9a0867cd4154bb8a6e138f40c115,
+        type: 3}
+      propertyPath: Rotated
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a7c9a0867cd4154bb8a6e138f40c115, type: 3}

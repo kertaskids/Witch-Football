@@ -125,7 +125,7 @@ public class WitchController : MonoBehaviour
         float vertical      = 0;
         
         /*----------------FOR TESTING ONLY--------------------*/
-        /* if(Input.GetKey(KeyCode.A)){
+        if(Input.GetKey(KeyCode.A)){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
@@ -140,12 +140,12 @@ public class WitchController : MonoBehaviour
         if(Input.GetKey(KeyCode.S)){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
-        }*/
+        }
         /*---------------TESTING ONLY --------------- */
         
         // Direction
-        horizontal = Input.GetAxis(playerInput.HorizontalMove);
-        vertical = Input.GetAxis(playerInput.VerticalMove);
+        //horizontal = Input.GetAxis(playerInput.HorizontalMove);
+        //vertical = Input.GetAxis(playerInput.VerticalMove);
         float angle;
         angle = Mathf.Atan2(horizontal, vertical);
         angle = Mathf.Rad2Deg * angle;
@@ -265,8 +265,9 @@ public class WitchController : MonoBehaviour
                 _isTackling = true;
                 Debug.Log("Tackling");
             }*/
+            //<Edit later>
             if((Input.GetButtonDown(playerInput.ShootOrTackle) && witch.character.tackleDelay.full) ||
-                    Input.GetKeyDown(KeyCode.A) && playerID == PlayerInput.ID.Player1){
+                    Input.GetKeyDown(KeyCode.Z) && playerID == PlayerInput.ID.Player1){ // <Edit later> Shoudl add Tackled delay check 
                 witch.character.tackleDelay.current = 0f;
                 _isTackling = true;
                 Debug.Log("Tackling");

@@ -58,6 +58,7 @@
      <Compile Include="Assets\Resources\Shader\3D Glass Blur\CommandBufferBlurRefraction.cs" />
      <Compile Include="Assets\Scenes\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
+     <Compile Include="Assets\Scripts\BillboardRotator.cs" />
      <Compile Include="Assets\Scripts\BillboardSprite.cs" />
      <Compile Include="Assets\Scripts\CameraRotator.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
@@ -96,6 +97,7 @@
      <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\Scripts\Witch.cs" />
      <Compile Include="Assets\Scripts\WitchController.cs" />
+     <Compile Include="Assets\Test.cs" />
      <None Include="Assets\Resources\Shader\3D Glass Blur\SeparableBlur.shader" />
      <None Include="Assets\Resources\Skyboxes\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
