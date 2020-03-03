@@ -941,8 +941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -25, y: -75}
-  m_SizeDelta: {x: 250, y: 150}
+  m_AnchoredPosition: {x: -25, y: -30}
+  m_SizeDelta: {x: 306, y: 310.5}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &119014567
 MonoBehaviour:
@@ -2030,8 +2030,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -25, y: 75}
-  m_SizeDelta: {x: 250, y: 150}
+  m_AnchoredPosition: {x: -25, y: -30}
+  m_SizeDelta: {x: 306, y: 310.5}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &284795589
 MonoBehaviour:
@@ -12105,8 +12105,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: -75}
-  m_SizeDelta: {x: 250, y: 150}
+  m_AnchoredPosition: {x: 25, y: -30}
+  m_SizeDelta: {x: 306, y: 310.5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1572016313
 MonoBehaviour:
@@ -17627,8 +17627,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 75}
-  m_SizeDelta: {x: 250, y: 150}
+  m_AnchoredPosition: {x: 25, y: -30}
+  m_SizeDelta: {x: 306, y: 310.5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2117550334
 MonoBehaviour:
@@ -18016,7 +18016,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pinUpSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 42f2c0951fa949d47a368397fa7c7ab3,
+      objectReference: {fileID: 21300000, guid: 90d416cbb24308846a8111e4643e18f9,
         type: 3}
     - target: {fileID: 390311783640829635, guid: f132efbc27516bc47b8e56cfe33fe15c,
         type: 3}
@@ -18176,7 +18176,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pinUpSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0af87d4c958656544a48c9d4046e1d6a,
+      objectReference: {fileID: 21300000, guid: d6d55f53881af394d93d6a75302fba79,
         type: 3}
     - target: {fileID: 793485856971020169, guid: 195e1040512281a48af94f09e3937378,
         type: 3}
@@ -18341,7 +18341,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pinUpSprite
       value: 
-      objectReference: {fileID: 21300000, guid: e2d3945a2ee04614086d0492bed71e9f,
+      objectReference: {fileID: 21300000, guid: f4091301db37ad340b93e96a0f8853e9,
         type: 3}
     - target: {fileID: 1984327188147220376, guid: cf2e6fe120adb854b8fe90a5f08f35a4,
         type: 3}
@@ -18427,7 +18427,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pinUpSprite
       value: 
-      objectReference: {fileID: 21300000, guid: f8fbcf94a9a777f4ba8f2ab96a2a202a,
+      objectReference: {fileID: 21300000, guid: 709bce18b980d6541bc5d6821663bca4,
         type: 3}
     - target: {fileID: 3228173024748880979, guid: 76ec084743c63394a93668325fd834fb,
         type: 3}

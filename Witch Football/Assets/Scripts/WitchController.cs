@@ -125,7 +125,7 @@ public class WitchController : MonoBehaviour
         float vertical      = 0;
         
         /*----------------FOR TESTING ONLY--------------------*/
-        if(Input.GetKey(KeyCode.A)){
+        /*if(Input.GetKey(KeyCode.A)){
             transform.localEulerAngles = new Vector3 (0, -90, 0);
             horizontal = -1f;    
         } 
@@ -140,12 +140,12 @@ public class WitchController : MonoBehaviour
         if(Input.GetKey(KeyCode.S)){
             transform.localEulerAngles = new Vector3 (0, 180, 0);
             vertical = -1f;    
-        }
+        }*/
         /*---------------TESTING ONLY --------------- */
         
         // Direction
-        //horizontal = Input.GetAxis(playerInput.HorizontalMove);
-        //vertical = Input.GetAxis(playerInput.VerticalMove);
+        horizontal = Input.GetAxis(playerInput.HorizontalMove);
+        vertical = Input.GetAxis(playerInput.VerticalMove);
         float angle;
         angle = Mathf.Atan2(horizontal, vertical);
         angle = Mathf.Rad2Deg * angle;
@@ -601,7 +601,7 @@ public class WitchController : MonoBehaviour
         // Possess the ball when touching it, later it can possessed when the ball is Shot and Passed too. and when the velocity is low. 
         // Ball 
         if(other.gameObject == ball && witch.character.stunnedDuration.empty) {
-            if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free) {
+            if(ball.GetComponent<Ball>().ballState == Ball.BallState.Free && witch.character.passDelay.full) {
                 // <Edit later> Must be Ballpossessing()
                 BallPossessing();
                 ball.GetComponent<Ball>().Possessed(this);

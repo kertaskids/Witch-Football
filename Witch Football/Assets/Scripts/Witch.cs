@@ -44,7 +44,7 @@ public static class WitchBase {
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
             witch.character.moveSpeed       = new CharacterStat(2f, 2f); 
             witch.character.shootDelay      = new CharacterStat(2f, 2f);
-            witch.character.passDelay       = new CharacterStat(1f, 1f);
+            witch.character.passDelay       = new CharacterStat(0.5f, 0.5f);
             witch.character.shootPower      = new CharacterStat(5f, 5f);
             witch.character.passPower       = new CharacterStat(3f, 3f);
             witch.character.guard           = new CharacterStat(0f, 2f); 
@@ -74,7 +74,7 @@ public static class WitchBase {
             witch.character.jumpDelay       = new CharacterStat(5f, 5f);
             witch.character.moveSpeed       = new CharacterStat(2f, 2f); 
             witch.character.shootDelay      = new CharacterStat(2f, 2f);
-            witch.character.passDelay       = new CharacterStat(1f, 1f);
+            witch.character.passDelay       = new CharacterStat(0.5f, 0.5f);
             witch.character.shootPower      = new CharacterStat(6f, 6f);
             witch.character.passPower       = new CharacterStat(3.5f, 3.5f);
             witch.character.guard           = new CharacterStat(0f, 4f); 
@@ -104,7 +104,7 @@ public static class WitchBase {
             witch.character.jumpDelay       = new CharacterStat(3f, 3f);
             witch.character.moveSpeed       = new CharacterStat(2.5f, 2.5f); 
             witch.character.shootDelay      = new CharacterStat(1f, 1f);
-            witch.character.passDelay       = new CharacterStat(0.5f, 0.5f);
+            witch.character.passDelay       = new CharacterStat(0.3f, 0.3f);
             witch.character.shootPower      = new CharacterStat(6f, 6f);
             witch.character.passPower       = new CharacterStat(3.5f, 3.5f);
             witch.character.guard           = new CharacterStat(0f, 3f); 
@@ -134,7 +134,7 @@ public static class WitchBase {
             witch.character.jumpDelay       = new CharacterStat(3f, 3f);
             witch.character.moveSpeed       = new CharacterStat(2f, 2f); 
             witch.character.shootDelay      = new CharacterStat(2f, 2f);
-            witch.character.passDelay       = new CharacterStat(2f, 2f);
+            witch.character.passDelay       = new CharacterStat(0.5f, 0.5f);
             witch.character.shootPower      = new CharacterStat(7f, 7f);
             witch.character.passPower       = new CharacterStat(4f, 4f);
             witch.character.guard           = new CharacterStat(0f, 3f); 
@@ -164,7 +164,7 @@ public static class WitchBase {
             witch.character.jumpDelay       = new CharacterStat(2f, 2f);
             witch.character.moveSpeed       = new CharacterStat(2.5f, 2.5f); 
             witch.character.shootDelay      = new CharacterStat(2f, 2f);
-            witch.character.passDelay       = new CharacterStat(1f, 1f);
+            witch.character.passDelay       = new CharacterStat(0.5f, 0.5f);
             witch.character.shootPower      = new CharacterStat(5.5f, 5.5f);
             witch.character.passPower       = new CharacterStat(3.5f, 3.5f);
             witch.character.guard           = new CharacterStat(0f, 2f); 
